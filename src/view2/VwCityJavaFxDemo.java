@@ -146,7 +146,7 @@ public class VwCityJavaFxDemo extends Application {
                 String ID = Integer.toString(carCloneId);String carname = "c"+ID;
                 carCloneView.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
                 carCloneId++;
-             }
+            }
             
             car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
             car1.setX(mdCity.getCarByName("c1").getLocation().getX());
