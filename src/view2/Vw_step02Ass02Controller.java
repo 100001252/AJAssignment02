@@ -62,42 +62,20 @@ public class Vw_step02Ass02Controller implements Initializable {
 
     @FXML
     private void demoOnlyAction(ActionEvent event) {
-<<<<<<< HEAD
-        
-        Dialog<Pair<String, String>> dialog =createPopupDialog();
-        
-=======
-        Stage stage = new Stage();
+
         Dialog<Pair<String, String>> dialog = createPopupDialog();
 
->>>>>>> 70682ee134e0a13ddced4d29a9e5d478f104954d
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(data -> {
 //            // System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
             showTime = data.getKey();
             Duration = data.getValue();
         });
-
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
-<<<<<<< HEAD
-        
+
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         runDemo(window);
-=======
-        int initialSpeed = 100;
-        MdCity mdcity = new MdCity();
-        MdTimer mdTimer = new MdTimer();
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        try {
-            VwCityJavaFxDemo vc = new VwCityJavaFxDemo(Duration, "#005544", mdcity, mdTimer, initialSpeed);
-            vc.start(window);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
->>>>>>> 70682ee134e0a13ddced4d29a9e5d478f104954d
     }
 
     @FXML
@@ -125,24 +103,19 @@ public class Vw_step02Ass02Controller implements Initializable {
         popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
         return popup;
     }
-<<<<<<< HEAD
-    
-    private void runDemo(Stage window){
-         int initialSpeed = 100;
-         MdCity mdcity = new MdCity();
-         MdTimer mdTimer = new MdTimer();
 
-         try{
-             VwCityJavaFxDemo vc = new VwCityJavaFxDemo(showTime, Duration,"#005544", mdcity, mdTimer, initialSpeed);
-             vc.start(window);
-         }catch(Exception e){
-             e.printStackTrace();
-         }
-=======
+    private void runDemo(Stage window) {
+        int initialSpeed = 100;
+        MdCity mdcity = new MdCity();
+        MdTimer mdTimer = new MdTimer();
 
-    private void runDemo() {
+        try {
+            VwCityJavaFxDemo vc = new VwCityJavaFxDemo(showTime, Duration, "#005544", mdcity, mdTimer, initialSpeed);
+            vc.start(window);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
->>>>>>> 70682ee134e0a13ddced4d29a9e5d478f104954d
     }
 
     private Dialog<Pair<String, String>> createPopupDialog() {
