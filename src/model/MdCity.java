@@ -58,7 +58,13 @@ public class MdCity implements Runnable {
      *
      * @param carobj
      */
-    public void addCar(MdCar carobj) {
+    public void addCar(MdCar carobj) throws Exception {
+        for (MdCar lstobj : this.getLstCar()) {
+            if (lstobj.getName().equals(carobj.getName())) {
+                DebugLog.appendData2("errrorrr2349080kj98723r>>>> car name exist");
+                throw new CarRacingException("Car name " + carobj.getName() + " already exist in our record ");
+            }
+        }
         lstCar.add(carobj);
     }
 
@@ -67,7 +73,14 @@ public class MdCity implements Runnable {
      *
      * @param schoolsignObj
      */
-    public void addSchoolSign(MdSchoolSign schoolsignObj) {
+    public void addSchoolSign(MdSchoolSign schoolsignObj) throws Exception {
+        for (MdSchoolSign scObj : this.getLstSchoolSign()) {
+            if (scObj.getName().equals(schoolsignObj.getName())) {
+                DebugLog.appendData2("errrroo23214hkjasdf987rrrr>>>>>   schoolSign");
+                throw new CarRacingException("this schoolsign name (" + schoolsignObj.getName() + ") already exist in our record");
+            }
+        }
+
         lstSchoolSign.add(schoolsignObj);
     }
 
@@ -85,7 +98,7 @@ public class MdCity implements Runnable {
             }
 
         }
-        throw new Exception("there is no car with this name");
+        throw new CarRacingException("there is no car with this name");
 
     }
 
@@ -104,7 +117,7 @@ public class MdCity implements Runnable {
             }
 
         }
-        throw new Exception("there is no car with this name");
+        throw new CarRacingException("there is no car with this name");
 
     }
 

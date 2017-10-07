@@ -5,14 +5,20 @@
  */
 package view2;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -45,6 +51,7 @@ public class Vw_step02Ass02Controller implements Initializable {
 
     private String showTime;
     private String Duration;
+
     /**
      * Initializes the controller class.
      */
@@ -55,24 +62,55 @@ public class Vw_step02Ass02Controller implements Initializable {
 
     @FXML
     private void demoOnlyAction(ActionEvent event) {
+<<<<<<< HEAD
         
         Dialog<Pair<String, String>> dialog =createPopupDialog();
         
+=======
+        Stage stage = new Stage();
+        Dialog<Pair<String, String>> dialog = createPopupDialog();
+
+>>>>>>> 70682ee134e0a13ddced4d29a9e5d478f104954d
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(data -> {
 //            // System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
             showTime = data.getKey();
             Duration = data.getValue();
         });
-        
+
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
+<<<<<<< HEAD
         
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         runDemo(window);
+=======
+        int initialSpeed = 100;
+        MdCity mdcity = new MdCity();
+        MdTimer mdTimer = new MdTimer();
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        try {
+            VwCityJavaFxDemo vc = new VwCityJavaFxDemo(Duration, "#005544", mdcity, mdTimer, initialSpeed);
+            vc.start(window);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+>>>>>>> 70682ee134e0a13ddced4d29a9e5d478f104954d
     }
 
     @FXML
     private void testOnlyAction(ActionEvent event) {
+        try {
+            Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/VwMainInitialStep02.fxml"));
+            Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(vwMainInitialSecondStep);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(Vw_step02Ass02Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -87,6 +125,7 @@ public class Vw_step02Ass02Controller implements Initializable {
         popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
         return popup;
     }
+<<<<<<< HEAD
     
     private void runDemo(Stage window){
          int initialSpeed = 100;
@@ -99,9 +138,14 @@ public class Vw_step02Ass02Controller implements Initializable {
          }catch(Exception e){
              e.printStackTrace();
          }
+=======
+
+    private void runDemo() {
+
+>>>>>>> 70682ee134e0a13ddced4d29a9e5d478f104954d
     }
-    
-    private Dialog<Pair<String, String>> createPopupDialog(){
+
+    private Dialog<Pair<String, String>> createPopupDialog() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Information Needed");
         dialog.setHeaderText("Please input how many times you want for display demo, and the duration of one demo");
@@ -123,9 +167,9 @@ public class Vw_step02Ass02Controller implements Initializable {
         grid.add(showTimes, 1, 0);
         grid.add(new Label("Duration:"), 0, 1);
         grid.add(duration, 1, 1);
-        
+
         dialog.getDialogPane().setContent(grid);
-        
+
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == loginButtonType) {
                 return new Pair<>(showTimes.getText(), duration.getText());

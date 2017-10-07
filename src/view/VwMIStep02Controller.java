@@ -112,11 +112,17 @@ public class VwMIStep02Controller implements Initializable {
             MdTimer mdTimer = new MdTimer();
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            if (rdoMap01.isSelected()) {
+                DebugLog.appendData2(">>>jlkjew123qiru234123>>rdomap01 is selected so i need to start map02");
+                VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.start(window);
+                //                VwCityJavaFx vc = new VwCityJavaFx(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                //vc.start(window);
 
-            VwCityJavaFx vc = new VwCityJavaFx(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
-            vc.start(window);
-            //VwReportView vwreportView = new VwReportView(mdcity, mdTimer); if i have time
-            MdCity mdCity = new MdCity();
+            } else if (rdoMap02.isSelected()) {
+                DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map02");
+
+            }
 
         } else {
             lblFeedback.setText("Please check Term and condition");

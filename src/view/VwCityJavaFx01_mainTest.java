@@ -66,7 +66,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFx extends Application {
+public class VwCityJavaFx01_mainTest extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -78,7 +78,7 @@ public class VwCityJavaFx extends Application {
     //-----------variable
     private int maxTime = 500;//maximum seconds of running this app
 
-    public VwCityJavaFx(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFx01_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
