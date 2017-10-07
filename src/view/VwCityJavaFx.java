@@ -60,6 +60,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -97,6 +98,16 @@ public class VwCityJavaFx extends Application {
             ImageView car1 = new ImageView();
             ImageView car2 = new ImageView();
             ImageView car3 = new ImageView();
+            ImageView car1Clone = new ImageView();
+            ImageView car2Clone = new ImageView();
+            ImageView car3Clone = new ImageView();
+            Label car1lblSpeed = new Label("Speed");
+            car1lblSpeed.setTextFill(labelsColor);
+            Label car2lblSpeed = new Label("Speed");
+            car2lblSpeed.setTextFill(labelsColor);
+            Label car3lblSpeed = new Label("Speed");
+            car3lblSpeed.setTextFill(labelsColor);
+
             ImageView img_schoolZone_start = new ImageView();
             ImageView img_schoolZone_end = new ImageView();
 
@@ -114,12 +125,6 @@ public class VwCityJavaFx extends Application {
             lbl2.setLayoutY(280);
             lbl2.setStyle("-fx-background-color: " + labelsBackgroudColor + ";");
 
-            Label lbl3 = new Label("car3 speed");
-            lbl3.setTextFill(labelsColor);
-            lbl3.setLayoutX(300);
-            lbl3.setLayoutY(360);
-            lbl3.setStyle("-fx-background-color: " + labelsBackgroudColor + ";");
-
             Label lblTimer = new Label("Timer");
             lblTimer.setTextFill(labelsColor);
             lblTimer.setStyle("-fx-background-color: " + labelsBackgroudColor + ";");
@@ -134,16 +139,28 @@ public class VwCityJavaFx extends Application {
             car1.setX(mdCity.getCarByName("c1").getLocation().getX());
             car1.setY(mdCity.getCarByName("c1").getLocation().getY());
             car1.setRotate(-90);
+            car1Clone.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+            HBox hb1 = new HBox();
+            hb1.getChildren().addAll(car1Clone, car1lblSpeed);
+            hb1.setLayoutY(20);
 
             car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
             car2.setX(mdCity.getCarByName("c1").getLocation().getX());
             car2.setY(mdCity.getCarByName("c1").getLocation().getY());
             car2.setRotate(-90);
+            car2Clone.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+            HBox hb2 = new HBox();
+            hb2.getChildren().addAll(car2Clone, car2lblSpeed);
+            hb2.setLayoutY(60);
 
             car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
             car3.setX(mdCity.getCarByName("c3").getLocation().getX());
             car3.setY(mdCity.getCarByName("c3").getLocation().getY());
             car3.setRotate(-90);
+            car3Clone.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+            HBox hb3 = new HBox();
+            hb3.getChildren().addAll(car3Clone, car3lblSpeed);
+            hb3.setLayoutY(100);
 
             img_schoolZone_start.setImage(new Image(mdCity.getSchoolSignByName("sc1").getImgSchoolStart()));
             img_schoolZone_start.setX(mdCity.getSchoolSignByName("sc1").getLocationSchoolStart().getX());
@@ -259,7 +276,7 @@ public class VwCityJavaFx extends Application {
             //root.getChildren().addAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lbl3, table);
             //----------addallitem add all item
             //root.getChildren().addAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lbl3, lblTimer, img_schoolZone_start, img_schoolZone_end);
-            root.getChildren().addAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
+            root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
             root.setTranslateX(50);
             root.setTranslateY(50);
 
@@ -364,7 +381,7 @@ public class VwCityJavaFx extends Application {
                                 //  anim.playFromStart();
                                 anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
                             }
-                            lbl3.setText("carname=c3|speed=" + Integer.toString(mdCity.getCarByName("c3").getSpeed()) + "|x=" + car3.getTranslateX() + "|y=" + car3.getTranslateY() + "|dist=" + mdCity.getCarByName("c3").getDistanceFromOrigin() + "|rate" + anim3.getRate());
+
                         } catch (Exception ex2) {
                             System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
@@ -377,10 +394,17 @@ public class VwCityJavaFx extends Application {
             Timeline timeline4 = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
+                    try {
+                        car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
+                        car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
+                        car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
 
                     if (mdTimer.getSec() == maxTime) {//--------end of process
                         stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, false);
-                        root.getChildren().removeAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lbl3, lblTimer, img_schoolZone_start, img_schoolZone_end);
+                        root.getChildren().removeAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
                         showTableCar(root);
                         showTableCarRecords(root);
                         tableCarRecords1.setLayoutX(650);
