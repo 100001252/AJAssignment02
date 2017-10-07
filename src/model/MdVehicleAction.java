@@ -39,7 +39,7 @@ public class MdVehicleAction {
 
     public MdVehicleAction(String abbr, String nameFriendly, String descriptiton, String actionby, String carName) throws Exception {
         if (!validateAbbriviation(abbr) || !validateActionBy(actionby)) {
-            throw new Exception("--oooooopppps: abbr or actionby for vehicle action is not valid");
+            throw new CarRacingException("--oooooopppps: abbr or actionby for vehicle action is not valid");
         }
         this.id = ++i;
         this.carName = carName;
@@ -53,7 +53,7 @@ public class MdVehicleAction {
 
     public MdVehicleAction(String abbr, String nameFriendly, String actionby, String carName) throws Exception {
         if (!validateAbbriviation(abbr) || !validateActionBy(actionby)) {
-            throw new Exception("--oooooopppps: abbr or actionby for vehicle action is not valid");
+            throw new CarRacingException("--oooooopppps: abbr or actionby for vehicle action is not valid");
         }
         this.id = ++i;
         this.carName = carName;

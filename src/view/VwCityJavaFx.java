@@ -445,7 +445,6 @@ public class VwCityJavaFx extends Application {
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
-                                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                             }
 
                         });

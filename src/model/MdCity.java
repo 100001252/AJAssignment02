@@ -85,7 +85,7 @@ public class MdCity implements Runnable {
             }
 
         }
-        throw new Exception("there is no car with this name");
+        throw new CarRacingException("there is no car with this name");
 
     }
 
@@ -104,7 +104,7 @@ public class MdCity implements Runnable {
             }
 
         }
-        throw new Exception("there is no car with this name");
+        throw new CarRacingException("there is no car with this name");
 
     }
 
