@@ -320,6 +320,7 @@ public class VwCityJavaFx extends Application {
                             anim2.setDelay(Duration.seconds(0));
                             ThreadStopAccident ths = new ThreadStopAccident(mdCity);
                             ths.run();
+                            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
 
                             if (mdCity.getCarByName("c2").isIsParked()) {
                                 anim2.pause();
@@ -351,8 +352,9 @@ public class VwCityJavaFx extends Application {
                         try {
 
                             anim3.setDelay(Duration.seconds(0));
-//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
-//                            ths.run();  noneed as it is happening in first one
+                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+                            ths.run();
+                            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
                             if (mdCity.getCarByName("c3").isIsParked()) {
                                 anim3.pause();
                             }
