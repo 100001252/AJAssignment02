@@ -24,6 +24,13 @@ public class TestIo_Support {
     }
 
     public static void testWriteToFile(String s) {
+        try {
+            ArrayList<String> lstfile = new ArrayList<String>();
+            lstfile.add(s);
+            IO_Support.saveData("C:\\zzzzjava\\aadworks\\javaDebug.txt", lstfile);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
