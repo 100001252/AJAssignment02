@@ -5,7 +5,7 @@
  */
 package AAmain;
 
-import helper02.DebugLog;
+import helper.DebugLog;
 import java.util.ArrayList;
 
 /**
@@ -28,8 +28,12 @@ public class TestDebugLog {
             ArrayList<String> lstfile = new ArrayList<String>();
             lstfile.add(s);
             lstfile.add("another one");
+            DebugLog.saveData(lstfile);
             //IO_Support.saveData("C:\\zzzzjava\\aadworks\\javaDebug.txt", lstfile);
-            DebugLog.appendData(lstfile);
+            DebugLog.appendData("here is my first test for debuging 02");
+            DebugLog.appendData("here is my first test for debuging 03");
+            DebugLog.appendData("here is my first test for debuging 04");
+            DebugLog.appendData("here is my first test for debuging 05");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
