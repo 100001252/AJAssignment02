@@ -105,8 +105,8 @@ public class Vw_step02Ass02Controller implements Initializable {
     private Popup createPopup() {
         final Popup popup = new Popup();
         popup.setAutoHide(true);
-        popup.setX(300);
-        popup.setY(200);
+        popup.setX(100);
+        popup.setY(50);
         popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
         return popup;
     }

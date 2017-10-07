@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="view2.Vw_step02Ass02Controller">
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view2.Vw_step02Ass02Controller">
    <children>
-      <Button fx:id="demoOnlyBtn" layoutX="265.0" layoutY="60.0" mnemonicParsing="false" onAction="#demoOnlyAction" text="Demo Only" />
-      <Button fx:id="testOnlyBtn" layoutX="270.0" layoutY="167.0" mnemonicParsing="false" onAction="#testOnlyAction" text="Test Only" />
-      <Button fx:id="demoAndTestBtn" layoutX="255.0" layoutY="276.0" mnemonicParsing="false" onAction="#demoAndTestAction" text="Demo and Test" />
+      <Pane layoutX="475.0" layoutY="175.0" prefHeight="400.0" prefWidth="400.0">
+         <children>
+            <Button fx:id="demoOnlyBtn" layoutX="145.0" layoutY="79.0" mnemonicParsing="false" onAction="#demoOnlyAction" styleClass="shiny-orange" stylesheets="@style.css" text="Demo Only" />
+            <Button fx:id="testOnlyBtn" layoutX="142.0" layoutY="167.0" mnemonicParsing="false" onAction="#testOnlyAction" prefHeight="40.0" prefWidth="121.0" styleClass="shiny-orange" text="Test Only" />
+            <Button fx:id="demoAndTestBtn" layoutX="126.0" layoutY="260.0" mnemonicParsing="false" onAction="#demoAndTestAction" prefHeight="40.0" prefWidth="165.0" styleClass="shiny-orange" text="Demo and Test" />
+         </children>
+      </Pane>
    </children>
+   <stylesheets>
+      <URL value="@style.css" />
+      <URL value="@style.css" />
+   </stylesheets>
 </AnchorPane>
