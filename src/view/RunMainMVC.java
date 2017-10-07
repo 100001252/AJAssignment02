@@ -30,7 +30,7 @@ public class RunMainMVC extends Application {
         //-------------------------------------------------------view load
 
         //--loadjavafxview
-        Parent root = FXMLLoader.load(getClass().getResource("VwMainInitialStep01.fxml"));//view an controller loaded
+        Parent root = FXMLLoader.load(getClass().getResource("VwMainInitialStep02.fxml"));//view an controller loaded
         Scene scene = new Scene(root, 1350, 750);
         stage.setScene(scene);
         stage.show();
