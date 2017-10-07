@@ -5,7 +5,7 @@
  */
 package AAmain;
 
-import helper02.DebugLog;
+import helper.DebugLog;
 import java.util.ArrayList;
 
 /**

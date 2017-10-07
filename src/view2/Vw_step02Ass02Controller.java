@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -24,6 +25,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import model.MdCity;
+import model.MdTimer;
+import view.VwCityJavaFx;
 
 /**
  * FXML Controller class
@@ -91,7 +95,19 @@ public class Vw_step02Ass02Controller implements Initializable {
         });
         
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
-        
+         int initialSpeed = 100;
+         MdCity mdcity = new MdCity();
+            MdTimer mdTimer = new MdTimer();
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+         try{
+             VwCityJavaFxDemo vc = new VwCityJavaFxDemo("#005544", mdcity, mdTimer, initialSpeed);
+             vc.start(window);
+         }catch(Exception e){
+             e.printStackTrace();
+         }
+            
     }
 
     @FXML
