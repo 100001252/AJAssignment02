@@ -5,32 +5,22 @@
  */
 package view2;
 
-import view.*;
-import com.jfoenix.controls.JFXButton;
 import helper.Location;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import static javafx.geometry.HPos.RIGHT;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcTo;
@@ -40,28 +30,12 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.JFrame;
 import model.*;
 import helper.*;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
+import java.security.SecureRandom;
+import java.util.ArrayList;
 
 /**
  *
@@ -76,39 +50,59 @@ public class VwCityJavaFxDemo extends Application {
     private Color labelsColor = Color.BLACK;
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
+    private int demoShowTimes;
+    private ArrayList<ImageView> cars =new ArrayList<>();
+    private ArrayList<ImageView> carClones =new ArrayList<>();
+    private ArrayList<Label> carSpeedLabels =new ArrayList<>();
     //-----------variable
     private int maxTime = 500;//maximum seconds of running this app
 
-    public VwCityJavaFxDemo(String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFxDemo(String times, String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
         this.initialSpeed = initialSpeed;
         this.maxTime = Integer.parseInt(maxtime);
+        this.demoShowTimes = Integer.parseInt(times);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-
+            //Generate secure random number
+            SecureRandom randomNumber = new SecureRandom();
+            int carNumber = 2 + randomNumber.nextInt(4);
+            
 //-----------define all cars
-            mdCity.addCar(new MdCar(new Location(180, 400), "carbluepolice.jpg", "c1", true, 1, this.initialSpeed));
-            mdCity.addCar(new MdCar(new Location(180, 400), "carred.png", "c2", true, 2, this.initialSpeed));
-            mdCity.addCar(new MdCar(new Location(180, 400), "carblue.png", "c3", true, 3, this.initialSpeed));
+            for(int i = 0; i < carNumber; i++){
+                int id = i+1; String ID = Integer.toString(id); 
+                mdCity.addCar(new MdCar(new Location(180, 400), "car"+ID+".jpg", "c"+ID, true, id, this.initialSpeed));
+            }
+//            mdCity.addCar(new MdCar(new Location(180, 400), "carbluepolice.jpg", "c1", true, 1, this.initialSpeed));
+//            mdCity.addCar(new MdCar(new Location(180, 400), "carred.png", "c2", true, 2, this.initialSpeed));
+//            mdCity.addCar(new MdCar(new Location(180, 400), "carblue.png", "c3", true, 3, this.initialSpeed));
             mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
-            ImageView car1 = new ImageView();
-            ImageView car2 = new ImageView();
-            ImageView car3 = new ImageView();
-            ImageView car1Clone = new ImageView();
-            ImageView car2Clone = new ImageView();
-            ImageView car3Clone = new ImageView();
-            Label car1lblSpeed = new Label("Speed");
-            car1lblSpeed.setTextFill(labelsColor);
-            Label car2lblSpeed = new Label("Speed");
-            car2lblSpeed.setTextFill(labelsColor);
-            Label car3lblSpeed = new Label("Speed");
-            car3lblSpeed.setTextFill(labelsColor);
+            for(int i = 0; i < carNumber; i++){
+                cars.add(new ImageView()) ;
+                carClones.add(new ImageView());
+                Label carSpeedLabel = new Label("Speed");
+                carSpeedLabel.setTextFill(labelsColor);
+                carSpeedLabels.add(carSpeedLabel);
+                
+            }
+//            ImageView car1 = new ImageView();
+//            ImageView car2 = new ImageView();
+//            ImageView car3 = new ImageView();
+//            ImageView car1Clone = new ImageView();
+//            ImageView car2Clone = new ImageView();
+//            ImageView car3Clone = new ImageView();
+//            Label car1lblSpeed = new Label("Speed");
+//            car1lblSpeed.setTextFill(labelsColor);
+//            Label car2lblSpeed = new Label("Speed");
+//            car2lblSpeed.setTextFill(labelsColor);
+//            Label car3lblSpeed = new Label("Speed");
+//            car3lblSpeed.setTextFill(labelsColor);
 
             ImageView img_schoolZone_start = new ImageView();
             ImageView img_schoolZone_end = new ImageView();
@@ -137,6 +131,23 @@ public class VwCityJavaFxDemo extends Application {
 //--------------------------------------------------------------------------------------defining car image or button
             Circle circ1 = new Circle(50, 20, 30, Color.BLUE); //new Circle(50, 20, 10);
             //car.setImage(new Image("file:res/car.gif"));
+            int carid = 1;
+            for(ImageView carView: cars){
+                String ID = Integer.toString(carid);String carname = "c"+ID;
+                carView.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
+                carView.setX(mdCity.getCarByName("c1").getLocation().getX());
+                carView.setY(mdCity.getCarByName("c1").getLocation().getY());
+                carView.setRotate(-90);
+                carid++;
+                
+            }
+            int carCloneId = 1;
+            for(ImageView carCloneView: cars){
+                String ID = Integer.toString(carCloneId);String carname = "c"+ID;
+                carCloneView.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+                carCloneId++;
+             }
+            
             car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
             car1.setX(mdCity.getCarByName("c1").getLocation().getX());
             car1.setY(mdCity.getCarByName("c1").getLocation().getY());
@@ -398,7 +409,7 @@ public class VwCityJavaFxDemo extends Application {
                     }
 
                     if (mdTimer.getSec() == maxTime) {//--------end of process
-                      
+                        
                     }
                     if (mdTimer.getSec() <= maxTime) {
                         lblTimer.setText("Timer:" + mdTimer.getSec());

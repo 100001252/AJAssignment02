@@ -55,7 +55,7 @@ public class Vw_step02Ass02Controller implements Initializable {
 
     @FXML
     private void demoOnlyAction(ActionEvent event) {
-        Stage stage = new Stage();
+        
         Dialog<Pair<String, String>> dialog =createPopupDialog();
         
         Optional<Pair<String, String>> result = dialog.showAndWait();
@@ -66,19 +66,9 @@ public class Vw_step02Ass02Controller implements Initializable {
         });
         
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
-         int initialSpeed = 100;
-         MdCity mdcity = new MdCity();
-            MdTimer mdTimer = new MdTimer();
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-         try{
-             VwCityJavaFxDemo vc = new VwCityJavaFxDemo(Duration,"#005544", mdcity, mdTimer, initialSpeed);
-             vc.start(window);
-         }catch(Exception e){
-             e.printStackTrace();
-         }
-            
+        
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        runDemo(window);
     }
 
     @FXML
@@ -98,8 +88,17 @@ public class Vw_step02Ass02Controller implements Initializable {
         return popup;
     }
     
-    private void runDemo(){
-        
+    private void runDemo(Stage window){
+         int initialSpeed = 100;
+         MdCity mdcity = new MdCity();
+         MdTimer mdTimer = new MdTimer();
+
+         try{
+             VwCityJavaFxDemo vc = new VwCityJavaFxDemo(showTime, Duration,"#005544", mdcity, mdTimer, initialSpeed);
+             vc.start(window);
+         }catch(Exception e){
+             e.printStackTrace();
+         }
     }
     
     private Dialog<Pair<String, String>> createPopupDialog(){
