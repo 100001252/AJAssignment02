@@ -201,7 +201,7 @@ public class PathDemoJavaFx_ver06 extends Application {
 
                     anim2.play();
 
-                    System.out.println("(" + car1.getTranslateX() + "|||" + car2.getTranslateX() + "," + car1.getTranslateY() + ")");
+                    // System.out.println("(" + car1.getTranslateX() + "|||" + car2.getTranslateX() + "," + car1.getTranslateY() + ")");
 //                    if (car1.getTranslateX() > 0) {
 //                        anim.pause();
 //                    }
@@ -209,7 +209,7 @@ public class PathDemoJavaFx_ver06 extends Application {
                     //----------end testanim
                     //move the ball
 //                ball.setLayoutY(ball.getLayoutY() + dy);
-                    // System.out.println(ball.getLayoutX());
+                    // // System.out.println(ball.getLayoutX());
                     //all rotation in oneplace
 //                    if (car1.getLayoutY() == 380 || car1.getLayoutY() > 380 && car1.getLayoutX() < 900) {
 //                        if (car1.getLayoutY() == 380) {

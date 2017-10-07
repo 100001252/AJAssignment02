@@ -19,7 +19,7 @@ public class MdTimer {
     TimerTask myTask = new TimerTask() {
         public void run() {
             sec++;
-            // System.out.println(sec);
+            // // System.out.println(sec);
         }
     };
 

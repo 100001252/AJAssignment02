@@ -9,7 +9,7 @@ public class RunDb {
             // testisStudentExist(1, "33");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
         }
     }
 
@@ -23,7 +23,7 @@ public class RunDb {
             Ass02StudentSoap uniStudent = new Ass02StudentSoap();
             uniStudent.deleteStudent(stid);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
         }
     }
 
@@ -37,7 +37,7 @@ public class RunDb {
             Ass02StudentSoap uniStudent = new Ass02StudentSoap();
             uniStudent.addStudent("mansour", "3345");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
         }
     }
 

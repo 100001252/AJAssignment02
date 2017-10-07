@@ -74,7 +74,7 @@ public class VwCityView extends JFrame {
 
     public void move() {//just for test purposes zzzmove
         try {
-            System.out.println("moooooviinnngtestoption");
+            // System.out.println("moooooviinnngtestoption");
             for (int i = 0; i < 10000; i++) {
 
                 if (getInitialyCar() == 2 && getInitialxCar() != 200) {
@@ -100,7 +100,7 @@ public class VwCityView extends JFrame {
                 // cityView.drawImage(initialxCar, initialyCar, emptyImage);
                 wait(100);
 
-                System.out.println("x=" + getInitialxCar() + " || y=" + getInitialyCar() + " | totalDistanceTraveled=" + totalDistanceTravel);
+                // System.out.println("x=" + getInitialxCar() + " || y=" + getInitialyCar() + " | totalDistanceTraveled=" + totalDistanceTravel);
                 //this.myRepaint();
 
                 this.myRepaint();
@@ -112,7 +112,7 @@ public class VwCityView extends JFrame {
     }
 
     public void myRepaint() {
-        System.out.println("x=" + getInitialxCar() + " || y=" + getInitialyCar() + " | totalDistanceTraveled=" + totalDistanceTravel);
+        // System.out.println("x=" + getInitialxCar() + " || y=" + getInitialyCar() + " | totalDistanceTraveled=" + totalDistanceTravel);
         cityView.repaint();
     }
 

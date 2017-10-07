@@ -21,7 +21,7 @@ public class DatabaseTest {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        // System.out.println(getAllBook());
+        // // System.out.println(getAllBook());
         //  mytest_TestVwMoveCars4();//expect to avoid accident(work on two different thread to fix it)
     }
 
@@ -44,7 +44,7 @@ public class DatabaseTest {
 //                // Book(myRs.getInt("id")/#myRs.getString(2),myRs.getString(3),myRs.getString(4),myRs.getString("publisher"),myRs.getString("publishDate"),myRs.getString("status"),myRs.getInt("student_id")));
 //            }
 //
-//            System.out.println("myNotegetallbookunibbbb \n" + result);
+//            // System.out.println("myNotegetallbookunibbbb \n" + result);
 //            return result;
 //        } catch (Exception e) {
 //            e.printStackTrace();

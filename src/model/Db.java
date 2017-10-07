@@ -31,7 +31,7 @@ public class Db {
             user = "admin2";
             pass = "admin2";
             Connection conn = DriverManager.getConnection(Db.url, Db.user, Db.pass);
-            System.out.println("connected");
+            // System.out.println("connected");
             return conn;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -57,13 +57,13 @@ public class Db {
             myStmt = myConn.createStatement();
             String sql = "insert into " + dbName + "." + this.table_race
                     + "( `race_name`, `description`) values('test1','test1desc')";
-            System.out.println(sql);
+            // System.out.println(sql);
             myStmt.executeUpdate(sql);
 
             return true;
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
             throw new Exception(
                     "4042-updatetBook-book database there is issue with our database");
 
@@ -89,7 +89,7 @@ public class Db {
                     String sql = "insert into " + dbName + "." + this.table_race_report
                             + "( `carname`, `name`, `abbr`, `description`, `actionby`) values('" + c.getName() + "','" + vact.getNameFriendly() + "',"
                             + "'" + vact.getAbbriviation() + "','" + vact.getDescription() + "','" + vact.getActionedBy() + "' )";
-                    System.out.println(sql);
+                    // System.out.println(sql);
                     myStmt.executeUpdate(sql);
                 }
             }
@@ -98,7 +98,7 @@ public class Db {
 
         } catch (Exception e) {
             result = false;
-            System.out.println(e.getMessage());
+            // System.out.println(e.getMessage());
             throw new Exception(
                     "4042-updatetBook-book database there is issue with our database");
 

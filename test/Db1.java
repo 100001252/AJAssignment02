@@ -39,7 +39,7 @@ public class Db1 {
             myConn = DriverManager
                     .getConnection(this.url, this.user, this.pass);
         } catch (Exception e) {
-            System.out.println("erro" + e.getMessage());
+            // System.out.println("erro" + e.getMessage());
         }
     }
 
@@ -58,7 +58,7 @@ public class Db1 {
             myConn = DriverManager
                     .getConnection(this.url, this.user, this.pass);
         } catch (Exception e) {
-            System.out.println("erro" + e.getMessage());
+            // System.out.println("erro" + e.getMessage());
         }
     }
 
@@ -90,13 +90,13 @@ public class Db1 {
                 myStmt = myConn.createStatement();
                 String sql = "update " + dbName + "." + tableName
                         + " set status='" + status + "' where id=" + bookid;
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 return true;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         "4042-updatetBook-book database there is issue with our database");
 
@@ -128,13 +128,13 @@ public class Db1 {
                         + authorList + "',isbn='" + isbn + "',publishDate='"
                         + publishDate + "',status='" + status + "',publisher='"
                         + publisher + "' where id=" + bookid;
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 return true;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 e.printStackTrace();
                 throw new BookException(
                         "4042-updatetBook-book database there is issue with our database");
@@ -156,13 +156,13 @@ public class Db1 {
                 myStmt = myConn.createStatement();
                 String sql = "delete from " + dbName + "." + tableName
                         + " where id=" + bookid;
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 return true;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         "insertBook -book database there is issue with our database");
 
@@ -183,7 +183,7 @@ public class Db1 {
                 return myRs;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -204,7 +204,7 @@ public class Db1 {
                 return myRs;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -235,7 +235,7 @@ public class Db1 {
 
                 return result;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -266,7 +266,7 @@ public class Db1 {
 
                 return result;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -298,7 +298,7 @@ public class Db1 {
 
                 return result;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -324,7 +324,7 @@ public class Db1 {
                 return result;
 
             } catch (Exception e) {
-                // System.out.println(e.);
+                // // System.out.println(e.);
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -358,13 +358,13 @@ public class Db1 {
 //						+ "'" + ",'" + objBook.getPublisher() + "','"
 //						+ sdf.format(objBook.getPublishDate()) + "','"
 //						+ objBook.getStatus() + "',NOW())";
-//				System.out.println(sql);
+//				// System.out.println(sql);
 //				myStmt.executeUpdate(sql);
 //
 //				return true;
 //
 //			} catch (Exception e) {
-//				System.out.println(e.getMessage());
+//				// System.out.println(e.getMessage());
 //				throw new BookException(
 //						"insertBook -book database there is issue with our database");
 //
@@ -396,13 +396,13 @@ public class Db1 {
                         + "values('" + title + "','" + authorList + "','"
                         + isbn + "'" + ",'" + publisher + "','" + publishDate
                         + "','" + status + "',NOW())";
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 return true;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         "insertBook -book database there is issue with our database");
 
@@ -450,7 +450,7 @@ public class Db1 {
 
                 return result;
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " StudentBorrow database there is issue with our database");
 
@@ -473,7 +473,7 @@ public class Db1 {
                 return myRs;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -499,7 +499,7 @@ public class Db1 {
                 return myRs;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -519,7 +519,7 @@ public class Db1 {
                 return myRs;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         " book database there is issue with our database");
 
@@ -545,7 +545,7 @@ public class Db1 {
                 String sql = "update " + tableName + " set action='" + action
                         + "' where student_id=" + studentId + " book_id="
                         + bookId + " ";
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 result = true;
@@ -553,7 +553,7 @@ public class Db1 {
                 return result;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         "4044-updateStudent- database there is issue with our database");
 
@@ -580,7 +580,7 @@ public class Db1 {
                         + "(student_id,book_id," + "action,createdTime)"
                         + " values(" + studentId + "," + bookId + ",'" + action
                         + "',now())";
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 result = true;
@@ -588,7 +588,7 @@ public class Db1 {
                 return result;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 e.printStackTrace();
                 throw new BookException(
                         "4045-insertStudentrecords- database there is issue with our database");
@@ -614,7 +614,7 @@ public class Db1 {
                 myStmt = myConn.createStatement();
                 String sql = "delete from " + tableName + " where student_id="
                         + studentId + " and book_id=" + bookId;
-                System.out.println(sql);
+                // System.out.println(sql);
                 myStmt.executeUpdate(sql);
 
                 result = true;
@@ -622,7 +622,7 @@ public class Db1 {
                 return result;
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                // System.out.println(e.getMessage());
                 throw new BookException(
                         "4049-deleteStudentrecords- database there is issue with our database");
 

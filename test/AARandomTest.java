@@ -29,7 +29,7 @@ public class AARandomTest {
         //double secondpart=(y1-y2)^2
         double part2 = Math.pow((y1 - y2), 2);
         result = Math.sqrt(part1 + part2);
-        System.out.println("test1-result= part1and2(" + part1 + ", " + part2 + " )" + result + " | " + Math.pow(3, 4) + "| ");
+        // System.out.println("test1-result= part1and2(" + part1 + ", " + part2 + " )" + result + " | " + Math.pow(3, 4) + "| ");
     }
 
 }

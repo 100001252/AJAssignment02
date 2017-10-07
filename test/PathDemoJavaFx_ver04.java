@@ -117,7 +117,7 @@ public class PathDemoJavaFx_ver04 extends Application {
                 //move the ball
 //                ball.setLayoutX(ball.getLayoutX() + dx);
 //                ball.setLayoutY(ball.getLayoutY() + dy);
-                // System.out.println(ball.getLayoutX());
+                // // System.out.println(ball.getLayoutX());
                 car.setLayoutX(car.getLayoutX());
                 car.setLayoutY(car.getLayoutY());
 

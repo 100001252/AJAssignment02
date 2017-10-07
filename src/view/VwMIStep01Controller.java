@@ -61,16 +61,16 @@ public class VwMIStep01Controller implements Initializable {
         Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //--------end loading second step
-        System.out.println("makiiinglogin");
+        // System.out.println("makiiinglogin");
         String username = txtUsername.getText();
         String pass = txtPassword.getText();
         if (username.equals("admin") && pass.equals("admin")) {
-            System.out.println("welcome");
+            // System.out.println("welcome");
             window.setScene(vwMainInitialSecondStep);
             window.show();
         } else {
             lblfeedback.setText("User name and password does not match with our record");
-            System.out.println("Incorect username and password");
+            // System.out.println("Incorect username and password");
         }
     }
 
@@ -79,7 +79,7 @@ public class VwMIStep01Controller implements Initializable {
      * needs to do signup but it is not active for this assignment
      */
     private void doSignup(ActionEvent event) throws IOException, Exception {
-        System.out.println("start doing signup");
+        // System.out.println("start doing signup");
 
     }
 

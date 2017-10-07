@@ -91,10 +91,10 @@ public class VwMIStep02Controller implements Initializable {
      */
     public void radioMapSelect(ActionEvent event) {
         if (rdoMap01.isSelected()) {
-            // System.out.println("map01" + this.tt);
+            // // System.out.println("map01" + this.tt);
             imgMap.setImage(new Image("images/map01.png"));
         } else {
-            System.out.println("map02");
+            // System.out.println("map02");
             imgMap.setImage(new Image("images/map02.png"));
         }
     }

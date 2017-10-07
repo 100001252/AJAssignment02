@@ -54,7 +54,7 @@ public class MyFirstGame extends Application {
                 //move the ball
                 ball.setLayoutX(ball.getLayoutX() + dx);
                 ball.setLayoutY(ball.getLayoutY() + dy);
-                System.out.println(ball.getLayoutX());
+                // System.out.println(ball.getLayoutX());
 
                 Bounds bounds = canvas.getBoundsInLocal();
 

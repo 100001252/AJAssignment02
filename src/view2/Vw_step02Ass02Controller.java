@@ -85,12 +85,12 @@ public class Vw_step02Ass02Controller implements Initializable {
         
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(data -> {
-//            System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
+//            // System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
             showTime = data.getKey();
             Duration = data.getValue();
         });
         
-        System.out.println("Times=" + showTime + ", Duration=" + Duration);
+        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
         
     }
 

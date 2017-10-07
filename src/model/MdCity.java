@@ -211,7 +211,7 @@ public class MdCity implements Runnable {
      */
     public synchronized void stopAccident() {
         try {
-            System.out.println();
+            // System.out.println();
             for (MdCar objCar : (ArrayList<MdCar>) this.getLstCar().clone()) {
                 MdCar c = null;
                 int index = this.getLstCar().indexOf(objCar);
@@ -259,7 +259,7 @@ public class MdCity implements Runnable {
 //            this.setLstCar(listCar2);
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("123123mymessage" + ex.getMessage());
+            // System.out.println("123123mymessage" + ex.getMessage());
         }
 
     }
@@ -293,7 +293,7 @@ public class MdCity implements Runnable {
     public synchronized void move() {
 
         try {
-            System.out.println();
+            // System.out.println();
             for (MdCar c : (ArrayList<MdCar>) this.getLstCar().clone()) {
                 c.setImgName("taxi.jpg");
                 c.setLocation(new Location(c.getLocation().getX() + (c.getSpeed() / 10), c.getLocation().getY()));

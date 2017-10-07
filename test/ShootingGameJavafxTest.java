@@ -57,7 +57,7 @@ public class ShootingGameJavafxTest extends Application {
                 weaponRotation.setAngle(Math.min(45, weaponRotation.getAngle() + 2));
             }
             if (e.getCode() == KeyCode.SPACE) {
-                System.out.println("keeeyyyPresssed1323->step1| x=" + weaponX + "| weaponY: " + weaponEndY);
+                // System.out.println("keeeyyyPresssed1323->step1| x=" + weaponX + "| weaponY: " + weaponEndY);
                 Point2D weaponEnd = weapon.localToParent(weaponX, weaponEndY);
 
                 Circle projectile = new Circle(weaponEnd.getX(), weaponEnd.getY(), projectileRadius);
@@ -69,15 +69,15 @@ public class ShootingGameJavafxTest extends Application {
 
                 BooleanBinding hit = Bindings.createBooleanBinding(() -> {
                     Point2D targetLocation = target.localToParent(targetStartX, targetY);
-                    System.out.println("keeeyyyPresssed3333->step2 x=" + targetStartX + " y=" + targetY + " | shot=(" + shot.getByX() + "," + shot.getByY());
+                    // System.out.println("keeeyyyPresssed3333->step2 x=" + targetStartX + " y=" + targetY + " | shot=(" + shot.getByX() + "," + shot.getByY());
                     Point2D projectileLocation = projectile.localToParent(weaponEnd);
                     return (targetLocation.distance(projectileLocation) < targetRadius + projectileRadius);
                 }, projectile.translateXProperty(), projectile.translateYProperty());
 
                 hit.addListener((obs, wasHit, isNowHit) -> {
-                    //   System.out.println("keeeyyyPresssed1323->step3" + wasHit);
+                    //   // System.out.println("keeeyyyPresssed1323->step3" + wasHit);
                     if (isNowHit) {
-                        System.out.println("Hit");
+                        // System.out.println("Hit");
                         root.getChildren().remove(projectile);
                         root.getChildren().remove(target);
                         targetMotion.stop();

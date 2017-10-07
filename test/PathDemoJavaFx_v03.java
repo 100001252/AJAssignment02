@@ -139,10 +139,10 @@ public class PathDemoJavaFx_v03 extends Application {
                 if (status == Animation.Status.RUNNING
                         && status != Animation.Status.PAUSED) {
                     anim.pause();
-                    System.out.println(anim.currentTimeProperty().toString() + " | object" + anim.getPath().getLayoutX());
-                    System.out.println("translate f: (" + car.getX() + "," + car.getY() + ")");
-                    //System.out.println("translate f: (" + anim + "," + car.getY() + ")");
-                    //  System.out.println(">>>>test f: (" + anim3.getNode().getCursor().toString());
+                    // System.out.println(anim.currentTimeProperty().toString() + " | object" + anim.getPath().getLayoutX());
+                    // System.out.println("translate f: (" + car.getX() + "," + car.getY() + ")");
+                    //// System.out.println("translate f: (" + anim + "," + car.getY() + ")");
+                    //  // System.out.println(">>>>test f: (" + anim3.getNode().getCursor().toString());
                 } else {
                     // anim.interpolate(0.2);
                     anim.play();

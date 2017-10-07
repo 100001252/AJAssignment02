@@ -82,11 +82,11 @@ public class MovementEventsDemoJavaFx extends Application {
                         circle.setCenterX(circle.getCenterX() - KEYBOARD_MOVEMENT_DELTA);
                         break;
                     case A:
-                        System.out.print("a pressed");
+                        // System.out.print("a pressed");
                         circle.setCenterX(circle.getCenterX() - KEYBOARD_MOVEMENT_DELTA);
                         break;
                     case NUMPAD0:
-                        System.out.println("0 is pressed");
+                        // System.out.println("0 is pressed");
                         break;
 
                 }

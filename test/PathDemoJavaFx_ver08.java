@@ -244,7 +244,7 @@ public class PathDemoJavaFx_ver08 extends Application {
                                     + "|orientation:" + anim.getOrientation());
 
                         } catch (Exception ex2) {
-                            System.out.println("searchhhhhhfor23424234");
+                            // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
                         }
 
@@ -276,7 +276,7 @@ public class PathDemoJavaFx_ver08 extends Application {
                             }
                             lbl2.setText("carname=c2|speed=" + Integer.toString(mdCity.getCarByName("c2").getSpeed()) + "|x=" + car2.getTranslateX() + "|y=" + car2.getTranslateY() + " + x=" + car1.getTranslateX() + "|dist=" + mdCity.getCarByName("c2").getDistanceFromOrigin() + "|rate" + anim2.getRate());
                         } catch (Exception ex2) {
-                            System.out.println("searchhhhhhfor23424234");
+                            // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
                         }
 
@@ -306,7 +306,7 @@ public class PathDemoJavaFx_ver08 extends Application {
                             }
                             lbl3.setText("carname=c3|speed=" + Integer.toString(mdCity.getCarByName("c3").getSpeed()) + "|x=" + car3.getTranslateX() + "|y=" + car3.getTranslateY() + "|dist=" + mdCity.getCarByName("c3").getDistanceFromOrigin() + "|rate" + anim3.getRate());
                         } catch (Exception ex2) {
-                            System.out.println("searchhhhhhfor23424234");
+                            // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
                         }
 
@@ -479,7 +479,7 @@ public class PathDemoJavaFx_ver08 extends Application {
             scene.setOnKeyPressed(e
                     -> {
                 try {
-                    System.out.println("carname:" + mdCity.getCarToControl());
+                    // System.out.println("carname:" + mdCity.getCarToControl());
                     if (e.getCode() == KeyCode.UP) {//keyup
                         mdCity.getCarByName(mdCity.getCarToControl()).increaseSpeed(10);
 //                        if (mdCity.getCarByName("c1").getSpeed() > 0) {
@@ -527,14 +527,14 @@ public class PathDemoJavaFx_ver08 extends Application {
                         //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
                     }
                     if (e.getCode() == KeyCode.RIGHT) {
-                        System.out.println("right");
+                        // System.out.println("right");
                         //  weaponRotation.setAngle(Math.min(45, weaponRotation.getAngle() + 2));
                     }
                 } catch (Exception ex3) {
                     ex3.printStackTrace();
                 }
                 if (e.getCode() == KeyCode.SPACE) {
-                    System.out.println("space clickeddd");
+                    // System.out.println("space clickeddd");
                     //Animation.Status status = anim.getStatus();
                     Timeline.Status status = timeline1.getStatus();
                     if (status == Timeline.Status.RUNNING
@@ -567,7 +567,7 @@ public class PathDemoJavaFx_ver08 extends Application {
             circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("clickkkd on circle");
+                    // System.out.println("clickkkd on circle");
                     if (timeline1.getStatus() == Timeline.Status.RUNNING) {
                         timeline1.pause();
                         timeline2.pause();
@@ -610,7 +610,7 @@ public class PathDemoJavaFx_ver08 extends Application {
         //3 if anyone click on any car also slow down by 10km/hr
         //4. RECORD ALL STOP AUTOMATIC AND ALL MANUAL BREAK
         //
-        //     System.out.println("PathDemoJavaFx_ver07.testToCall()");
+        //     // System.out.println("PathDemoJavaFx_ver07.testToCall()");
     }
 
     public static void main(String[] args) {

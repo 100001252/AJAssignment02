@@ -13,7 +13,7 @@ class Hi extends Thread {
 
     public void run() {
         for (int i = 1; i < 10; i++) {
-            System.out.println("Hi");
+            // System.out.println("Hi");
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
@@ -68,7 +68,7 @@ class Hello extends Thread {
 
     public void run() {
         for (int i = 1; i < 10; i++) {
-            System.out.println("Hello");
+            // System.out.println("Hello");
             try {
                 Thread.sleep(20);
             } catch (Exception e) {
@@ -94,7 +94,7 @@ public class Test1 {
         //        Location loc = new Location(0, 0);
         //        MdCar mdcar = new MdCar(loc);
         //        Path path = Paths.get("/src/taxi.jpg");
-        //        System.out.println(path.toString());
+        //        // System.out.println(path.toString());
 
         //VwCityView.CityView cv = new VwCityView().new CityView(700, 700);
         //mdcar.getVehicleImage().toString();
@@ -208,7 +208,7 @@ public class Test1 {
 
                     for (MdCar c : mdCity.getLstCar()) {
                         //    mdCity.stopAccident(c);
-                        //  System.out.println(c.toString());
+                        //  // System.out.println(c.toString());
                         c.setLocation(new Location(c.getLocation().getX() + (c.getSpeed() / 10), c.getLocation().getY()));
                         if (c.getLocation().getX() > 450) {
 

@@ -76,7 +76,7 @@ public class VwCityJavaFx extends Application {
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
     //-----------variable
-    private int maxTime = 50;//maximum seconds of running this app
+    private int maxTime = 500;//maximum seconds of running this app
 
     public VwCityJavaFx(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
@@ -298,7 +298,7 @@ public class VwCityJavaFx extends Application {
 
                             ths.run();
                             car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-                            System.out.println("c1 image" + mdCity.getCarByName("c1").getImgName() + " | image normal:" + mdCity.getCarByName("c1").getImgNormal());
+
                             if (mdCity.getCarByName("c1").isIsParked()) {
                                 anim.pause();
                             }
@@ -317,7 +317,7 @@ public class VwCityJavaFx extends Application {
 //                            );
 
                         } catch (Exception ex2) {
-                            System.out.println("searchhhhhhfor23424234");
+                            // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
                         }
 
@@ -351,7 +351,7 @@ public class VwCityJavaFx extends Application {
                             }
                             //lbl2.setText("carname=c2|speed=" + Integer.toString(mdCity.getCarByName("c2").getSpeed()) + "|x=" + car2.getTranslateX() + "|y=" + car2.getTranslateY() + " + x=" + car1.getTranslateX() + "|dist=" + mdCity.getCarByName("c2").getDistanceFromOrigin() + "|rate" + anim2.getRate());
                         } catch (Exception ex2) {
-                            System.out.println("searchhhhhhfor23424234");
+                            // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
                         }
 
@@ -383,7 +383,7 @@ public class VwCityJavaFx extends Application {
                             }
 
                         } catch (Exception ex2) {
-                            System.out.println("searchhhhhhfor23424234");
+                            // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
                         }
 
@@ -398,6 +398,9 @@ public class VwCityJavaFx extends Application {
                         car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
                         car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
                         car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
+                        //----------------------------just for dbug purposes
+
+                        //----------------------------end of debug
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -613,7 +616,7 @@ public class VwCityJavaFx extends Application {
             scene.setOnKeyPressed(e
                     -> {
                 try {
-                    System.out.println("carname:" + mdCity.getCarToControl());
+                    // System.out.println("carname:" + mdCity.getCarToControl());
                     if (e.getCode() == KeyCode.UP) {//keyup
                         mdCity.getCarByName(mdCity.getCarToControl()).increaseSpeed(10, new MdVehicleAction("inc", "increase speed by 10 km/hr", "user press arrow up to increase speed", "user", mdCity.getCarToControl()));
 //                        if (mdCity.getCarByName("c1").getSpeed() > 0) {
@@ -661,14 +664,14 @@ public class VwCityJavaFx extends Application {
                         //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
                     }
                     if (e.getCode() == KeyCode.RIGHT) {
-                        System.out.println("right");
+                        // System.out.println("right");
                         //  weaponRotation.setAngle(Math.min(45, weaponRotation.getAngle() + 2));
                     }
                 } catch (Exception ex3) {
                     ex3.printStackTrace();
                 }
                 if (e.getCode() == KeyCode.SPACE) {
-                    System.out.println("space clickeddd");
+                    // System.out.println("space clickeddd");
                     //Animation.Status status = anim.getStatus();
                     Timeline.Status status = timeline1.getStatus();
                     if (status == Timeline.Status.RUNNING
@@ -697,7 +700,7 @@ public class VwCityJavaFx extends Application {
             circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("clickkkd on circle");
+                    // System.out.println("clickkkd on circle");
 
                     if (timeline1.getStatus() == Timeline.Status.RUNNING) {
                         stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, false);
@@ -821,7 +824,7 @@ public class VwCityJavaFx extends Application {
         ObservableList<MdCar> myCars = FXCollections.observableArrayList();
         for (MdCar c : mdCity.getLstCar()) {
             c.calcNumberOfBreaks();
-            System.out.println("number of break" + c.getCumulitivedecMan());
+            // System.out.println("number of break" + c.getCumulitivedecMan());
             myCars.add(c);
 
         }
@@ -889,7 +892,7 @@ public class VwCityJavaFx extends Application {
      * @throws IOException
      */
     public void btnReturnToStartClicked(MouseEvent event) throws IOException {
-        System.out.println("ttttesfsdf gobacktostart");
+        // System.out.println("ttttesfsdf gobacktostart");
         Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("VwMainInitialStep02.fxml"));
         Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

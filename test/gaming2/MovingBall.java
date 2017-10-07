@@ -35,7 +35,7 @@ public class MovingBall extends Application {
         Bounds bounds = canvas.getBoundsInLocal();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3),
                 new KeyValue(ball.layoutXProperty(), bounds.getMaxX() - ball.getRadius())));
-        System.out.println(ball.layoutXProperty());
+        // System.out.println(ball.layoutXProperty());
         timeline.setCycleCount(2);
         timeline.play();
     }
