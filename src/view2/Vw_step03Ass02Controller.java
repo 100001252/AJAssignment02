@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author feiyeyuji
  */
-public class TestttttController implements Initializable {
+public class Vw_step03Ass02Controller implements Initializable {
 
     /**
      * Initializes the controller class.
