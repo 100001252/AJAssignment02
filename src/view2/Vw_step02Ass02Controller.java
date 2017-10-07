@@ -57,6 +57,53 @@ public class Vw_step02Ass02Controller implements Initializable {
     private void demoOnlyAction(ActionEvent event) {
         Stage stage = new Stage();
         Dialog<Pair<String, String>> dialog = new Dialog<>();
+        
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        result.ifPresent(data -> {
+//            // System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
+            showTime = data.getKey();
+            Duration = data.getValue();
+        });
+        
+        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
+         int initialSpeed = 100;
+         MdCity mdcity = new MdCity();
+            MdTimer mdTimer = new MdTimer();
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+         try{
+             VwCityJavaFxDemo vc = new VwCityJavaFxDemo(Duration,"#005544", mdcity, mdTimer, initialSpeed);
+             vc.start(window);
+         }catch(Exception e){
+             e.printStackTrace();
+         }
+            
+    }
+
+    @FXML
+    private void testOnlyAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void demoAndTestAction(ActionEvent event) {
+    }
+
+    private Popup createPopup() {
+        final Popup popup = new Popup();
+        popup.setAutoHide(true);
+        popup.setX(100);
+        popup.setY(50);
+        popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
+        return popup;
+    }
+    
+    private void runDemo(){
+        
+    }
+    
+    private Dialog<Pair<String, String>> popup(){
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Information Needed");
         dialog.setHeaderText("Please input how many times you want for display demo, and the duration of one demo");
 
@@ -86,44 +133,6 @@ public class Vw_step02Ass02Controller implements Initializable {
             }
             return null;
         });
-        
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-        result.ifPresent(data -> {
-//            // System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
-            showTime = data.getKey();
-            Duration = data.getValue();
-        });
-        
-        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
-         int initialSpeed = 100;
-         MdCity mdcity = new MdCity();
-            MdTimer mdTimer = new MdTimer();
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-         try{
-             VwCityJavaFxDemo vc = new VwCityJavaFxDemo("#005544", mdcity, mdTimer, initialSpeed);
-             vc.start(window);
-         }catch(Exception e){
-             e.printStackTrace();
-         }
-            
-    }
-
-    @FXML
-    private void testOnlyAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void demoAndTestAction(ActionEvent event) {
-    }
-
-    private Popup createPopup() {
-        final Popup popup = new Popup();
-        popup.setAutoHide(true);
-        popup.setX(100);
-        popup.setY(50);
-        popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
-        return popup;
+        return dialog;
     }
 }

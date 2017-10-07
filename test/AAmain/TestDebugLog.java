@@ -29,6 +29,7 @@ public class TestDebugLog {
             lstfile.add(s);
             lstfile.add("another one");
             DebugLog.saveData(lstfile);
+            DebugLog.saveData2(lstfile);
             //IO_Support.saveData("C:\\zzzzjava\\aadworks\\javaDebug.txt", lstfile);
             DebugLog.appendData("here is my first test for debuging 02");
             DebugLog.appendData("here is my first test for debuging 03");

@@ -84,7 +84,7 @@ public class VwCityJavaFxDemo extends Application {
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
         this.initialSpeed = initialSpeed;
-        
+        this.maxTime = Integer.parseInt(maxtime);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class VwCityJavaFxDemo extends Application {
             circ1.setLayoutX(400);
             circ1.setLayoutY(200);
 //---------------------------------------------------------------------------------------------------end defining car initial image..
-//-------------------------------------------------------defining all path(normal, pathgocar,pathreturncar)
+//*****dontworry for now-------------------------------------------------------defining all path(normal, pathgocar,pathreturncar)--------
             PathElement[] path
                     = {
                         new MoveTo(0, 500),
@@ -217,7 +217,7 @@ public class VwCityJavaFxDemo extends Application {
                         new LineTo(0, 580),
                         new ClosePath()
                     };
-//--------------------------------------------------------------------------------end defining all path
+//****end kjlk--------------------------------------------------------------------------------end defining all path
 
 //--------------------------------------draw road black
             Path road = new Path();
@@ -243,10 +243,11 @@ public class VwCityJavaFxDemo extends Application {
             roadCarreturn.setLayoutX(200);
             roadCarreturn.getElements().addAll(pathCarReturn);
 
-            MdCar.setId_autoGen(0);
-            PathTransition anim = new PathTransition();
+            
+            
             //-------anim
             //Group g1=new Group()
+            PathTransition anim = new PathTransition();
             anim.setNode(car1);
             anim.setPath(mdCity.getCarByName("c1").isIsRouteToGo() ? roadCargo : roadCarreturn);
             anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -273,11 +274,8 @@ public class VwCityJavaFxDemo extends Application {
             anim3.setDuration(new Duration(mdCity.getCarByName("c3").convertSpeedToDuration()));
             anim3.setDelay(Duration.seconds(mdCity.getCarByName("c3").getDelay()));
 
-            PathTransition anim4 = new PathTransition();
+           //------------------------------root group 
             Group root = new Group();
-            //root.getChildren().addAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lbl3, table);
-            //----------addallitem add all item
-            //root.getChildren().addAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lbl3, lblTimer, img_schoolZone_start, img_schoolZone_end);
             root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
             root.setTranslateX(50);
             root.setTranslateY(50);
@@ -311,15 +309,9 @@ public class VwCityJavaFxDemo extends Application {
                                 anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
 
                             }
-//                            lbl1.setText("carname=c1|speed=" + Integer.toString(mdCity.getCarByName("c1").getSpeed()) + "|x=" + car1.getTranslateX() + "|dist=" + mdCity.getCarByName("c1").getDistanceFromOrigin() + "|rate" + anim.getRate() + "\n ttt"
-//                                    + "|x=" + car1.getTranslateX() + "|y=" + car1.getTranslateY() + "|time" + anim.getCurrentTime() + "\n "
-//                                    + "|orientation:" + anim.getOrientation());
-//                            lbl1.setText("carname=c1|speed=" + Integer.toString(mdCity.getCarByName("c1").getSpeed()) + "|rate" + anim.getRate() + "\n ttt"
-//                                    + "Dist=" + Integer.toString(mdCity.getCarByName("c1").getDistanceFromOrigin()) + "  |time" + anim.getCurrentTime() + "\n "
-//                            );
 
                         } catch (Exception ex2) {
-                            // System.out.println("searchhhhhhfor23424234");
+                          
                             ex2.printStackTrace();
                         }
 
@@ -331,7 +323,6 @@ public class VwCityJavaFxDemo extends Application {
             Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    //mdCity.updateCarLocation("c2", car2.getTranslateX(), car2.getTranslateY());
                     mdCity.updateCarLocation("c2", car2.getX() + car2.getTranslateX(), car2.getY() + car2.getTranslateY());
                     if (mdTimer.getSec() > 3) {
                         try {
@@ -348,10 +339,9 @@ public class VwCityJavaFxDemo extends Application {
                             if (mdCity.getCarByName("c2").getSpeed() == 0) {
                                 anim2.pause();
                             } else {
-                                //  anim.playFromStart();
                                 anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
                             }
-                            //lbl2.setText("carname=c2|speed=" + Integer.toString(mdCity.getCarByName("c2").getSpeed()) + "|x=" + car2.getTranslateX() + "|y=" + car2.getTranslateY() + " + x=" + car1.getTranslateX() + "|dist=" + mdCity.getCarByName("c2").getDistanceFromOrigin() + "|rate" + anim2.getRate());
+                           
                         } catch (Exception ex2) {
                             // System.out.println("searchhhhhhfor23424234");
                             ex2.printStackTrace();
@@ -408,50 +398,7 @@ public class VwCityJavaFxDemo extends Application {
                     }
 
                     if (mdTimer.getSec() == maxTime) {//--------end of process
-                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, false);
-                        root.getChildren().removeAll(road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
-                        showTableCar(root);
-                        showTableCarRecords(root);
-                        tableCarRecords1.setLayoutX(650);
-                        btnReturnToStart = new JFXButton("return To Start");
-                        btnReturnToStart.setStyle("-fx-background-color:blue; -fx-color:white;");
-                        btnReturnToStart.setTextFill(Color.WHITE);
-                        btnReturnToStart.setLayoutX(500);
-                        btnReturnToStart.setLayoutY(500);
-                        btnSaveToDatabase = new JFXButton("Save");
-                        btnSaveToDatabase.setLayoutX(400);
-                        btnSaveToDatabase.setLayoutY(500);
-                        btnSaveToDatabase.setStyle("-fx-background-color:blue; -fx-color:white;");
-                        btnSaveToDatabase.setTextFill(Color.WHITE);
-                        root.getChildren().addAll(tableCar, tableCarRecords1, btnReturnToStart, btnSaveToDatabase);
-
-                        btnSaveToDatabase.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent event) {
-                                Db db = new Db();
-                                try {
-                                    db.btnSaveToDbClicked(mdCity);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-
-                        });
-
-                        btnReturnToStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                            @Override
-                            public void handle(MouseEvent event) {
-                                try {
-                                    btnReturnToStartClicked(event);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                            }
-
-                        });
-
+                      
                     }
                     if (mdTimer.getSec() <= maxTime) {
                         lblTimer.setText("Timer:" + mdTimer.getSec());
@@ -621,22 +568,7 @@ public class VwCityJavaFxDemo extends Application {
                     // System.out.println("carname:" + mdCity.getCarToControl());
                     if (e.getCode() == KeyCode.UP) {//keyup
                         mdCity.getCarByName(mdCity.getCarToControl()).increaseSpeed(10, new MdVehicleAction("inc", "increase speed by 10 km/hr", "user press arrow up to increase speed", "user", mdCity.getCarToControl()));
-//                        if (mdCity.getCarByName("c1").getSpeed() > 0) {
-//
-//                            timeline1.play();
-//                            anim.play();
-//                        }
-//
-//                        if (mdCity.getCarByName("c2").getSpeed() > 0) {
-//
-//                            timeline2.play();
-//                            anim2.play();
-//                        }
-//                        if (mdCity.getCarByName("c3").getSpeed() > 0) {
-//
-//                            timeline3.play();
-//                            anim3.play();
-//                        }
+
 
                         //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
                     }
@@ -727,133 +659,10 @@ public class VwCityJavaFxDemo extends Application {
 
     }
 //---------------variable
-    TableView<MdCar> tableCar;
-    TableView<MdVehicleAction> tableCarRecords1;
-    TableView<MdVehicleAction> tableCarRecords2;
-    TableView<MdVehicleAction> tableCarRecords3;
-    JFXButton btnReturnToStart;
-    TextField txtSaveName;
-    JFXButton btnSaveToDatabase;
+   
+   
 
-    /**
-     * all logic for cars table view
-     *
-     * @param root
-     * @return
-     */
-    public TableView showTableCar(Group root) {
-        //-------------tableviewcreate
-        TableColumn<MdCar, String> nameColumn = new TableColumn<>("Car name");
-        // nameColumn.setMinWidth(100);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn<MdCar, String> column2 = new TableColumn<>("Image Name");
-        // column2.setMinWidth(100);
-        column2.setCellValueFactory(new PropertyValueFactory<>("imgName"));
-
-        TableColumn<MdCar, Integer> destinationColumn = new TableColumn<>("End Distance From Origin");
-        // destinationColumn.setMinWidth(100);
-        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("distanceFromOrigin"));
-
-        TableColumn<MdCar, Integer> column3 = new TableColumn<>("Break By user");
-        // column3.setMinWidth(50);
-        column3.setCellValueFactory(new PropertyValueFactory<>("cumulitivebreakMan"));
-
-        TableColumn<MdCar, Integer> column4 = new TableColumn<>("Break By Auto");
-        // column4.setMinWidth(50);
-        column4.setCellValueFactory(new PropertyValueFactory<>("cumulitivebrakAuto"));
-
-        TableColumn<MdCar, Integer> column5 = new TableColumn<>("Decrease Speed User");
-        // column5.setMinWidth(50);
-        column5.setCellValueFactory(new PropertyValueFactory<>("cumulitivedecMan"));
-
-        TableColumn<MdCar, Integer> column6 = new TableColumn<>("Decrease Speed Auto");
-        //  column6.setMinWidth(50);
-        column6.setCellValueFactory(new PropertyValueFactory<>("cumulitivedecAuto"));
-
-        tableCar = new TableView<>();
-        tableCar.setItems(getCars());
-        tableCar.getColumns().addAll(nameColumn, destinationColumn, column2, column3, column4, column5, column6);
-        return tableCar;
-        // root.getChildren().add(tableCar);
-        //-------------tableviewend
-    }
-
-    /**
-     * table view to show car records with exact detail why they
-     * decrease/increase speed (by user/auto)
-     *
-     * @param root
-     * @return
-     */
-    public TableView showTableCarRecords(Group root) {
-        TableColumn<MdVehicleAction, String> column1 = new TableColumn<>("CarName");
-        //column1.setMinWidth(100);
-        column1.setCellValueFactory(new PropertyValueFactory<>("carName"));
-
-        TableColumn<MdVehicleAction, String> column3 = new TableColumn<>("Time");
-        column3.setMinWidth(100);
-        column3.setCellValueFactory(new PropertyValueFactory<>("actionTimeInString"));
-//
-        TableColumn<MdVehicleAction, String> column2 = new TableColumn<>("Auto/Manual");
-        //column2.setMinWidth(100);
-        column2.setCellValueFactory(new PropertyValueFactory<>("actionedBy"));
-
-        TableColumn<MdVehicleAction, String> column4 = new TableColumn<>("action Name");
-        // column4.setMinWidth(100);
-        column4.setCellValueFactory(new PropertyValueFactory<>("nameFriendly"));
-
-        TableColumn<MdVehicleAction, String> column5 = new TableColumn<>("description");
-        //column5.setMinWidth(100);
-        column5.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-//
-        tableCarRecords1 = new TableView<>();
-        tableCarRecords1.setItems(getCarRecords());
-        tableCarRecords1.getColumns().addAll(column1, column2, column3, column4, column5);
-//
-        //root.getChildren().add(tableCarRecords1);
-        return tableCarRecords1;
-
-    }
-
-    /**
-     * for table view of cars
-     *
-     * @return
-     */
-    public ObservableList<MdCar> getCars() {
-        ObservableList<MdCar> myCars = FXCollections.observableArrayList();
-        for (MdCar c : mdCity.getLstCar()) {
-            c.calcNumberOfBreaks();
-            // System.out.println("number of break" + c.getCumulitivedecMan());
-            myCars.add(c);
-
-        }
-        return myCars;
-    }
-
-    /**
-     * obsarvablelist for Tableview
-     *
-     * @return
-     */
-    public ObservableList<MdVehicleAction> getCarRecords() {
-        ObservableList<MdVehicleAction> CarRecords = FXCollections.observableArrayList();
-        for (MdCar c : mdCity.getLstCar()) {
-            for (MdVehicleAction vaction : c.getLstVehicleAction()) {
-                //-----
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //Or whatever format fits best your needs.
-
-                //--------
-                vaction.setActionTimeInString(sdf.format(vaction.getActionTime()));
-                CarRecords.add(vaction);
-            }
-        }
-
-        return CarRecords;
-    }
-
+    
     /**
      * function to stop all animation and correcpndanse timelines
      *
@@ -887,23 +696,7 @@ public class VwCityJavaFxDemo extends Application {
 
     }
 
-    /**
-     * there is a button at the end to return to start page
-     *
-     * @param event
-     * @throws IOException
-     */
-    public void btnReturnToStartClicked(MouseEvent event) throws IOException {
-        // System.out.println("ttttesfsdf gobacktostart");
-        Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("VwMainInitialStep02.fxml"));
-        Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(vwMainInitialSecondStep);
-        window.show();
-
-    }
-
+   
     /**
      * function for full stop
      *
