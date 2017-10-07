@@ -14,24 +14,4 @@ import java.util.*;
  */
 public class TestIo_Support {
 
-    public static void main(String[] args) {// ToDO
-        try {
-            testWriteToFile("this string will be written");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void testWriteToFile(String s) {
-        try {
-            ArrayList<String> lstfile = new ArrayList<String>();
-            lstfile.add(s);
-            IO_Support.saveData("C:\\zzzzjava\\aadworks\\javaDebug.txt", lstfile);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-    }
-
 }
