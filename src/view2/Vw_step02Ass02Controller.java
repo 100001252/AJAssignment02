@@ -56,7 +56,7 @@ public class Vw_step02Ass02Controller implements Initializable {
     @FXML
     private void demoOnlyAction(ActionEvent event) {
         Stage stage = new Stage();
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        Dialog<Pair<String, String>> dialog =createPopupDialog();
         
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(data -> {
@@ -102,7 +102,7 @@ public class Vw_step02Ass02Controller implements Initializable {
         
     }
     
-    private Dialog<Pair<String, String>> popup(){
+    private Dialog<Pair<String, String>> createPopupDialog(){
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Information Needed");
         dialog.setHeaderText("Please input how many times you want for display demo, and the duration of one demo");
