@@ -54,6 +54,9 @@ public class VwCityJavaFxDemo extends Application {
     private ArrayList<ImageView> cars =new ArrayList<>();
     private ArrayList<ImageView> carClones =new ArrayList<>();
     private ArrayList<Label> carSpeedLabels =new ArrayList<>();
+    private ArrayList<HBox> carBoxs =new ArrayList<>();
+    private ArrayList<PathTransition> anims = new ArrayList<>();
+    private ArrayList<Timeline> timelines = new ArrayList<>();
     //-----------variable
     private int maxTime = 500;//maximum seconds of running this app
 
@@ -74,22 +77,34 @@ public class VwCityJavaFxDemo extends Application {
             int carNumber = 2 + randomNumber.nextInt(4);
             
 //-----------define all cars
+            int id;
             for(int i = 0; i < carNumber; i++){
-                int id = i+1; String ID = Integer.toString(id); 
-                mdCity.addCar(new MdCar(new Location(180, 400), "car"+ID+".jpg", "c"+ID, true, id, this.initialSpeed));
+                id = i+1; String ID = Integer.toString(id); 
+                if(id==1 || id==4){
+                    mdCity.addCar(new MdCar(new Location(180, 400), "car"+ID+".png", "c"+ID, true, id, this.initialSpeed));
+                }else{
+                    mdCity.addCar(new MdCar(new Location(180, 400), "car"+ID+".jpg", "c"+ID, true, id, this.initialSpeed));
+                }
+                
+                
             }
 //            mdCity.addCar(new MdCar(new Location(180, 400), "carbluepolice.jpg", "c1", true, 1, this.initialSpeed));
 //            mdCity.addCar(new MdCar(new Location(180, 400), "carred.png", "c2", true, 2, this.initialSpeed));
 //            mdCity.addCar(new MdCar(new Location(180, 400), "carblue.png", "c3", true, 3, this.initialSpeed));
             mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
+            
             for(int i = 0; i < carNumber; i++){
                 cars.add(new ImageView()) ;
                 carClones.add(new ImageView());
+                
                 Label carSpeedLabel = new Label("Speed");
                 carSpeedLabel.setTextFill(labelsColor);
                 carSpeedLabels.add(carSpeedLabel);
                 
+                carBoxs.add(new HBox());
+                
+                anims.add(new PathTransition());
             }
 //            ImageView car1 = new ImageView();
 //            ImageView car2 = new ImageView();
@@ -132,48 +147,50 @@ public class VwCityJavaFxDemo extends Application {
             Circle circ1 = new Circle(50, 20, 30, Color.BLUE); //new Circle(50, 20, 10);
             //car.setImage(new Image("file:res/car.gif"));
             int carid = 1;
-            for(ImageView carView: cars){
+            int hboxY = 20;
+            for(int counter = 0; counter < cars.size(); counter++){
                 String ID = Integer.toString(carid);String carname = "c"+ID;
+                ImageView carView = cars.get(counter);
                 carView.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
-                carView.setX(mdCity.getCarByName("c1").getLocation().getX());
-                carView.setY(mdCity.getCarByName("c1").getLocation().getY());
+                carView.setX(mdCity.getCarByName(carname).getLocation().getX());
+                carView.setY(mdCity.getCarByName(carname).getLocation().getY());
                 carView.setRotate(-90);
+                
+                ImageView carCloneView = carClones.get(counter);
+                carCloneView.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
                 carid++;
                 
+                carBoxs.get(counter).getChildren().addAll(carCloneView, carSpeedLabels.get(counter));
+                carBoxs.get(counter).setLayoutY(hboxY);
+                hboxY += 40;
             }
-            int carCloneId = 1;
-            for(ImageView carCloneView: cars){
-                String ID = Integer.toString(carCloneId);String carname = "c"+ID;
-                carCloneView.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-                carCloneId++;
-             }
-            
-            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-            car1.setX(mdCity.getCarByName("c1").getLocation().getX());
-            car1.setY(mdCity.getCarByName("c1").getLocation().getY());
-            car1.setRotate(-90);
-            car1Clone.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-            HBox hb1 = new HBox();
-            hb1.getChildren().addAll(car1Clone, car1lblSpeed);
-            hb1.setLayoutY(20);
 
-            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
-            car2.setX(mdCity.getCarByName("c1").getLocation().getX());
-            car2.setY(mdCity.getCarByName("c1").getLocation().getY());
-            car2.setRotate(-90);
-            car2Clone.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
-            HBox hb2 = new HBox();
-            hb2.getChildren().addAll(car2Clone, car2lblSpeed);
-            hb2.setLayoutY(60);
-
-            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
-            car3.setX(mdCity.getCarByName("c3").getLocation().getX());
-            car3.setY(mdCity.getCarByName("c3").getLocation().getY());
-            car3.setRotate(-90);
-            car3Clone.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
-            HBox hb3 = new HBox();
-            hb3.getChildren().addAll(car3Clone, car3lblSpeed);
-            hb3.setLayoutY(100);
+//            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+//            car1.setX(mdCity.getCarByName("c1").getLocation().getX());
+//            car1.setY(mdCity.getCarByName("c1").getLocation().getY());
+//            car1.setRotate(-90);
+//            car1Clone.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+//            HBox hb1 = new HBox();
+//            hb1.getChildren().addAll(car1Clone, car1lblSpeed);
+//            hb1.setLayoutY(20);
+//
+//            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+//            car2.setX(mdCity.getCarByName("c1").getLocation().getX());
+//            car2.setY(mdCity.getCarByName("c1").getLocation().getY());
+//            car2.setRotate(-90);
+//            car2Clone.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+//            HBox hb2 = new HBox();
+//            hb2.getChildren().addAll(car2Clone, car2lblSpeed);
+//            hb2.setLayoutY(60);
+//
+//            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+//            car3.setX(mdCity.getCarByName("c3").getLocation().getX());
+//            car3.setY(mdCity.getCarByName("c3").getLocation().getY());
+//            car3.setRotate(-90);
+//            car3Clone.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+//            HBox hb3 = new HBox();
+//            hb3.getChildren().addAll(car3Clone, car3lblSpeed);
+//            hb3.setLayoutY(100);
 
             img_schoolZone_start.setImage(new Image(mdCity.getSchoolSignByName("sc1").getImgSchoolStart()));
             img_schoolZone_start.setX(mdCity.getSchoolSignByName("sc1").getLocationSchoolStart().getX());
@@ -258,149 +275,220 @@ public class VwCityJavaFxDemo extends Application {
             
             //-------anim
             //Group g1=new Group()
-            PathTransition anim = new PathTransition();
-            anim.setNode(car1);
-            anim.setPath(mdCity.getCarByName("c1").isIsRouteToGo() ? roadCargo : roadCarreturn);
-            anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-            anim.setInterpolator(Interpolator.LINEAR);
-            anim.setCycleCount(Timeline.INDEFINITE);
-            anim.setDuration(new Duration(mdCity.getCarByName("c1").convertSpeedToDuration()));
-            anim.setDelay(Duration.seconds(mdCity.getCarByName("c1").getDelay()));
-            //---------anim2
-            PathTransition anim2 = new PathTransition();
-            anim2.setNode(car2);
-            anim2.setPath(mdCity.getCarByName("c2").isIsRouteToGo() ? roadCargo : roadCarreturn);
-            anim2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-            anim2.setCycleCount(Timeline.INDEFINITE);
-            anim2.setInterpolator(Interpolator.LINEAR);
-            anim2.setDuration(new Duration(mdCity.getCarByName("c2").convertSpeedToDuration()));
-            anim2.setDelay(Duration.seconds(mdCity.getCarByName("c2").getDelay()));
-            //----------anim3
-            PathTransition anim3 = new PathTransition();
-            anim3.setNode(car3);
-            anim3.setPath(mdCity.getCarByName("c3").isIsRouteToGo() ? roadCargo : roadCarreturn);
-            anim3.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-            anim3.setCycleCount(Timeline.INDEFINITE);
-            anim3.setInterpolator(Interpolator.LINEAR);
-            anim3.setDuration(new Duration(mdCity.getCarByName("c3").convertSpeedToDuration()));
-            anim3.setDelay(Duration.seconds(mdCity.getCarByName("c3").getDelay()));
+            int pathi = 0;
+            int pathid;
+            for(PathTransition anim : anims){
+                 pathid =pathi+1; String ID = Integer.toString(pathid);String carname = "c"+ID;
+                
+                anim.setNode(cars.get(pathi));
+                anim.setPath(mdCity.getCarByName(carname).isIsRouteToGo() ? roadCargo : roadCarreturn);
+                anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+                anim.setInterpolator(Interpolator.LINEAR);
+                anim.setCycleCount(Timeline.INDEFINITE);
+                anim.setDuration(new Duration(mdCity.getCarByName(carname).convertSpeedToDuration()));
+                anim.setDelay(Duration.seconds(mdCity.getCarByName(carname).getDelay()));
+                pathi++;
+            }
+//            PathTransition anim = new PathTransition();
+//            anim.setNode(car1);
+//            anim.setPath(mdCity.getCarByName("c1").isIsRouteToGo() ? roadCargo : roadCarreturn);
+//            anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+//            anim.setInterpolator(Interpolator.LINEAR);
+//            anim.setCycleCount(Timeline.INDEFINITE);
+//            anim.setDuration(new Duration(mdCity.getCarByName("c1").convertSpeedToDuration()));
+//            anim.setDelay(Duration.seconds(mdCity.getCarByName("c1").getDelay()));
+//            //---------anim2
+//            PathTransition anim2 = new PathTransition();
+//            anim2.setNode(car2);
+//            anim2.setPath(mdCity.getCarByName("c2").isIsRouteToGo() ? roadCargo : roadCarreturn);
+//            anim2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+//            anim2.setCycleCount(Timeline.INDEFINITE);
+//            anim2.setInterpolator(Interpolator.LINEAR);
+//            anim2.setDuration(new Duration(mdCity.getCarByName("c2").convertSpeedToDuration()));
+//            anim2.setDelay(Duration.seconds(mdCity.getCarByName("c2").getDelay()));
+//            //----------anim3
+//            PathTransition anim3 = new PathTransition();
+//            anim3.setNode(car3);
+//            anim3.setPath(mdCity.getCarByName("c3").isIsRouteToGo() ? roadCargo : roadCarreturn);
+//            anim3.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+//            anim3.setCycleCount(Timeline.INDEFINITE);
+//            anim3.setInterpolator(Interpolator.LINEAR);
+//            anim3.setDuration(new Duration(mdCity.getCarByName("c3").convertSpeedToDuration()));
+//            anim3.setDelay(Duration.seconds(mdCity.getCarByName("c3").getDelay()));
 
            //------------------------------root group 
             Group root = new Group();
-            root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
+            for(ImageView car: cars){
+                root.getChildren().add(car);
+            }
+            for(HBox hbox: carBoxs){
+                root.getChildren().add(hbox);
+            }
+            root.getChildren().addAll(road, divider, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
+            //root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
             root.setTranslateX(50);
             root.setTranslateY(50);
 
             //---------animations.play()
-            anim.play();
-            anim2.play();
-            anim3.play();
+            for(PathTransition anim: anims){
+                anim.play();
+            }
+//            anim.play();
+//            anim2.play();
+//            anim3.play();
 
             //---------test race start-timeline1
-            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    mdCity.updateCarLocation("c1", car1.getX() + car1.getTranslateX(), car1.getY() + car1.getTranslateY());
-                    if (mdTimer.getSec() > 3) {
-                        try {
+            int ti=0,timelineId;
+            for(ImageView aCar: cars){
+                 timelineId =ti+1; String ID = Integer.toString(timelineId);String carname = "c"+ID;
+                 PathTransition anim = anims.get(ti);
+                Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+                    @Override
+                        public void handle(ActionEvent t) {
+                        mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
+                        if (mdTimer.getSec() > 3) {
+                            try {
 
-                            anim.setDelay(Duration.seconds(0));
-                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+                                anim.setDelay(Duration.seconds(0));
+                                ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
-                            ths.run();
-                            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+                                ths.run();
+                                aCar.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
-                            if (mdCity.getCarByName("c1").isIsParked()) {
-                                anim.pause();
+                                if (mdCity.getCarByName(carname).isIsParked()) {
+                                    anim.pause();
+                                }
+                                if (mdCity.getCarByName(carname).getSpeed() == 0) {
+                                    anim.pause();
+                                } else {
+                                    //  anim.playFromStart();
+                                    anim.setRate(mdCity.getCarByName(carname).convertSpeedToRate());
+
+                                }
+
+                            } catch (Exception ex2) {
+
+                                ex2.printStackTrace();
                             }
-                            if (mdCity.getCarByName("c1").getSpeed() == 0) {
-                                anim.pause();
-                            } else {
-                                //  anim.playFromStart();
-                                anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
 
-                            }
-
-                        } catch (Exception ex2) {
-                          
-                            ex2.printStackTrace();
                         }
-
-                    }
-                }
-            }));//----//---------test race end-timeline1
-
-            //---------test race start-timeline2
-            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    mdCity.updateCarLocation("c2", car2.getX() + car2.getTranslateX(), car2.getY() + car2.getTranslateY());
-                    if (mdTimer.getSec() > 3) {
-                        try {
-
-                            anim2.setDelay(Duration.seconds(0));
-                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
-                            ths.run();
-                            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
-
-                            if (mdCity.getCarByName("c2").isIsParked()) {
-                                anim2.pause();
-                            }
-
-                            if (mdCity.getCarByName("c2").getSpeed() == 0) {
-                                anim2.pause();
-                            } else {
-                                anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
-                            }
-                           
-                        } catch (Exception ex2) {
-                            // System.out.println("searchhhhhhfor23424234");
-                            ex2.printStackTrace();
                         }
-
-                    }
-                }
-            }));//----//---------test race end-timeline2
-
-            //---------test race start-timeline3
-            Timeline timeline3 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    //mdCity.updateCarLocation("c3", car3.getTranslateX(), car3.getTranslateY());
-                    mdCity.updateCarLocation("c3", car3.getX() + car3.getTranslateX(), car3.getY() + car3.getTranslateY());
-                    if (mdTimer.getSec() > 3) {
-                        try {
-
-                            anim3.setDelay(Duration.seconds(0));
-                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
-                            ths.run();
-                            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
-                            if (mdCity.getCarByName("c3").isIsParked()) {
-                                anim3.pause();
-                            }
-                            if (mdCity.getCarByName("c3").getSpeed() == 0) {
-                                anim3.pause();
-                            } else {
-                                //  anim.playFromStart();
-                                anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
-                            }
-
-                        } catch (Exception ex2) {
-                            // System.out.println("searchhhhhhfor23424234");
-                            ex2.printStackTrace();
-                        }
-
-                    }
-                }
-            }));//----//---------test race end-timeline3
+                    }));
+                ti++;
+                timelines.add(aTimeline);
+            }
+            
+//            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//                    mdCity.updateCarLocation("c1", car1.getX() + car1.getTranslateX(), car1.getY() + car1.getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            anim.setDelay(Duration.seconds(0));
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//
+//                            ths.run();
+//                            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+//
+//                            if (mdCity.getCarByName("c1").isIsParked()) {
+//                                anim.pause();
+//                            }
+//                            if (mdCity.getCarByName("c1").getSpeed() == 0) {
+//                                anim.pause();
+//                            } else {
+//                                //  anim.playFromStart();
+//                                anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
+//
+//                            }
+//
+//                        } catch (Exception ex2) {
+//                          
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }));//----//---------test race end-timeline1
+//
+//            //---------test race start-timeline2
+//            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//                    mdCity.updateCarLocation("c2", car2.getX() + car2.getTranslateX(), car2.getY() + car2.getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            anim2.setDelay(Duration.seconds(0));
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//                            ths.run();
+//                            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+//
+//                            if (mdCity.getCarByName("c2").isIsParked()) {
+//                                anim2.pause();
+//                            }
+//
+//                            if (mdCity.getCarByName("c2").getSpeed() == 0) {
+//                                anim2.pause();
+//                            } else {
+//                                anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+//                            }
+//                           
+//                        } catch (Exception ex2) {
+//                            // System.out.println("searchhhhhhfor23424234");
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }));//----//---------test race end-timeline2
+//
+//            //---------test race start-timeline3
+//            Timeline timeline3 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//                    //mdCity.updateCarLocation("c3", car3.getTranslateX(), car3.getTranslateY());
+//                    mdCity.updateCarLocation("c3", car3.getX() + car3.getTranslateX(), car3.getY() + car3.getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            anim3.setDelay(Duration.seconds(0));
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//                            ths.run();
+//                            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+//                            if (mdCity.getCarByName("c3").isIsParked()) {
+//                                anim3.pause();
+//                            }
+//                            if (mdCity.getCarByName("c3").getSpeed() == 0) {
+//                                anim3.pause();
+//                            } else {
+//                                //  anim.playFromStart();
+//                                anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
+//                            }
+//
+//                        } catch (Exception ex2) {
+//                            // System.out.println("searchhhhhhfor23424234");
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }));
+            //----//---------test race end-timeline3
             //---------test race start-timeline4 it is a timeline that we never stop
             Timeline timeline4 = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
+                    int carId =1; 
                     try {
-                        car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
-                        car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
-                        car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
+                        for(Label carlabel : carSpeedLabels){
+                            String ID = Integer.toString(carId);String carname = "c"+ID;
+                            carlabel.setText(Integer.toString(mdCity.getCarByName(carname).getSpeed()) + " km/hr");
+                            carId++;
+                        }
+//                        car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
+//                        car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
+//                        car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
                         //----------------------------just for dbug purposes
 
                         //----------------------------end of debug
@@ -409,7 +497,7 @@ public class VwCityJavaFxDemo extends Application {
                     }
 
                     if (mdTimer.getSec() == maxTime) {//--------end of process
-                        
+                        System.out.println("Finished");
                     }
                     if (mdTimer.getSec() <= maxTime) {
                         lblTimer.setText("Timer:" + mdTimer.getSec());
@@ -419,238 +507,302 @@ public class VwCityJavaFxDemo extends Application {
             }));//----//---------test race end-timeline4
 
             ///mouse-onclick-car1
-            car1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent
-                ) {
-                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                        try {
-                            mdCity.setCarToControl("c1");
-                            fullStopControl(timeline1, anim, "c1", "user");
+            int ei=0;
+            int mouseActId;
+            for(ImageView aCar:cars){
+                mouseActId = ei+1;String ID = Integer.toString(mouseActId);String carname = "c"+ID;
+                Timeline timeline1 = timelines.get(ei);
+                PathTransition anim = anims.get(ei);
+                aCar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent
+                    ) {
+                        if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                            try {
+                                mdCity.setCarToControl(carname);
+                                fullStopControl(timeline1, anim, carname, "user");
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-
-                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
-                        //-----------------------------------------------------normal op
-                        try {
-
-                            mdCity.setCarToControl("c1");
-                            Timeline.Status status = timeline1.getStatus();
-                            //--------------------------------------------------end normal op
-                            anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
-
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-
-                    }//end middle button mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press arrowdown to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
-                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                        //-----------------------------------------------------normal op
-                        try {
-
-                            mdCity.setCarToControl("c1");
-                            Timeline.Status status = timeline1.getStatus();
-                            if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
-                                fullStopControlWhenDecreaseSpeed(timeline1, anim, "c1", "user", true);
-                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
-                                fullStopControlWhenDecreaseSpeed(timeline1, anim, "c1", "user", false);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
                             }
-                            mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press leftclick to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
-
-                            //--------------------------------------------------end normal op
-                            anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
-
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
                         }
 
-                    }
-                }
-            });
+                        if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
+                            //-----------------------------------------------------normal op
+                            try {
 
-            //------------------///mouse-onclick-car2
-            car2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent
-                ) {
-                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                        try {
-                            mdCity.setCarToControl("c2");
-                            fullStopControl(timeline2, anim2, "c2", "user");
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
-                        //-----------------------------------------------------normal op
-                        try {
-                            mdCity.setCarToControl("c2");
-                            Timeline.Status status = timeline2.getStatus();
-                            anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
+                                mdCity.setCarToControl(carname);
+                                Timeline.Status status = timeline1.getStatus();
+                                //--------------------------------------------------end normal op
+                                anim.setRate(mdCity.getCarByName(carname).convertSpeedToRate());
 
-                    }
-                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                        //-----------------------------------------------------normal op
-                        try {
-
-                            mdCity.setCarToControl("c2");
-                            Timeline.Status status = timeline2.getStatus();
-                            if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
-                                fullStopControlWhenDecreaseSpeed(timeline2, anim2, "c2", "user", true);
-                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
-                                fullStopControlWhenDecreaseSpeed(timeline2, anim2, "c2", "user", false);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
                             }
-                            mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press left click to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
 
-                            //--------------------------------------------------end normal op
-                            anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+                        }//end middle button mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press arrowdown to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+                        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                            //-----------------------------------------------------normal op
+                            try {
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
+                                mdCity.setCarToControl(carname);
+                                Timeline.Status status = timeline1.getStatus();
+                                if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+                                    fullStopControlWhenDecreaseSpeed(timeline1, anim, carname, "user", true);
+                                } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+                                    fullStopControlWhenDecreaseSpeed(timeline1, anim, carname, "user", false);
+                                }
+                                mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press leftclick to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
 
-                    }
-                }
-            });
-//-------------///mouse-onclick-car1
-            car3.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                        try {
-                            mdCity.setCarToControl("c3");
-                            fullStopControl(timeline3, anim3, "c3", "user");
+                                //--------------------------------------------------end normal op
+                                anim.setRate(mdCity.getCarByName(carname).convertSpeedToRate());
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-
-                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
-                        try {
-                            mdCity.setCarToControl("c3");
-                            Timeline.Status status = timeline3.getStatus();
-
-                            //--------------------------------------------------end normal op
-                            anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-
-                    }
-
-                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                        //-----------------------------------------------------normal op
-                        try {
-
-                            mdCity.setCarToControl("c3");
-                            Timeline.Status status = timeline3.getStatus();
-                            if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
-                                fullStopControlWhenDecreaseSpeed(timeline3, anim3, "c3", "user", true);
-                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
-                                fullStopControlWhenDecreaseSpeed(timeline3, anim3, "c3", "user", false);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
                             }
-                            mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press leftClick to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
 
-                            //--------------------------------------------------end normal op
-                            anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
-
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
                         }
-
                     }
-                }
-            });
+                });
+                ei++;
+            }
+            
+//            car1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent mouseEvent
+//                ) {
+//                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+//                        try {
+//                            mdCity.setCarToControl("c1");
+//                            fullStopControl(timeline1, anim, "c1", "user");
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    }
+//
+//                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
+//                        //-----------------------------------------------------normal op
+//                        try {
+//
+//                            mdCity.setCarToControl("c1");
+//                            Timeline.Status status = timeline1.getStatus();
+//                            //--------------------------------------------------end normal op
+//                            anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//
+//                    }//end middle button mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press arrowdown to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+//                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+//                        //-----------------------------------------------------normal op
+//                        try {
+//
+//                            mdCity.setCarToControl("c1");
+//                            Timeline.Status status = timeline1.getStatus();
+//                            if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControlWhenDecreaseSpeed(timeline1, anim, "c1", "user", true);
+//                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControlWhenDecreaseSpeed(timeline1, anim, "c1", "user", false);
+//                            }
+//                            mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press leftclick to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+//
+//                            //--------------------------------------------------end normal op
+//                            anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            });
+//
+//            //------------------///mouse-onclick-car2
+//            car2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent mouseEvent
+//                ) {
+//                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+//                        try {
+//                            mdCity.setCarToControl("c2");
+//                            fullStopControl(timeline2, anim2, "c2", "user");
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    }
+//                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
+//                        //-----------------------------------------------------normal op
+//                        try {
+//                            mdCity.setCarToControl("c2");
+//                            Timeline.Status status = timeline2.getStatus();
+//                            anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//
+//                    }
+//                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+//                        //-----------------------------------------------------normal op
+//                        try {
+//
+//                            mdCity.setCarToControl("c2");
+//                            Timeline.Status status = timeline2.getStatus();
+//                            if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControlWhenDecreaseSpeed(timeline2, anim2, "c2", "user", true);
+//                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControlWhenDecreaseSpeed(timeline2, anim2, "c2", "user", false);
+//                            }
+//                            mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press left click to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+//
+//                            //--------------------------------------------------end normal op
+//                            anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            });
+////-------------///mouse-onclick-car1
+//            car3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent mouseEvent) {
+//                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+//                        try {
+//                            mdCity.setCarToControl("c3");
+//                            fullStopControl(timeline3, anim3, "c3", "user");
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    }
+//
+//                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
+//                        try {
+//                            mdCity.setCarToControl("c3");
+//                            Timeline.Status status = timeline3.getStatus();
+//
+//                            //--------------------------------------------------end normal op
+//                            anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//
+//                    }
+//
+//                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+//                        //-----------------------------------------------------normal op
+//                        try {
+//
+//                            mdCity.setCarToControl("c3");
+//                            Timeline.Status status = timeline3.getStatus();
+//                            if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && !mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControlWhenDecreaseSpeed(timeline3, anim3, "c3", "user", true);
+//                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControlWhenDecreaseSpeed(timeline3, anim3, "c3", "user", false);
+//                            }
+//                            mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press leftClick to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+//
+//                            //--------------------------------------------------end normal op
+//                            anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            });
 
             Scene scene = new Scene(root, 1350, 750, Color.DARKGREEN);
 
 //--------------------------------tableview end
             //--------------------------------------------------------------------keyevent
-            scene.setOnKeyPressed(e
-                    -> {
-                try {
-                    // System.out.println("carname:" + mdCity.getCarToControl());
-                    if (e.getCode() == KeyCode.UP) {//keyup
-                        mdCity.getCarByName(mdCity.getCarToControl()).increaseSpeed(10, new MdVehicleAction("inc", "increase speed by 10 km/hr", "user press arrow up to increase speed", "user", mdCity.getCarToControl()));
+//            scene.setOnKeyPressed(e
+//                    -> {
+//                try {
+//                    // System.out.println("carname:" + mdCity.getCarToControl());
+//                    if (e.getCode() == KeyCode.UP) {//keyup
+//                        mdCity.getCarByName(mdCity.getCarToControl()).increaseSpeed(10, new MdVehicleAction("inc", "increase speed by 10 km/hr", "user press arrow up to increase speed", "user", mdCity.getCarToControl()));
+//
+//
+//                        //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
+//                    }
+//                    if (e.getCode() == KeyCode.DOWN) {//keydown
+//                        mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press arrowdown to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+////                        anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
+////                        anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+////                        anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
+//
+//                        if (mdCity.getCarByName("c1").getSpeed() == 0) {
+//                            anim.pause();
+//                            timeline1.pause();
+//                        }
+//                        if (mdCity.getCarByName("c2").getSpeed() == 0) {
+//                            anim2.pause();
+//                            timeline2.pause();
+//                        }
+//                        if (mdCity.getCarByName("c3").getSpeed() == 0) {
+//                            anim3.pause();
+//                            timeline3.pause();
+//                        }
+//                        //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
+//                    }
+//
+//                    if (e.getCode() == KeyCode.LEFT) {
+//
+//                        //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
+//                    }
+//                    if (e.getCode() == KeyCode.RIGHT) {
+//                        // System.out.println("right");
+//                        //  weaponRotation.setAngle(Math.min(45, weaponRotation.getAngle() + 2));
+//                    }
+//                } catch (Exception ex3) {
+//                    ex3.printStackTrace();
+//                }
+//                if (e.getCode() == KeyCode.SPACE) {
+//                    // System.out.println("space clickeddd");
+//                    //Animation.Status status = anim.getStatus();
+//                    Timeline.Status status = timeline1.getStatus();
+//                    if (status == Timeline.Status.RUNNING
+//                            && status != Timeline.Status.PAUSED) {
+//                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, false);
+//
+//                    } else {
+//                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, true);
+//
+//                    }
+//
+//                }
+//            }
+//            );
 
-
-                        //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
-                    }
-                    if (e.getCode() == KeyCode.DOWN) {//keydown
-                        mdCity.getCarByName(mdCity.getCarToControl()).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press arrowdown to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
-//                        anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
-//                        anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
-//                        anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
-
-                        if (mdCity.getCarByName("c1").getSpeed() == 0) {
-                            anim.pause();
-                            timeline1.pause();
-                        }
-                        if (mdCity.getCarByName("c2").getSpeed() == 0) {
-                            anim2.pause();
-                            timeline2.pause();
-                        }
-                        if (mdCity.getCarByName("c3").getSpeed() == 0) {
-                            anim3.pause();
-                            timeline3.pause();
-                        }
-                        //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
-                    }
-
-                    if (e.getCode() == KeyCode.LEFT) {
-
-                        //weaponRotation.setAngle(Math.max(-45, weaponRotation.getAngle() - 2));
-                    }
-                    if (e.getCode() == KeyCode.RIGHT) {
-                        // System.out.println("right");
-                        //  weaponRotation.setAngle(Math.min(45, weaponRotation.getAngle() + 2));
-                    }
-                } catch (Exception ex3) {
-                    ex3.printStackTrace();
-                }
-                if (e.getCode() == KeyCode.SPACE) {
-                    // System.out.println("space clickeddd");
-                    //Animation.Status status = anim.getStatus();
-                    Timeline.Status status = timeline1.getStatus();
-                    if (status == Timeline.Status.RUNNING
-                            && status != Timeline.Status.PAUSED) {
-                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, false);
-
-                    } else {
-                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, true);
-
-                    }
-
-                }
+            for(Timeline aLine: timelines){
+                aLine.setCycleCount(Timeline.INDEFINITE);
+                aLine.play();
             }
-            );
-
-            timeline1.setCycleCount(Timeline.INDEFINITE);
-            timeline2.setCycleCount(Timeline.INDEFINITE);
-            timeline3.setCycleCount(Timeline.INDEFINITE);
+//            timeline1.setCycleCount(Timeline.INDEFINITE);
+//            timeline2.setCycleCount(Timeline.INDEFINITE);
+//            timeline3.setCycleCount(Timeline.INDEFINITE);
             timeline4.setCycleCount(Timeline.INDEFINITE);
 
-            timeline1.play();
-            timeline2.play();
-            timeline3.play();
+//            timeline1.play();
+//            timeline2.play();
+//            timeline3.play();
             timeline4.play();
             ///circle clicked
             circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     // System.out.println("clickkkd on circle");
-
+                    Timeline timeline1 = timelines.get(0);
                     if (timeline1.getStatus() == Timeline.Status.RUNNING) {
-                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, false);
+                        stopAllMove(anims, timelines, mdTimer, false);
                     } else {
-                        stopAllMove(anim, anim2, anim3, timeline1, timeline2, timeline3, mdTimer, true);
+                        stopAllMove(anims, timelines, mdTimer, true);
 
                     }
                 }
@@ -686,22 +838,30 @@ public class VwCityJavaFxDemo extends Application {
      * @param mdtimer
      * @param start
      */
-    public void stopAllMove(PathTransition anim, PathTransition anim2, PathTransition anim3, Timeline t1, Timeline t2, Timeline t3, MdTimer mdtimer, boolean start) {
+    public void stopAllMove(ArrayList<PathTransition> animations, ArrayList<Timeline> multiT, MdTimer mdtimer, boolean start) {
         if (mdtimer.getSec() < this.maxTime && start) {
-            t1.play();
-            t2.play();
-            t3.play();
-            anim.play();
-            anim2.play();
-            anim3.play();
+            for(int i=0;i<animations.size();i++){
+                animations.get(i).play();
+                multiT.get(i).play();
+            }
+//            t1.play();
+//            t2.play();
+//            t3.play();
+//            anim.play();
+//            anim2.play();
+//            anim3.play();
 
         } else {
-            t1.pause();
-            t2.pause();
-            t3.pause();
-            anim.pause();
-            anim2.pause();
-            anim3.pause();
+            for(int i=0;i<animations.size();i++){
+                animations.get(i).pause();
+                multiT.get(i).pause();
+            }
+//            t1.pause();
+//            t2.pause();
+//            t3.pause();
+//            anim.pause();
+//            anim2.pause();
+//            anim3.pause();
 
         }
 
