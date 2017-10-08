@@ -327,8 +327,8 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         if (this.getLstVehicleAction().size() > 0) {
             Date lastTimeAction = this.getLstVehicleAction().get(this.getLstVehicleAction().size() - 1).getActionTime();
             Date now = new Date();
-            long diff = (now.getTime() / 1000) - (lastTimeAction.getTime() / 1000);
-            if (diff > 1 && this.imgName.equals(imgBrake)) {
+            long diff = (now.getTime()) - (lastTimeAction.getTime());//diff in miliseconds
+            if (diff > 600 && this.imgName.equals(imgBrake) && !this.isParked) {
                 setImgName(imgNormal);
             }
         }
@@ -379,7 +379,8 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         if (!this.isActionExist(mdVehicleAction)) {
             getLstVehicleAction().add(mdVehicleAction);
         }
-        if (mdVehicleAction.getAbbriviation().toLowerCase().equals("dec")) {
+        String abbrAction = mdVehicleAction.getAbbriviation().toLowerCase();
+        if (abbrAction.equals("dec") || abbrAction.equals("break")) {
             this.imgName = this.imgBrake;
             DebugLog.appendData2("myy imagename is" + this.imgName);
         }
@@ -485,6 +486,11 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     public void setIsParked(boolean isParked, MdVehicleAction mdVehicleAction) {
         if (!this.isActionExist(mdVehicleAction)) {
             getLstVehicleAction().add(mdVehicleAction);
+        }
+        if (isParked) {
+            setImgName(imgBrake);
+        } else {
+            setImgName(imgNormal);
         }
         this.isParked = isParked;
     }
