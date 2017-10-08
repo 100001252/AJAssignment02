@@ -8,8 +8,12 @@ package model;
 import model.*;
 import view.*;
 import helper.*;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +28,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
 
     private String imgName;
     private String imgNormal;
-    private String imgBreak;
+    private String imgBrake;
     private String img40Zone;
     // Where the vehicle is.
     private Location location;
@@ -59,7 +63,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         //temperoarily
         this.lstVehicleAction = new ArrayList<MdVehicleAction>();
         this.imgName = imageName;
-        this.imgBreak = imageName;
+        this.imgBrake = imageName.replace(".png", "") + "-brake.png";
         this.imgNormal = imageName;
         this.name = carName;
 
@@ -78,7 +82,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         //temperoarily
         this.lstVehicleAction = new ArrayList<MdVehicleAction>();
         this.imgName = imageName;
-        this.imgBreak = imageName;
+        this.imgBrake = imageName.replace(".png", "") + "-brake.png";
         this.imgNormal = imageName;
         this.name = carName;
 
@@ -319,6 +323,16 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * @return the imgName
      */
     public String getImgName() {
+        //-------------functionality to see when was the time of last action break
+        if (this.getLstVehicleAction().size() > 0) {
+            Date lastTimeAction = this.getLstVehicleAction().get(this.getLstVehicleAction().size() - 1).getActionTime();
+            Date now = new Date();
+            long diff = (now.getTime() / 1000) - (lastTimeAction.getTime() / 1000);
+            if (diff > 1 && this.imgName.equals(imgBrake)) {
+                setImgName(imgNormal);
+            }
+        }
+
         return imgName;
     }
 
@@ -328,7 +342,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     public void setImgName(String imgName) {
 
         this.imgName = imgName;
-//        this.imgBreak = imgName + "-break";
+
 //        this.setImgNormal(imgName);
     }
 
@@ -365,6 +379,10 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         if (!this.isActionExist(mdVehicleAction)) {
             getLstVehicleAction().add(mdVehicleAction);
         }
+        if (mdVehicleAction.getAbbriviation().toLowerCase().equals("dec")) {
+            this.imgName = this.imgBrake;
+            DebugLog.appendData2("myy imagename is" + this.imgName);
+        }
         this.speed = speed;
 
     }
@@ -398,7 +416,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
 
     public String toString() {
 
-        String str = "my name=" + this.name + " | myimgName=" + this.imgName + " | normalimg=" + this.getImgNormal() + "| breakimg=" + this.imgBreak + ""
+        String str = "my name=" + this.name + " | myimgName=" + this.imgName + " | normalimg=" + this.getImgNormal() + "| breakimg=" + this.imgBrake + ""
                 + "| location(" + Integer.toString(this.location.getX()) + "," + Integer.toString(this.location.getY()) + ")"
                 + "| speed=" + this.speed + "| timeinsecond=" + this.timeInSecond + "|distanceFromOrg=" + this.distanceFromOrigin;
         return str;

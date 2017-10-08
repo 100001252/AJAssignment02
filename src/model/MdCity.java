@@ -178,7 +178,8 @@ public class MdCity implements Runnable {
                 if (objCar.isIs40ZoneArea() && objCar.getSpeed() > 40) {
                     objCar.setImgName("car-pink.png");
                     // objCar.setSpeedFor40Zone("auto"); in 40 zone we wont set speed automatically
-                } else {
+                }
+                if (!objCar.isIs40ZoneArea() && objCar.getImgName().equals("car-pink.png")) {
                     objCar.setImgName(objCar.getImgNormal());
                 }
 

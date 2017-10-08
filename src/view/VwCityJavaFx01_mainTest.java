@@ -49,6 +49,7 @@ import model.*;
 import helper.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,7 +77,7 @@ public class VwCityJavaFx01_mainTest extends Application {
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
     //-----------variable
-    private int maxTime = 20;//maximum seconds of running this app
+    private int maxTime = 100;//maximum seconds of running this app
 
     public VwCityJavaFx01_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
@@ -289,7 +290,7 @@ public class VwCityJavaFx01_mainTest extends Application {
             anim3.play();
 
             //---------test race start-timeline1
-            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     mdCity.updateCarLocation("c1", car1.getX() + car1.getTranslateX(), car1.getY() + car1.getTranslateY());
@@ -302,9 +303,7 @@ public class VwCityJavaFx01_mainTest extends Application {
 
                             ths.run();
 
-                            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-                            DebugLog.appendData2("imagenameforc1>>>> " + mdCity.getCarByName("c1").getImgName());
-
+                            // DebugLog.appendData2("imagenameforc1>>>> " + mdCity.getCarByName("c1").getImgName());
                             if (mdCity.getCarByName("c1").isIsParked()) {
                                 anim.pause();
                             }
@@ -332,7 +331,7 @@ public class VwCityJavaFx01_mainTest extends Application {
             }));//----//---------test race end-timeline1
 
             //---------test race start-timeline2
-            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     //mdCity.updateCarLocation("c2", car2.getTranslateX(), car2.getTranslateY());
@@ -343,7 +342,7 @@ public class VwCityJavaFx01_mainTest extends Application {
                             anim2.setDelay(Duration.seconds(0));
                             ThreadStopAccident ths = new ThreadStopAccident(mdCity);
                             ths.run();
-                            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+                            //  car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
 
                             if (mdCity.getCarByName("c2").isIsParked()) {
                                 anim2.pause();
@@ -366,7 +365,7 @@ public class VwCityJavaFx01_mainTest extends Application {
             }));//----//---------test race end-timeline2
 
             //---------test race start-timeline3
-            Timeline timeline3 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+            Timeline timeline3 = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     //mdCity.updateCarLocation("c3", car3.getTranslateX(), car3.getTranslateY());
@@ -377,7 +376,7 @@ public class VwCityJavaFx01_mainTest extends Application {
                             anim3.setDelay(Duration.seconds(0));
                             ThreadStopAccident ths = new ThreadStopAccident(mdCity);
                             ths.run();
-                            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+                            //  car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
                             if (mdCity.getCarByName("c3").isIsParked()) {
                                 anim3.pause();
                             }
@@ -396,16 +395,20 @@ public class VwCityJavaFx01_mainTest extends Application {
                     }
                 }
             }));//----//---------test race end-timeline3
-            //---------test race start-timeline4 it is a timeline that we never stop
-            Timeline timeline4 = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            //---------test race start-timelinefinal it is a timeline that we never stop
+            Timeline timelinefinal = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     try {
                         car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
                         car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
                         car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
-                        //----------------------------just for dbug purposes
 
+                        car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+                        car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+                        car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+
+                        //----------------------------just for dbug purposes
                         //----------------------------end of debug
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -461,7 +464,7 @@ public class VwCityJavaFx01_mainTest extends Application {
                     }
 
                 }
-            }));//----//---------test race end-timeline4
+            }));//----//---------test race end-timelinefinal
 
             ///mouse-onclick-car1
             car1.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -695,12 +698,12 @@ public class VwCityJavaFx01_mainTest extends Application {
             timeline1.setCycleCount(Timeline.INDEFINITE);
             timeline2.setCycleCount(Timeline.INDEFINITE);
             timeline3.setCycleCount(Timeline.INDEFINITE);
-            timeline4.setCycleCount(Timeline.INDEFINITE);
+            timelinefinal.setCycleCount(Timeline.INDEFINITE);
 
             timeline1.play();
             timeline2.play();
             timeline3.play();
-            timeline4.play();
+            timelinefinal.play();
             ///circle clicked
             circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override

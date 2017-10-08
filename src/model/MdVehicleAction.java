@@ -76,7 +76,7 @@ public class MdVehicleAction {
             case "break"://full stop
                 result = true;
                 break;
-            case "breakstart"://full stop
+            case "breakstart"://full stop start moving
                 result = true;
                 break;
         }
