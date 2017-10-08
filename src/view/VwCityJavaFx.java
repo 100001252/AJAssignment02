@@ -90,9 +90,9 @@ public class VwCityJavaFx extends Application {
         try {
 
 //-----------define all cars
-            mdCity.addCar(new MdCar(new Location(180, 400), "carbluepolice.jpg", "c1", true, 1, this.initialSpeed));
-            mdCity.addCar(new MdCar(new Location(180, 400), "carred.png", "c2", true, 2, this.initialSpeed));
-            mdCity.addCar(new MdCar(new Location(180, 400), "carblue.png", "c3", true, 3, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), "..\\images\\car-2a492b.png", "c1", true, 1, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), "..\\images\\car-2a492b.png", "c2", true, 2, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), "..\\images\\car-2a492b.png", "c3", true, 3, this.initialSpeed));
             mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
             ImageView car1 = new ImageView();
@@ -135,7 +135,9 @@ public class VwCityJavaFx extends Application {
 //--------------------------------------------------------------------------------------defining car image or button
             Circle circ1 = new Circle(50, 20, 30, Color.BLUE); //new Circle(50, 20, 10);
             //car.setImage(new Image("file:res/car.gif"));
+            DebugLog.appendData2("lllloadingimages01" + mdCity.getCarByName("c1").getImgName());
             car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+            DebugLog.appendData2("lllloadingimages02");
             car1.setX(mdCity.getCarByName("c1").getLocation().getX());
             car1.setY(mdCity.getCarByName("c1").getLocation().getY());
             car1.setRotate(-90);

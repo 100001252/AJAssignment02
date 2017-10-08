@@ -13,12 +13,16 @@ import view.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXColorPicker;
+import com.jfoenix.controls.JFXComboBox;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -72,6 +76,10 @@ public class VwMIStep02Controller implements Initializable {
     private RadioButton rdoSpeed100;
     @FXML
     private JFXButton btnAbout;
+    @FXML
+    private RadioButton rdoMap03;
+    @FXML
+    private JFXComboBox<Integer> cmbNumberOfCars;
 
     //----------------------endvariable
 //    public VwMIStep02Controller(String test) {
@@ -83,6 +91,10 @@ public class VwMIStep02Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        ObservableList<Integer> options
+                = FXCollections.observableArrayList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+                        15, 16, 17, 18, 19, 20);
+        cmbNumberOfCars.setItems(options);
     }
 
     @FXML
@@ -90,12 +102,17 @@ public class VwMIStep02Controller implements Initializable {
      * when user change radio button for map
      */
     public void radioMapSelect(ActionEvent event) {
-        if (rdoMap01.isSelected()) {
-            // // System.out.println("map01" + this.tt);
-            imgMap.setImage(new Image("images/map01.png"));
-        } else {
-            // System.out.println("map02");
-            imgMap.setImage(new Image("images/map02.png"));
+        try {
+            DebugLog.appendData2(">>sdf234changeradiomap>");
+            if (rdoMap01.isSelected()) {
+
+                imgMap.setImage(new Image("images/map01.png"));
+            } else {
+                // System.out.println("map02");
+                imgMap.setImage(new Image("images/map02.png"));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(VwMIStep02Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

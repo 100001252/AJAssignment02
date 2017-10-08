@@ -76,7 +76,7 @@ public class VwCityJavaFx01_mainTest extends Application {
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
     //-----------variable
-    private int maxTime = 500;//maximum seconds of running this app
+    private int maxTime = 20;//maximum seconds of running this app
 
     public VwCityJavaFx01_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
@@ -90,9 +90,9 @@ public class VwCityJavaFx01_mainTest extends Application {
         try {
 
 //-----------define all cars
-            mdCity.addCar(new MdCar(new Location(180, 400), "carbluepolice.jpg", "c1", true, 1, this.initialSpeed));
-            mdCity.addCar(new MdCar(new Location(180, 400), "carred.png", "c2", true, 2, this.initialSpeed));
-            mdCity.addCar(new MdCar(new Location(180, 400), "carblue.png", "c3", true, 3, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), "car-21d811.png", "c1", true, 1, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), "car-030dbf.png", "c2", true, 2, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), "car-5906e8.png", "c3", true, 3, this.initialSpeed));
             mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
             ImageView car1 = new ImageView();
@@ -135,7 +135,10 @@ public class VwCityJavaFx01_mainTest extends Application {
 //--------------------------------------------------------------------------------------defining car image or button
             Circle circ1 = new Circle(50, 20, 30, Color.BLUE); //new Circle(50, 20, 10);
             //car.setImage(new Image("file:res/car.gif"));
+            // DebugLog.appendData2("lllloadingimagesforimageview000001");
+            // DebugLog.appendData2("lllloadingimages01 ..>>>>" + getClass().getResource("../images/").toString());
             car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+            // DebugLog.appendData2("lllloadingimages02" + mdCity.getCarByName("c1").getImgName());
             car1.setX(mdCity.getCarByName("c1").getLocation().getX());
             car1.setY(mdCity.getCarByName("c1").getLocation().getY());
             car1.setRotate(-90);
@@ -294,10 +297,13 @@ public class VwCityJavaFx01_mainTest extends Application {
                         try {
 
                             anim.setDelay(Duration.seconds(0));
+
                             ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
                             ths.run();
+
                             car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+                            DebugLog.appendData2("imagenameforc1>>>> " + mdCity.getCarByName("c1").getImgName());
 
                             if (mdCity.getCarByName("c1").isIsParked()) {
                                 anim.pause();

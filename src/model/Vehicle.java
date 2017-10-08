@@ -566,6 +566,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * @param imgNormal the imgNormal to set
      */
     public void setImgNormal(String imgNormal) {
+        // this.imgNormal = getClass().getResource("../images/").toString() + imgNormal;
         this.imgNormal = imgNormal;
     }
 
