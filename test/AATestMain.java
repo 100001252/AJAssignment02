@@ -3,7 +3,7 @@ import static java.awt.SystemColor.window;
 import static javax.annotation.Resource.AuthenticationType.APPLICATION;
 import model.MdCity;
 import model.MdTimer;
-import view.VwCityJavaFxMain_justForTest;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.

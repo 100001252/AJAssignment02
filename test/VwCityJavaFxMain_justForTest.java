@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
 
 import view2.*;
+import helper02.*;
 import helper.Location;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -58,6 +58,7 @@ public class VwCityJavaFxMain_justForTest extends Application {
     private ArrayList<HBox> carBoxs = new ArrayList<>();
     private ArrayList<PathTransition> anims = new ArrayList<>();
     private ArrayList<Timeline> timelines = new ArrayList<>();
+    private ArrayList<ThreadGeneral> lstThreadGeneral = new ArrayList<>();
     //-----------variable
     private int maxTime = 20;//maximum seconds of running this app
 
@@ -84,7 +85,7 @@ public class VwCityJavaFxMain_justForTest extends Application {
         try {
             //Generate secure random number
             SecureRandom randomNumber = new SecureRandom();
-            int carNumber = 20 + randomNumber.nextInt(40);
+            int carNumber = 2 + randomNumber.nextInt(5);
 
 //-----------define all cars
             int id;
@@ -332,7 +333,7 @@ public class VwCityJavaFxMain_justForTest extends Application {
                 String ID = Integer.toString(timelineId);
                 String carname = "c" + ID;
                 PathTransition anim0 = anims.get(ti);
-                Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+                Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
                         mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
