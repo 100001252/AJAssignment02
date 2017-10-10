@@ -74,7 +74,7 @@ public class VwCityJavaFxDemo extends Application {
         try {
             //Generate secure random number
             SecureRandom randomNumber = new SecureRandom();
-            int carNumber = 2 + randomNumber.nextInt(4);
+            int carNumber = 5 + randomNumber.nextInt(10);
 
 //-----------define all cars
             int id;

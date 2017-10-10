@@ -77,7 +77,7 @@ public class VwCityJavaFx01_mainTest extends Application {
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
     //-----------variable
-    private int maxTime = 100;//maximum seconds of running this app
+    private int maxTime = 20;//maximum seconds of running this app
 
     public VwCityJavaFx01_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
