@@ -59,7 +59,7 @@ public class ThreadGeneral extends Thread {
         if (getMdTimer().getSec() > 3) {
             try {
                 mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
-
+                System.out.println("c1 x=" + mdCity.getCarByName(carname).getLocation().getX() + "|Y=" + mdCity.getCarByName(carname).getLocation().getY());
                 getAnim0().setDelay(Duration.seconds(0));
                 ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
