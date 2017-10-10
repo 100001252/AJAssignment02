@@ -8,7 +8,6 @@ package view;
 import helper.*;
 
 import model.*;
-import view.*;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -131,7 +130,11 @@ public class VwMIStep02Controller implements Initializable {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             if (rdoMap01.isSelected()) {
                 DebugLog.appendData2(">>>jlkjew123qiru234123>>rdomap01 is selected so i need to start map02");
-                VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+
+                //VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                //VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                //VwCityJavaFx01_justForTest vc = new VwCityJavaFx01_justForTest("1", "#005544", mdcity, mdTimer, initialSpeed);
+                VwCityJavaFxMain_justForTest vc = new VwCityJavaFxMain_justForTest("1", "#005544", mdcity, mdTimer, initialSpeed);
                 vc.start(window);
                 //                VwCityJavaFx vc = new VwCityJavaFx(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
                 //vc.start(window);
