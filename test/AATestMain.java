@@ -18,7 +18,24 @@ public class AATestMain {
 
     public static void main(String[] args) {
         //test1_formulaDistance(1, 2, 3, 10);
-        runMainJustForTest();
+        // runMainJustForTest();
+        runCityJavaFx01_justForTest();
+    }
+
+    public static void runCityJavaFx01_justForTest() {
+        MdTimer mdTimer = new MdTimer();
+        MdCity mdcity = new MdCity();
+        // VwCityJavaFxMain_justForTest vc = new VwCityJavaFxMain_justForTest("1", "#005544", mdcity, mdTimer, 100);
+
+        //vc.start(window);
+        new Thread() {
+            @Override
+            public void run() {
+                javafx.application.Application.launch(VwCityJavaFx01_JustForTest.class);
+            }
+        }.start();
+//        StartUpTest startUpTest = StartUpTest.waitForStartUpTest();
+//        startUpTest.printSomething();
     }
 
     public static void runMainJustForTest() {
@@ -30,7 +47,8 @@ public class AATestMain {
         new Thread() {
             @Override
             public void run() {
-                javafx.application.Application.launch(VwCityJavaFxMain_justForTest.class);
+                javafx.application.Application.launch(VwCityJavaFxMain_justForTest.class
+                );
             }
         }.start();
 //        StartUpTest startUpTest = StartUpTest.waitForStartUpTest();
