@@ -101,13 +101,33 @@ public class VwCityJavaFx01_JustForTest extends Application {
         this.initialSpeed = 100;
     }
 
+    private String chooseImageById(int id) {
+        String image = "car-21d811.png";
+        if (id % 7 == 0) {
+            image = "car-030dbf.png";
+        } else if (id % 7 == 1) {
+            image = "car-043d01.png";
+        } else if (id % 7 == 2) {
+            image = "car-67dbc9.png";
+        } else if (id % 7 == 3) {
+            image = "car-578eed.png";
+        } else if (id % 7 == 4) {
+            image = "car-822d00.png";
+        } else if (id % 7 == 5) {
+            image = "car-5906e8.png";
+        } else if (id % 7 == 6) {
+            image = "car-999999.png";
+        }
+        return image;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         for (int i = 0; i < numberOfCars / 2; i++) {
-            mdCity.addCar(new MdCar(new Location(180, 400), "car-21d811.png", "c" + Integer.toString(i), true, i, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), true, i, this.initialSpeed));
         }
         for (int i = numberOfCars / 2; i < numberOfCars; i++) {
-            mdCity.addCar(new MdCar(new Location(180, 400), "car-21d811.png", "c" + Integer.toString(i), false, i, this.initialSpeed));
+            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
         }
         mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
