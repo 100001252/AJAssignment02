@@ -36,6 +36,12 @@ import model.*;
 import helper.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -74,7 +80,7 @@ public class VwCityJavaFxDemo extends Application {
         try {
             //Generate secure random number
             SecureRandom randomNumber = new SecureRandom();
-            int carNumber = 5 + randomNumber.nextInt(10);
+            int carNumber = 2 + randomNumber.nextInt(5);
 
 //-----------define all cars
             int id;
@@ -494,7 +500,8 @@ public class VwCityJavaFxDemo extends Application {
 //            }));
             //----//---------test race end-timeline3
             //---------test race start-timeline4 it is a timeline that we never stop
-            Timeline timeline4 = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            Timeline timeline4;//----//---------test race end-timeline4
+            timeline4 = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     int carId = 1;
@@ -508,22 +515,72 @@ public class VwCityJavaFxDemo extends Application {
 //                        car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
 //                        car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
 //                        car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
-                        //----------------------------just for dbug purposes
+//----------------------------just for dbug purposes
 
-                        //----------------------------end of debug
+//----------------------------end of debug
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
 
                     if (mdTimer.getSec() == maxTime) {//--------end of process
                         System.out.println("Finished");
+                        int sum = 0;
+                        
+                        final CategoryAxis xAxis = new CategoryAxis();
+                        final NumberAxis yAxis = new NumberAxis();
+                        final BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+                        final PieChart pieChart = new PieChart();
+                        final Label pieDataLabel = new Label("");
+                        
+                        pieDataLabel.setTextFill(Color.ANTIQUEWHITE);
+                        pieDataLabel.setStyle("-fx-font: 16 arial;");
+                                                
+                        xAxis.setLabel("Car Name");
+                        yAxis.setLabel("Control Times");
+
+                        XYChart.Series userSeries = new XYChart.Series();
+                        userSeries.setName("User");
+                        XYChart.Series systemSeries = new XYChart.Series();
+                        systemSeries.setName("Auto");
+                        
+                        for(MdCar pieCar: mdCity.getLstCar()){
+                            sum += pieCar.getLstVehicleAction().size();
+                        }
+                        
+                        for(MdCar pieCar: mdCity.getLstCar()){
+                            String name = pieCar.getName();int actionLstSize = pieCar.getLstVehicleAction().size();
+                            userSeries.getData().add(new XYChart.Data(name,actionLstSize));
+                            systemSeries.getData().add(new XYChart.Data(name,0));
+                            int per = actionLstSize*100/sum;
+                            pieChart.getData().add(new PieChart.Data(name, per));
+                            
+                        }
+                        
+                        barChart.getData().addAll(userSeries, systemSeries);
+                        pieChart.getData().stream().forEach((data) -> {
+                            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
+                                pieDataLabel.setTranslateX(e.getSceneX());
+                                pieDataLabel.setTranslateY(e.getSceneY());
+                                pieDataLabel.setText(String.valueOf(data.getPieValue())
+                                        +"%");
+                                
+                            });
+                        });
+                                  
+                        HBox chartBox = new HBox();
+                        chartBox.getChildren().addAll(barChart,pieChart);
+                        Scene aScene = new Scene(new Group(),1000,500);
+                        ((Group) aScene.getRoot()).getChildren().addAll(chartBox,pieDataLabel);
+                        primaryStage.setScene(aScene);
+                        primaryStage.show();
+                        
                     }
                     if (mdTimer.getSec() <= maxTime) {
                         lblTimer.setText("Timer:" + mdTimer.getSec());
                     }
 
                 }
-            }));//----//---------test race end-timeline4
+            }));
 
             ///mouse-onclick-car1
             int ei = 0;
