@@ -20,18 +20,33 @@ import view2.VwCityJavaFxDemo;
 public class AATestMain {
 
     public static void main(String[] args) {
-
+        runCityJavaFxMain_justForTestOld();
         //runCityJavaFx01_justForTest();
         //  runCityJavaFxDemo_justForTest();
         // testHashMap();
-        runCityJavaFx01_justForTest_hashmap();
+//        runCityJavaFx01_justForTest_hashmap();
+
+    }
+
+    public static void runCityJavaFxMain_justForTestOld() {
+        MdTimer mdTimer = new MdTimer();
+        MdCity mdcity = new MdCity();
+        // VwCityJavaFxMain_justForTestOld vc = new VwCityJavaFxMain_justForTestOld("1", "#005544", mdcity, mdTimer, 100);
+
+        //vc.start(window);
+        new Thread() {
+            @Override
+            public void run() {
+                javafx.application.Application.launch(VwCityJavaFxMain_justForTestOld.class);
+            }
+        }.start();
 
     }
 
     public static void runCityJavaFx01_justForTest_hashmap() {
         MdTimer mdTimer = new MdTimer();
         MdCity mdcity = new MdCity();
-        // VwCityJavaFxMain_justForTest vc = new VwCityJavaFxMain_justForTest("1", "#005544", mdcity, mdTimer, 100);
+        // VwCityJavaFxMain_justForTestOld vc = new VwCityJavaFxMain_justForTestOld("1", "#005544", mdcity, mdTimer, 100);
 
         //vc.start(window);
         new Thread() {
@@ -75,7 +90,7 @@ public class AATestMain {
     public static void runCityJavaFx01_justForTest() {
         MdTimer mdTimer = new MdTimer();
         MdCity mdcity = new MdCity();
-        // VwCityJavaFxMain_justForTest vc = new VwCityJavaFxMain_justForTest("1", "#005544", mdcity, mdTimer, 100);
+        // VwCityJavaFxMain_justForTestOld vc = new VwCityJavaFxMain_justForTestOld("1", "#005544", mdcity, mdTimer, 100);
 
         //vc.start(window);
         new Thread() {

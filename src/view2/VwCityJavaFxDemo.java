@@ -74,7 +74,7 @@ public class VwCityJavaFxDemo extends Application {
         this.maxTime = Integer.parseInt(maxtime);
         this.demoShowTimes = Integer.parseInt(times);
     }
-    
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
@@ -303,7 +303,7 @@ public class VwCityJavaFxDemo extends Application {
                 anim.setDuration(new Duration(mdCity.getCarByName(carname).convertSpeedToDuration()));
                 anim.setDelay(Duration.seconds(mdCity.getCarByName(carname).getDelay()));
                 pathi++;
-                 anim.play();
+                anim.play();
             }
             PathTransition anim = new PathTransition();
             anim.setNode(car1);
@@ -335,7 +335,7 @@ public class VwCityJavaFxDemo extends Application {
 
             //------------------------------root group
             Group root = new Group();
-           
+
             root.getChildren().addAll(road, divider, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
             //root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
             for (ImageView car : cars) {
@@ -351,14 +351,13 @@ public class VwCityJavaFxDemo extends Application {
 //            anims.forEach((anim0) -> {
 //                anim0.play();
 //            });
-             anims.forEach((anim0) -> {
-                 System.err.println(anim0.getStatus());
+            anims.forEach((anim0) -> {
+                System.err.println(anim0.getStatus());
             });
-            
+
 //            anim.play();
 //            anim2.play();
 //            anim3.play();
-
             //---------test race start-timeline1
             int ti = 0, timelineId;
             for (ImageView aCar : cars) {
@@ -525,16 +524,16 @@ public class VwCityJavaFxDemo extends Application {
                     if (mdTimer.getSec() == maxTime) {//--------end of process
                         System.out.println("Finished");
                         int sum = 0;
-                        
+
                         final CategoryAxis xAxis = new CategoryAxis();
                         final NumberAxis yAxis = new NumberAxis();
-                        final BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+                        final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
                         final PieChart pieChart = new PieChart();
                         final Label pieDataLabel = new Label("");
-                        
+
                         pieDataLabel.setTextFill(Color.ANTIQUEWHITE);
                         pieDataLabel.setStyle("-fx-font: 16 arial;");
-                                                
+
                         xAxis.setLabel("Car Name");
                         yAxis.setLabel("Control Times");
 
@@ -542,38 +541,39 @@ public class VwCityJavaFxDemo extends Application {
                         userSeries.setName("User");
                         XYChart.Series systemSeries = new XYChart.Series();
                         systemSeries.setName("Auto");
-                        
-                        for(MdCar pieCar: mdCity.getLstCar()){
+
+                        for (MdCar pieCar : mdCity.getLstCar()) {
                             sum += pieCar.getLstVehicleAction().size();
                         }
-                        
-                        for(MdCar pieCar: mdCity.getLstCar()){
-                            String name = pieCar.getName();int actionLstSize = pieCar.getLstVehicleAction().size();
-                            userSeries.getData().add(new XYChart.Data(name,actionLstSize));
-                            systemSeries.getData().add(new XYChart.Data(name,0));
-                            int per = actionLstSize*100/sum;
+
+                        for (MdCar pieCar : mdCity.getLstCar()) {
+                            String name = pieCar.getName();
+                            int actionLstSize = pieCar.getLstVehicleAction().size();
+                            userSeries.getData().add(new XYChart.Data(name, actionLstSize));
+                            systemSeries.getData().add(new XYChart.Data(name, 0));
+                            int per = actionLstSize * 100 / sum;
                             pieChart.getData().add(new PieChart.Data(name, per));
-                            
+
                         }
-                        
+
                         barChart.getData().addAll(userSeries, systemSeries);
                         pieChart.getData().stream().forEach((data) -> {
                             data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
                                 pieDataLabel.setTranslateX(e.getSceneX());
                                 pieDataLabel.setTranslateY(e.getSceneY());
                                 pieDataLabel.setText(String.valueOf(data.getPieValue())
-                                        +"%");
-                                
+                                        + "%");
+
                             });
                         });
-                                  
+
                         HBox chartBox = new HBox();
-                        chartBox.getChildren().addAll(barChart,pieChart);
-                        Scene aScene = new Scene(new Group(),1000,500);
-                        ((Group) aScene.getRoot()).getChildren().addAll(chartBox,pieDataLabel);
+                        chartBox.getChildren().addAll(barChart, pieChart);
+                        Scene aScene = new Scene(new Group(), 1000, 500);
+                        ((Group) aScene.getRoot()).getChildren().addAll(chartBox, pieDataLabel);
                         primaryStage.setScene(aScene);
                         primaryStage.show();
-                        
+
                     }
                     if (mdTimer.getSec() <= maxTime) {
                         lblTimer.setText("Timer:" + mdTimer.getSec());
@@ -990,4 +990,3 @@ public class VwCityJavaFxDemo extends Application {
     }
 
 }
-

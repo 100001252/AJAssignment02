@@ -48,10 +48,12 @@ import javafx.util.Duration;
 import javax.swing.JFrame;
 import model.*;
 import helper.*;
+import helper02.ThreadUpdateCar;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +80,7 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
     private Color labelsColor = Color.BLACK;
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
-    private int numberOfCars = 3; //46;
+    private int numberOfCars = 2; //46;
     //-----------variable
     private int maxTime = 50;//maximum seconds of running this app
     //private HashMap<String, ImageView> hashImageViewCar = new HashMap<>();
@@ -286,17 +288,19 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
         roadCarreturn.getElements().addAll(pathCarReturn);
 
         //--------------------------------------------------------------------------------end of draw road
-        for (int i = 0; i < mdCity.getLstCar().size(); i++) {
-            lstPathTransitions.add(new PathTransition());
+        for (MdCar carobj : mdCity.getLstCar()) {
+            String carname = carobj.getName();
+            PathTransition pathTransobj = new PathTransition();
             //Duration.seconds(mdCity.getLstCar().get(i).convertSpeedToDuration()), mdCity.getLstCar().get(i).isIsRouteToGo() ? roadCargo : roadCarreturn, lstImageViewCar.get(i))
-            lstPathTransitions.get(i).setNode(lstImageViewCar.get(i));
-            lstPathTransitions.get(i).setPath(mdCity.getLstCar().get(i).isIsRouteToGo() ? roadCargo : roadCarreturn);
-            lstPathTransitions.get(i).setDuration(new Duration(25000));
+            pathTransobj.setNode(hashImageViewCar.get(carname));
+            pathTransobj.setPath(carobj.isIsRouteToGo() ? roadCargo : roadCarreturn);
+            pathTransobj.setDuration(new Duration(25000));
             //lstPathTransitions.get(i).setDelay(new Duration(50));
-            lstPathTransitions.get(i).setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-            lstPathTransitions.get(i).setInterpolator(Interpolator.LINEAR);
-            lstPathTransitions.get(i).setCycleCount(Timeline.INDEFINITE);
-            lstPathTransitions.get(i).setDelay(Duration.seconds(mdCity.getLstCar().get(i).getDelay()));
+            pathTransobj.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+            pathTransobj.setInterpolator(Interpolator.LINEAR);
+            pathTransobj.setCycleCount(Timeline.INDEFINITE);
+            pathTransobj.setDelay(Duration.seconds(carobj.getDelay()));
+            hashPathTransitions.put(carname, pathTransobj);
 
         }
         //-----------------------------------add all element
@@ -307,8 +311,8 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
             root.getChildren().add(hbobj);
         }
         //imageviewcars
-        for (ImageView imgCar : lstImageViewCar) {
-            root.getChildren().add(imgCar);
+        for (Map.Entry<String, ImageView> imgCar : hashImageViewCar.entrySet()) {
+            root.getChildren().add(imgCar.getValue());
         }
         //schoolzone images
         for (int i = 0; i < lstImageViewSchoolSignStart.size(); i++) {
@@ -368,7 +372,7 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
         Timeline timelineMain = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                System.out.println("time is>>" + mdTimer.getSec());
+                // System.out.println("time is>>" + mdTimer.getSec());
                 if (mdTimer.getSec() <= maxTime) {
                     lblTimer.setText("Timer:" + mdTimer.getSec());
                 }
@@ -376,32 +380,49 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
                 if (mdTimer.getSec() > 3) {
                     try {
                         for (MdCar carobj : mdCity.getLstCar()) {
-                            int i = mdCity.getLstCar().indexOf(carobj);
-                            System.out.println("carname=" + carobj.getName() + "| index=" + i);
+                            String carName = carobj.getName();
+                            //  System.out.println("carname=" + carobj.getName() + "| speed=" + carobj.getSpeed() + "| rat" + hashPathTransitions.get(carName).getRate() + " | convert to rate: " + carobj.convertSpeedToRate());
                             //MdCar carobj = mdCity.getLstCar().get(i);
-                            mdCity.updateCarLocation(carobj.getName(), lstImageViewCar.get(i).getX() + lstImageViewCar.get(i).getTranslateX(), lstImageViewCar.get(i).getY() + lstImageViewCar.get(i).getTranslateY());
-                            lstLabelViewClone.get(i).setText(Integer.toString(carobj.getSpeed()) + " km/hr");
-                            // lstImageViewCar.get(i).setImage(new Image(mdCity.getLstCar().get(i).getImgName()));
+                            hashLabelViewClone.get(carName).setText(Integer.toString(carobj.getSpeed()) + " km/hr");
+                            hashImageViewCar.get(carName).setImage(new Image(carobj.getImgName()));
+                            //    DebugLog.appendData2("imagenameforc1>>>> " + carobj.getLocation().getX() + " y=" + carobj.getLocation().getY());
 
-                            // DebugLog.appendData2("imagenameforc1>>>> " + mdCity.getCarByName("c1").getImgName());
-                            if (carobj.isIsParked()) {
-                                lstPathTransitions.get(i).pause();
-                            }
-                            if (carobj.getSpeed() == 0) {
-                                lstPathTransitions.get(i).pause();
-                            } else {
-                                //  anim.playFromStart();
-                                lstPathTransitions.get(i).setRate(mdCity.getCarByName(carobj.getName()).convertSpeedToRate());
-                            }
+                            Thread t1 = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mdCity.updateCarLocation(carobj.getName(), hashImageViewCar.get(carName).getX() + hashImageViewCar.get(carName).getTranslateX(), hashImageViewCar.get(carName).getY() + hashImageViewCar.get(carName).getTranslateY());
+                                }
+                            });
+                            Thread t2 = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    thread2Running(carName);
 
-                            lstPathTransitions.get(i).setDelay(Duration.seconds(0));
+                                }
+                            });
 
+//                            Thread t3 = new Thread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    try {
+//                                        hashPathTransitions.get(carName).setDelay(Duration.seconds(0));
+//                                    } catch (Exception ex) {
+//                                        ex.printStackTrace();
+//                                    }
+//
+//                                }
+//
+//                            });
+                            t1.start();
+//                            t2.start();
+//                            t3.start();
+//                            t1.join();
+//                            t2.join();
+//                            t3.join();
                         }
 
-                        ThreadStopAccident ths = new ThreadStopAccident(mdCity);
-
-                        ths.run();
-
+                        ThreadStopAccident t4 = new ThreadStopAccident(mdCity);
+                        t4.start();
                     } catch (Exception ex2) {
                         ex2.printStackTrace();
                     }
@@ -415,10 +436,34 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
         //play all animation
         timelineMain.setCycleCount(Timeline.INDEFINITE);
         timelineMain.play();
-        for (PathTransition ps : lstPathTransitions) {
-            ps.play();
+        for (Map.Entry<String, PathTransition> ps : hashPathTransitions.entrySet()) {
+            ps.getValue().play();
         }
 
+    }
+
+    public synchronized void thread2Running(String carName) {
+        try {
+            if (mdCity.getCarByName(carName).isIsParked()) {
+                hashPathTransitions.get(carName).pause();
+            }
+            if (mdCity.getCarByName(carName).getSpeed() == 0) {
+                hashPathTransitions.get(carName).pause();
+            } else {
+
+                try {
+                    DebugLog.appendData2("reduce speed convert" + mdCity.getCarByName(carName).convertSpeedToRate());
+                    //this line makes concurrentmodificationException if it is not in syncronized thread
+                    //  anim.playFromStart();
+                    hashPathTransitions.get(carName).setRate(mdCity.getCarByName(carName).convertSpeedToRate());
+                    DebugLog.appendData2("reduce speed convert2" + mdCity.getCarByName(carName).convertSpeedToRate());
+                } catch (Exception ex) {
+                    Logger.getLogger(VwCityJavaFx01_JustForTest1_hashmap.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(VwCityJavaFx01_JustForTest1_hashmap.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
