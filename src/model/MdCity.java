@@ -35,7 +35,7 @@ public class MdCity implements Runnable {
      * @param xVal
      * @param yVal
      */
-    public void updateCarLocation(String carName, double xVal, double yVal) {
+    public synchronized void updateCarLocation(String carName, double xVal, double yVal) {
         try {
             MdCar carobj = this.getCarByName(carName);
             Location oldLocation = carobj.getLocation();

@@ -50,6 +50,7 @@ import helper.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,9 +77,10 @@ public class VwCityJavaFx01_JustForTest extends Application {
     private Color labelsColor = Color.BLACK;
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
-    private int numberOfCars = 20;
+    private int numberOfCars = 3; //46;
     //-----------variable
-    private int maxTime = 20;//maximum seconds of running this app
+    private int maxTime = 50;//maximum seconds of running this app
+    //private HashMap<String, ImageView> hashImageViewCar = new HashMap<>();
     private ArrayList<ImageView> lstImageViewCar = new ArrayList<>();
     private ArrayList<ImageView> lstImageViewClone = new ArrayList<>();
     private ArrayList<ImageView> lstImageViewSchoolSignStart = new ArrayList<>();
@@ -86,6 +88,7 @@ public class VwCityJavaFx01_JustForTest extends Application {
     private ArrayList<Label> lstLabelViewClone = new ArrayList<>();
     private ArrayList<HBox> lstHboxViewClone = new ArrayList<>();
     private ArrayList<PathTransition> lstPathTransitions = new ArrayList<>();
+    private ArrayList<Timeline> lstTimeline = new ArrayList<>();
 
     public VwCityJavaFx01_JustForTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
@@ -123,12 +126,12 @@ public class VwCityJavaFx01_JustForTest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        for (int i = 0; i < numberOfCars / 2; i++) {
+        for (int i = 0; i < numberOfCars; i++) {
             mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), true, i, this.initialSpeed));
         }
-        for (int i = numberOfCars / 2; i < numberOfCars; i++) {
-            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
-        }
+//        for (int i = numberOfCars / 2; i < numberOfCars; i++) {
+//            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
+//        }
         mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
         //for (MdCar carobj : mdCity.getLstCar()) {
@@ -143,7 +146,54 @@ public class VwCityJavaFx01_JustForTest extends Application {
             lstHboxViewClone.add(new HBox());
             lstHboxViewClone.get(i).getChildren().addAll(lstImageViewClone.get(i), lstLabelViewClone.get(i));
             lstHboxViewClone.get(i).setLayoutY(i * 20);
+            final int ID = i;
+            //---------------------------------------------------------------------------------------onclick event for each car
+            lstImageViewCar.get(ID).setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+                @Override
+                public void handle(MouseEvent mouseEvent
+                ) {
+
+                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                        try {
+                            mdCity.setCarToControl(mdCity.getLstCar().get(ID).getName());
+                            fullStopControl(lstPathTransitions.get(ID), mdCity.getLstCar().get(ID).getName(), "user");
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
+                        //-----------------------------------------------------normal op
+                        try {
+                            mdCity.setCarToControl(mdCity.getLstCar().get(ID).getName());
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                        //-----------------------------------------------------normal op
+                        try {
+
+                            mdCity.setCarToControl(mdCity.getLstCar().get(ID).getName());
+//                            if (mdCity.getLstCar().get(ID).getSpeed() == 10 && !mdCity.getLstCar().get(ID).isIsParked()) {
+//                                fullStopControl(lstPathTransitions.get(ID), mdCity.getLstCar().get(ID).getName(), "user");
+//                            } else if (mdCity.getCarByName(mdCity.getCarToControl()).getSpeed() == 10 && mdCity.getCarByName(mdCity.getCarToControl()).isIsParked()) {
+//                                fullStopControl(lstPathTransitions.get(ID), mdCity.getLstCar().get(ID).getName(), "user");
+//                            }
+                            mdCity.getLstCar().get(ID).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press left click to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
+
+                            //--------------------------------------------------end normal op
+                            // anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                }
+            });
+
+            //----------------------------------------------------------------------------------------onclick event end
         }
         for (int i = 0; i < mdCity.getLstSchoolSign().size(); i++) {
 
@@ -259,16 +309,129 @@ public class VwCityJavaFx01_JustForTest extends Application {
         }
         root.setTranslateX(50);
         root.setTranslateY(50);
-        //play all animation
 
+        //-------------------------------------------------------------------------add timeline
+//        for (int i = 0; i < mdCity.getLstCar().size(); i++) {
+//            final int ID = i;
+//            MdCar carobj = mdCity.getLstCar().get(ID);
+//            lstTimeline.add(new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//
+//                    mdCity.updateCarLocation(carobj.getName(), lstImageViewCar.get(ID).getX() + lstImageViewCar.get(ID).getTranslateX(), lstImageViewCar.get(ID).getY() + lstImageViewCar.get(ID).getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            lstPathTransitions.get(ID).setDelay(Duration.seconds(0));
+//
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//
+//                            ths.run();
+//
+//                            // DebugLog.appendData2("imagenameforc1>>>> " + mdCity.getCarByName("c1").getImgName());
+//                            if (carobj.isIsParked()) {
+//                                lstPathTransitions.get(ID).pause();
+//                            }
+//                            if (mdCity.getCarByName("c1").getSpeed() == 0) {
+//                                lstPathTransitions.get(ID).pause();
+//                            } else {
+//                                //  anim.playFromStart();
+//                                lstPathTransitions.get(ID).setRate(mdCity.getLstCar().get(ID).convertSpeedToRate());
+//
+//                            }
+//                        } catch (Exception ex2) {
+//                            // System.out.println("searchhhhhhfor23424234");
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            })));//end addsingletimeline
+//        }
+        //-------------------------------------------------------------------------end add timeline
         Scene scene = new Scene(root, 1350, 750, Color.DARKGREEN);
         primaryStage.setTitle(
-                "PathTransition Demo");
+                "PathTransition Test");
         primaryStage.setScene(scene);
         scene.setFill(Color.web(this.colorHash));
         primaryStage.show();
+
+        //---------------------------------------------------------------------------------------only one timline
+        Timeline timelineMain = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                System.out.println("time is>>" + mdTimer.getSec());
+                if (mdTimer.getSec() <= maxTime) {
+                    lblTimer.setText("Timer:" + mdTimer.getSec());
+                }
+
+                if (mdTimer.getSec() > 3) {
+                    try {
+                        for (MdCar carobj : mdCity.getLstCar()) {
+                            int i = mdCity.getLstCar().indexOf(carobj);
+                            System.out.println("carname=" + carobj.getName() + "| index=" + i);
+                            //MdCar carobj = mdCity.getLstCar().get(i);
+                            mdCity.updateCarLocation(carobj.getName(), lstImageViewCar.get(i).getX() + lstImageViewCar.get(i).getTranslateX(), lstImageViewCar.get(i).getY() + lstImageViewCar.get(i).getTranslateY());
+                            lstLabelViewClone.get(i).setText(Integer.toString(carobj.getSpeed()) + " km/hr");
+                            // lstImageViewCar.get(i).setImage(new Image(mdCity.getLstCar().get(i).getImgName()));
+
+                            // DebugLog.appendData2("imagenameforc1>>>> " + mdCity.getCarByName("c1").getImgName());
+                            if (carobj.isIsParked()) {
+                                lstPathTransitions.get(i).pause();
+                            }
+                            if (carobj.getSpeed() == 0) {
+                                lstPathTransitions.get(i).pause();
+                            } else {
+                                //  anim.playFromStart();
+                                lstPathTransitions.get(i).setRate(mdCity.getCarByName(carobj.getName()).convertSpeedToRate());
+                            }
+
+                            lstPathTransitions.get(i).setDelay(Duration.seconds(0));
+
+                        }
+
+                        ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+
+                        ths.run();
+
+                    } catch (Exception ex2) {
+                        ex2.printStackTrace();
+                    }
+                }
+            }
+        }));//----//---------test race end-timeline1
+
+        //-----------------------------------------------------------------------------------------only one timline end
+        //----------------------------onclickevent
+        //----------------------------onclickevent
+        //play all animation
+        timelineMain.setCycleCount(Timeline.INDEFINITE);
+        timelineMain.play();
         for (PathTransition ps : lstPathTransitions) {
             ps.play();
+        }
+
+    }
+
+    /**
+     * function for full stop
+     *
+     * @param timelineobj
+     * @param anim
+     * @param carname
+     * @param ActionBy
+     * @throws Exception
+     */
+    public void fullStopControl(PathTransition anim, String carname, String ActionBy) throws Exception {
+        if (anim.getStatus() == PathTransition.Status.RUNNING) {
+            anim.pause();
+            mdCity.getCarByName(carname).setIsParked(true, new MdVehicleAction("break", "break full stop", "user press full stop", ActionBy, carname));
+
+        } else {
+            mdCity.getCarByName(carname).setIsParked(false, new MdVehicleAction("breakstart", "start from break step01 handbreak release", "user continue from full stop", ActionBy, carname));
+            mdCity.getCarByName(carname).setSpeed(initialSpeed, new MdVehicleAction("breakstart", "start from break step02 increase speed", "user continue from full stop", ActionBy, carname));
+
+            anim.play();
         }
 
     }
