@@ -104,8 +104,12 @@ public class Vw_step02Ass02Controller implements Initializable {
         for (int i = 0; i < 100; i++) {
             if (showTime.equals("") || Duration.equals("")) {
                 dialog.setContentText("Please do not leave input empty");
+            }else if(isNumber(showTime) || isNumber(Duration)){
+                
+            }else{
+                dialog.setContentText("Please input number data");
             }
-            dialog.setContentText("Please input number data");
+            
         }
 
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
@@ -114,6 +118,14 @@ public class Vw_step02Ass02Controller implements Initializable {
 
     }
 
+    private boolean isNumber(String aString){
+        try{
+            int i = Integer.parseInt(aString);
+        }catch(NumberFormatException numE){
+            return false;
+        }
+        return true;
+    }
     private Popup createPopup() {
         final Popup popup = new Popup();
         popup.setAutoHide(true);
