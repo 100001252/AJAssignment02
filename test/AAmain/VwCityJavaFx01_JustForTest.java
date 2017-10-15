@@ -1,9 +1,10 @@
+package AAmain;
+
 /* main javafxclass that all car running in it
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import view.*;
 import com.jfoenix.controls.JFXButton;
 import helper.Location;

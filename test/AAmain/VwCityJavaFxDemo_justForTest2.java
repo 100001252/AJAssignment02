@@ -50,7 +50,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFxDemo_justForTest extends Application {
+public class VwCityJavaFxDemo_justForTest2 extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -69,7 +69,7 @@ public class VwCityJavaFxDemo_justForTest extends Application {
     //-----------variable
     private int maxTime = 150;//maximum seconds of running this app
 
-    public VwCityJavaFxDemo_justForTest() {
+    public VwCityJavaFxDemo_justForTest2() {
         this.colorHash = "white";
         this.mdCity = new MdCity();
         this.mdTimer = new MdTimer();
@@ -78,7 +78,7 @@ public class VwCityJavaFxDemo_justForTest extends Application {
         //this.demoShowTimes = Integer.parseInt(times);
     }
 
-    public VwCityJavaFxDemo_justForTest(String times, String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFxDemo_justForTest2(String times, String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
@@ -365,7 +365,7 @@ public class VwCityJavaFxDemo_justForTest extends Application {
 //                anim0.play();
 //            });
             anims.forEach((anim0) -> {
-                System.err.println(anim0.getStatus());
+                //  System.err.println(anim0.getStatus());
             });
 
 //            anim.play();
@@ -378,17 +378,30 @@ public class VwCityJavaFxDemo_justForTest extends Application {
                 String ID = Integer.toString(timelineId);
                 String carname = "c" + ID;
                 PathTransition anim0 = anims.get(ti);
-                Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+                Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
-                        if (mdTimer.getSec() > 3) {
+                        Thread t1 = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
+                                    Thread.sleep(20);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(VwCityJavaFxDemo_justForTest2.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        });
+                        t1.start();
+
+                        if (mdTimer.getSec() > 1) {
                             try {
 
                                 anim0.setDelay(Duration.seconds(0));
                                 ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
-                                ths.run();
+                                ths.start();
                                 aCar.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
                                 if (mdCity.getCarByName(carname).isIsParked()) {
@@ -414,6 +427,103 @@ public class VwCityJavaFxDemo_justForTest extends Application {
                 timelines.add(aTimeline);
             }
 
+//            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//                    mdCity.updateCarLocation("c1", car1.getX() + car1.getTranslateX(), car1.getY() + car1.getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            anim.setDelay(Duration.seconds(0));
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//
+//                            ths.run();
+//                            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
+//
+//                            if (mdCity.getCarByName("c1").isIsParked()) {
+//                                anim.pause();
+//                            }
+//                            if (mdCity.getCarByName("c1").getSpeed() == 0) {
+//                                anim.pause();
+//                            } else {
+//                                //  anim.playFromStart();
+//                                anim.setRate(mdCity.getCarByName("c1").convertSpeedToRate());
+//
+//                            }
+//
+//                        } catch (Exception ex2) {
+//
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }));//----//---------test race end-timeline1
+//
+//            //---------test race start-timeline2
+//            Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//                    mdCity.updateCarLocation("c2", car2.getX() + car2.getTranslateX(), car2.getY() + car2.getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            anim2.setDelay(Duration.seconds(0));
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//                            ths.run();
+//                            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
+//
+//                            if (mdCity.getCarByName("c2").isIsParked()) {
+//                                anim2.pause();
+//                            }
+//
+//                            if (mdCity.getCarByName("c2").getSpeed() == 0) {
+//                                anim2.pause();
+//                            } else {
+//                                anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
+//                            }
+//
+//                        } catch (Exception ex2) {
+//                            // System.out.println("searchhhhhhfor23424234");
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }));//----//---------test race end-timeline2
+//
+//            //---------test race start-timeline3
+//            Timeline timeline3 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent t) {
+//                    //mdCity.updateCarLocation("c3", car3.getTranslateX(), car3.getTranslateY());
+//                    mdCity.updateCarLocation("c3", car3.getX() + car3.getTranslateX(), car3.getY() + car3.getTranslateY());
+//                    if (mdTimer.getSec() > 3) {
+//                        try {
+//
+//                            anim3.setDelay(Duration.seconds(0));
+//                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//                            ths.run();
+//                            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
+//                            if (mdCity.getCarByName("c3").isIsParked()) {
+//                                anim3.pause();
+//                            }
+//                            if (mdCity.getCarByName("c3").getSpeed() == 0) {
+//                                anim3.pause();
+//                            } else {
+//                                //  anim.playFromStart();
+//                                anim3.setRate(mdCity.getCarByName("c3").convertSpeedToRate());
+//                            }
+//
+//                        } catch (Exception ex2) {
+//                            // System.out.println("searchhhhhhfor23424234");
+//                            ex2.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            }));
+            //----//---------test race end-timeline3
             //---------test race start-timeline4 it is a timeline that we never stop
             Timeline timeline4;//----//---------test race end-timeline4
             timeline4 = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {

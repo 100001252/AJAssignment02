@@ -20,11 +20,47 @@ import view2.VwCityJavaFxDemo;
 public class AATestMain {
 
     public static void main(String[] args) {
-        runCityJavaFxMain_justForTestOld();
+        //     runCityJavaFxMain_justForTestOld();
         //runCityJavaFx01_justForTest();
-        //  runCityJavaFxDemo_justForTest();
+//        runCityJavaFxDemo_justForTest();
+        //  runCityJavaFxDemo_justForTest2();//all process in timeline thread(there is concurrent error)
+        //runCityJavaFxDemo_justForTest3();//same as original just shorter process for stopAccident
         // testHashMap();
-//        runCityJavaFx01_justForTest_hashmap();
+        //    runCityJavaFx01_justForTest_hashmap();
+        runCityJavaFx01_justForTest_hashmap2();  ///no error running
+
+    }
+
+    public static void runCityJavaFxDemo_justForTest3() {
+
+        try {
+            new Thread() {
+                @Override
+                public void run() {
+                    javafx.application.Application.launch(VwCityJavaFxDemo_justForTest3.class);
+                }
+            }.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void runCityJavaFxDemo_justForTest2() {
+        int initialSpeed = 100;
+        MdCity mdcity = new MdCity();
+        MdTimer mdTimer = new MdTimer();
+
+        try {
+            new Thread() {
+                @Override
+                public void run() {
+                    javafx.application.Application.launch(VwCityJavaFxDemo_justForTest2.class);
+                }
+            }.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -43,20 +79,28 @@ public class AATestMain {
 
     }
 
-    public static void runCityJavaFx01_justForTest_hashmap() {
-        MdTimer mdTimer = new MdTimer();
-        MdCity mdcity = new MdCity();
-        // VwCityJavaFxMain_justForTestOld vc = new VwCityJavaFxMain_justForTestOld("1", "#005544", mdcity, mdTimer, 100);
+    public static void runCityJavaFx01_justForTest_hashmap2() {
+//        MdTimer mdTimer = new MdTimer();
+//        MdCity mdcity = new MdCity();
+        new Thread() {
+            @Override
+            public void run() {
+                javafx.application.Application.launch(VwCityJavaFx01_JustForTest1_hashmap2.class);
+            }
+        }.start();
 
-        //vc.start(window);
+    }
+
+    public static void runCityJavaFx01_justForTest_hashmap() {
+//        MdTimer mdTimer = new MdTimer();
+//        MdCity mdcity = new MdCity();
         new Thread() {
             @Override
             public void run() {
                 javafx.application.Application.launch(VwCityJavaFx01_JustForTest1_hashmap.class);
             }
         }.start();
-//        StartUpTest startUpTest = StartUpTest.waitForStartUpTest();
-//        startUpTest.printSomething();
+
     }
 
     public static void testHashMap() {

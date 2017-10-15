@@ -71,7 +71,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
+public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -80,7 +80,7 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
     private Color labelsColor = Color.BLACK;
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
-    private int numberOfCars = 2; //46;
+    private int numberOfCars = 20; //46;
     //-----------variable
     private int maxTime = 50;//maximum seconds of running this app
     //private HashMap<String, ImageView> hashImageViewCar = new HashMap<>();
@@ -93,14 +93,14 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
     private HashMap<String, PathTransition> hashPathTransitions = new HashMap<String, PathTransition>();
     private HashMap<String, Timeline> hashTimeline = new HashMap<String, Timeline>();
 
-    public VwCityJavaFx01_JustForTest1_hashmap(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFx01_JustForTest1_hashmap3(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
         this.initialSpeed = initialSpeed;
     }
 
-    public VwCityJavaFx01_JustForTest1_hashmap() {
+    public VwCityJavaFx01_JustForTest1_hashmap3() {
         this.colorHash = "#055b08";
         this.mdCity = new MdCity();
         this.mdTimer = new MdTimer();
@@ -370,90 +370,43 @@ public class VwCityJavaFx01_JustForTest1_hashmap extends Application {
 
         //---------------------------------------------------------------------------------------only one timline
         for (MdCar carobj : mdCity.getLstCar()) {
-            final String carName = carobj.getName();
-            Timeline timelineMain = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+            final String carname = carobj.getName();
+            Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    // System.out.println("time is>>" + mdTimer.getSec());
-                    if (mdTimer.getSec() <= maxTime) {
-                        lblTimer.setText("Timer:" + mdTimer.getSec());
-                    }
-
+                    mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+                    hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr");
+                    hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                     if (mdTimer.getSec() > 3) {
                         try {
 
-                            //    DebugLog.appendData2("imagenameforc1>>>> " + carobj.getLocation().getX() + " y=" + carobj.getLocation().getY());
-                            Thread t1 = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    hashLabelViewClone.get(carName).setText(Integer.toString(carobj.getSpeed()) + " km/hr");
-                                    hashImageViewCar.get(carName).setImage(new Image(carobj.getImgName()));
-                                    mdCity.updateCarLocation(carobj.getName(), hashImageViewCar.get(carName).getX() + hashImageViewCar.get(carName).getTranslateX(), hashImageViewCar.get(carName).getY() + hashImageViewCar.get(carName).getTranslateY());
+                            hashPathTransitions.get(carname).setDelay(Duration.seconds(0));
+                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
-                                }
-                            });
+                            ths.run();
+                            hashImageViewCar.get(carname).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
-                            Thread t2 = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        if (mdCity.getCarByName(carName).isIsParked()) {
-                                            hashPathTransitions.get(carName).pause();
-                                        }
-                                        if (mdCity.getCarByName(carName).getSpeed() == 0) {
-                                            hashPathTransitions.get(carName).pause();
-                                        } else {
+                            if (mdCity.getCarByName(carname).isIsParked()) {
+                                hashPathTransitions.get(carname).pause();
+                            }
+                            if (mdCity.getCarByName(carname).getSpeed() == 0) {
+                                hashPathTransitions.get(carname).pause();
+                            } else {
+                                //  anim.playFromStart();
+                                hashPathTransitions.get(carname).setRate(mdCity.getCarByName(carname).convertSpeedToRate());
 
-                                            try {
-                                                DebugLog.appendData2("reduce speed convert" + mdCity.getCarByName(carName).convertSpeedToRate());
-                                                //this line makes concurrentmodificationException if it is not in syncronized thread
-                                                //  anim.playFromStart();
-                                                hashPathTransitions.get(carName).setRate(mdCity.getCarByName(carName).convertSpeedToRate());
-                                                DebugLog.appendData2("reduce speed convert2" + mdCity.getCarByName(carName).convertSpeedToRate());
-
-                                            } catch (Exception ex) {
-                                                Logger.getLogger(VwCityJavaFx01_JustForTest1_hashmap.class.getName()).log(Level.SEVERE, null, ex);
-                                            }
-                                        }
-                                    } catch (Exception ex) {
-                                        Logger.getLogger(VwCityJavaFx01_JustForTest1_hashmap.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-
-                                }
-                            });
-
-                            Thread t3 = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        hashPathTransitions.get(carName).setDelay(Duration.seconds(0));
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-
-                                }
-//
-                            });
-                            ThreadStopAccident t4 = new ThreadStopAccident(mdCity);
-                            t1.start();
-
-                            t2.start();
-                            t3.start();
-                            t4.start();
-                            t1.join();
-                            t2.join();
-                            t3.join();
-                            t4.join();
+                            }
 
                         } catch (Exception ex2) {
+
                             ex2.printStackTrace();
                         }
+
                     }
                 }
-            }
-            ));
-            timelineMain.setCycleCount(Timeline.INDEFINITE);
-            hashTimeline.put(carobj.getName(), timelineMain);
+            }));
+            aTimeline.setCycleCount(Timeline.INDEFINITE);
+            hashTimeline.put(carobj.getName(), aTimeline);
         }
 //----//---------test race end-timeline1
 

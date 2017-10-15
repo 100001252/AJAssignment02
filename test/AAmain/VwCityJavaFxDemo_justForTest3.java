@@ -50,7 +50,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFxDemo_justForTest extends Application {
+public class VwCityJavaFxDemo_justForTest3 extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -69,7 +69,7 @@ public class VwCityJavaFxDemo_justForTest extends Application {
     //-----------variable
     private int maxTime = 150;//maximum seconds of running this app
 
-    public VwCityJavaFxDemo_justForTest() {
+    public VwCityJavaFxDemo_justForTest3() {
         this.colorHash = "white";
         this.mdCity = new MdCity();
         this.mdTimer = new MdTimer();
@@ -78,7 +78,7 @@ public class VwCityJavaFxDemo_justForTest extends Application {
         //this.demoShowTimes = Integer.parseInt(times);
     }
 
-    public VwCityJavaFxDemo_justForTest(String times, String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFxDemo_justForTest3(String times, String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
@@ -92,13 +92,13 @@ public class VwCityJavaFxDemo_justForTest extends Application {
         try {
             //Generate secure random number
             SecureRandom randomNumber = new SecureRandom();
-            int carNumber = 30;
+            int carNumber = 20;
 
 //-----------define all cars
             int id;
             for (int i = 0; i < carNumber; i++) {
                 id = i + 1;
-                boolean routeTogo = (i > (carNumber / 2) ? false : true);
+                boolean routeTogo = true; //(i > (carNumber / 2) ? false : true);
                 String ID = Integer.toString(id);
 
                 if (id % 5 == 1) {
@@ -364,10 +364,9 @@ public class VwCityJavaFxDemo_justForTest extends Application {
 //            anims.forEach((anim0) -> {
 //                anim0.play();
 //            });
-            anims.forEach((anim0) -> {
-                System.err.println(anim0.getStatus());
-            });
-
+//            anims.forEach((anim0) -> {
+//                System.err.println(anim0.getStatus());
+//            });
 //            anim.play();
 //            anim2.play();
 //            anim3.play();
@@ -381,33 +380,33 @@ public class VwCityJavaFxDemo_justForTest extends Application {
                 Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
-                        if (mdTimer.getSec() > 3) {
-                            try {
-
-                                anim0.setDelay(Duration.seconds(0));
-                                ThreadStopAccident ths = new ThreadStopAccident(mdCity);
-
-                                ths.run();
-                                aCar.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
-
-                                if (mdCity.getCarByName(carname).isIsParked()) {
-                                    anim0.pause();
-                                }
-                                if (mdCity.getCarByName(carname).getSpeed() == 0) {
-                                    anim0.pause();
-                                } else {
-                                    //  anim.playFromStart();
-                                    anim0.setRate(mdCity.getCarByName(carname).convertSpeedToRate());
-
-                                }
-
-                            } catch (Exception ex2) {
-
-                                ex2.printStackTrace();
-                            }
-
-                        }
+//                        mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
+//                        if (mdTimer.getSec() > 3) {
+//                            try {
+//
+//                                anim0.setDelay(Duration.seconds(0));
+//                                ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+//
+//                                ths.start();
+//                                aCar.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
+//
+//                                if (mdCity.getCarByName(carname).isIsParked()) {
+//                                    anim0.pause();
+//                                }
+//                                if (mdCity.getCarByName(carname).getSpeed() == 0) {
+//                                    anim0.pause();
+//                                } else {
+//                                    //  anim.playFromStart();
+//                                    anim0.setRate(mdCity.getCarByName(carname).convertSpeedToRate());
+//
+//                                }
+//
+//                            } catch (Exception ex2) {
+//
+//                                ex2.printStackTrace();
+//                            }
+//
+//                        }
                     }
                 }));
                 ti++;
