@@ -577,7 +577,7 @@ public class VwCityJavaFxDemo extends Application {
                                         Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/UITestDrive.fxml"));
                                         Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
                                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                        
                                         window.setScene(vwMainInitialSecondStep);
                                         window.show();
                                     } catch (IOException ex) {
@@ -647,62 +647,7 @@ public class VwCityJavaFxDemo extends Application {
                             alert.show();
                             
                         }
-                        
-                        
-                        
 
-                        System.out.println("Finished");
-                        int sum = 1;
-
-                        final CategoryAxis xAxis = new CategoryAxis();
-                        final NumberAxis yAxis = new NumberAxis();
-                        final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-                        final PieChart pieChart = new PieChart();
-                        final Label pieDataLabel = new Label("");
-
-                        pieDataLabel.setTextFill(Color.ANTIQUEWHITE);
-                        pieDataLabel.setStyle("-fx-font: 16 arial;");
-
-                        xAxis.setLabel("Car Name");
-                        yAxis.setLabel("Control Times");
-
-                        XYChart.Series userSeries = new XYChart.Series();
-                        userSeries.setName("User");
-                        XYChart.Series systemSeries = new XYChart.Series();
-                        systemSeries.setName("Auto");
-
-                        for (MdCar pieCar : mdCity.getLstCar()) {
-                            sum += pieCar.getLstVehicleAction().size();
-                        }
-
-                        for (MdCar pieCar : mdCity.getLstCar()) {
-                            String name = pieCar.getName();
-                            int actionLstSize = pieCar.getLstVehicleAction().size();
-                            userSeries.getData().add(new XYChart.Data(name, actionLstSize));
-                            systemSeries.getData().add(new XYChart.Data(name, 0));
-                            int per = actionLstSize * 100 / sum;
-                            pieChart.getData().add(new PieChart.Data(name, per));
-
-                        }
-
-                        barChart.getData().addAll(userSeries, systemSeries);
-                        pieChart.getData().stream().forEach((data) -> {
-                            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
-                                pieDataLabel.setTranslateX(e.getSceneX());
-                                pieDataLabel.setTranslateY(e.getSceneY());
-                                pieDataLabel.setText(String.valueOf(data.getPieValue())
-                                        + "%");
-
-                            });
-                        });
-
-                        HBox chartBox = new HBox();
-                        chartBox.getChildren().addAll(barChart, pieChart);
-                        Scene aScene = new Scene(new Group(), 1000, 500);
-                        
-                        ((Group) aScene.getRoot()).getChildren().addAll(chartBox, pieDataLabel);
-                        primaryStage.setScene(aScene);
-                        primaryStage.show();
 
                     }
                     if (mdTimer.getSec() <= maxTime) {

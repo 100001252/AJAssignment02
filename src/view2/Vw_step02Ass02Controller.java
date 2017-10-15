@@ -135,7 +135,7 @@ public class Vw_step02Ass02Controller implements Initializable {
             runDemo(window, true);
         }
         
-
+        //runDemo(window, true);
     }
 
     private boolean isNumber(String aString){
