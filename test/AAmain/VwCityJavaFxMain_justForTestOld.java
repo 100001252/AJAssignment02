@@ -1,9 +1,10 @@
+package AAmain;
+
 /* main javafxclass that all car running in it
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import view2.*;
 import helper02.*;
 import helper.Location;
@@ -85,7 +86,7 @@ public class VwCityJavaFxMain_justForTestOld extends Application {
         try {
             //Generate secure random number
             SecureRandom randomNumber = new SecureRandom();
-            int carNumber = 16 + randomNumber.nextInt(26);
+            int carNumber = 6 + randomNumber.nextInt(10);
 
 //-----------define all cars
             int id;

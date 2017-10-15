@@ -35,7 +35,7 @@ public class MdCity implements Runnable {
      * @param xVal
      * @param yVal
      */
-    public void updateCarLocation(String carName, double xVal, double yVal) {
+    public synchronized void updateCarLocation(String carName, double xVal, double yVal) {
         try {
             MdCar carobj = this.getCarByName(carName);
             Location oldLocation = carobj.getLocation();
@@ -152,6 +152,72 @@ public class MdCity implements Runnable {
         double part2 = Math.pow((loc1.getY() - loc2.getY()), 2);
         result = Math.sqrt(part1 + part2);
         return result;
+    }
+
+    /**
+     * this method check distance between each pair of cars if distance is less
+     * than 60 and the car in front is slowwer it decrease car behind to same
+     * speed as the car infront. also it does fullstop if car infront is stopped
+     *
+     */
+    public synchronized void stopAccidentOnRouteForSingleCar(String carname) {
+        try {
+
+            //for (MdCar objCar : (ArrayList<MdCar>) this.getLstCar().clone()) {
+            MdCar objCar = this.getCarByName(carname);
+            //----------------manage 40zone area
+            for (MdSchoolSign sd : this.getLstSchoolSign()) {
+
+                if ((sd.getLocationSchoolStart().calcDistanceBetweenTwoLocation(objCar.getLocation())) < 50) {
+                    objCar.setIs40ZoneArea(true);
+                }
+                if ((sd.getLocationSchoolEnd().calcDistanceBetweenTwoLocation(objCar.getLocation())) < 50) {
+                    objCar.setIs40ZoneArea(false);
+                }
+            }
+
+            if (objCar.isIs40ZoneArea() && objCar.getSpeed() > 40) {
+                objCar.setImgName("car-pink.png");
+                // objCar.setSpeedFor40Zone("auto"); in 40 zone we wont set speed automatically
+            }
+            if (!objCar.isIs40ZoneArea() && objCar.getImgName().equals("car-pink.png")) {
+                objCar.setImgName(objCar.getImgNormal());
+            }
+
+            //----------------------------------------------------------objcar is the one that we check
+            //******check distance from infront car if its speed is less than me
+            MdCar c = null;
+            int index = this.getLstCar().indexOf(objCar);
+            if ((index - 1) < this.getLstCar().size() && (index - 1) > -1) {
+                c = this.getLstCar().get(index - 1);
+            } else {
+                c = this.getLstCar().get(this.getLstCar().size() - 1);
+            }
+            double distanceBetweenCars = distanceBetweenLocation(c.getLocation(), objCar.getLocation());
+            if (distanceBetweenCars < 40 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+                //it means they are very close that is why we stop the car in front
+                if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
+                    c.setIsParked(true, new MdVehicleAction("break", "break full stop", "because cars are very close", "auto", c.getName())); //car c is behind and objcar has speed less than c
+
+                }
+
+            }
+            if (distanceBetweenCars < 60 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+
+                if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
+                    c.setSpeed(objCar.getSpeed(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
+
+                }
+                //***********if front car is in fullstop condition
+                if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.isIsParked()) {
+                    c.setIsParked(true, new MdVehicleAction("break", "break full stop", "because car infront stoped", "auto", c.getName()));
+                }
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
