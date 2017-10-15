@@ -270,7 +270,7 @@ public class MdCity implements Runnable {
 
                 }
 
-                if (distanceBetweenCars < 80 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+                if (distanceBetweenCars < 40 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
                     //it means they are very close that is why we stop the car in front
                     if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
                         c.setSpeed(c.getSpeedofCarInFront(), new MdVehicleAction("break", "break full stop step01 slowdown", "because cars are very close", "auto", c.getName()));
@@ -279,7 +279,7 @@ public class MdCity implements Runnable {
                     }
 
                 }
-                if (distanceBetweenCars < 100 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+                if (distanceBetweenCars < 120 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
 
                     if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
                         c.setSpeed(c.getSpeedofCarInFront(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
