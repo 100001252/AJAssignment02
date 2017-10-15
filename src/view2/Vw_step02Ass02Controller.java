@@ -86,7 +86,25 @@ public class Vw_step02Ass02Controller implements Initializable {
                 Duration = data.getValue();
                 });
                 }else if(isNumber(showTime) && isNumber(Duration)){
-                    break;
+                    if(Integer.parseInt(showTime)>3 || Integer.parseInt(showTime)<1){
+                        dialog.setHeaderText("Showtime should limit from 1 to 3");
+                        result = dialog.showAndWait();
+                        result.ifPresent(data -> {
+
+                        showTime = data.getKey();
+                        Duration = data.getValue();
+                        });
+                    }else if(Integer.parseInt(Duration)>60 || Integer.parseInt(Duration)<1){
+                        dialog.setHeaderText("Duration should limit from 1 to 60");
+                        result = dialog.showAndWait();
+                        result.ifPresent(data -> {
+
+                        showTime = data.getKey();
+                        Duration = data.getValue();
+                        });
+                    }else{
+                        break;
+                    }
                 }else{
                     dialog.setHeaderText("Please input number data");
                     
@@ -145,7 +163,25 @@ public class Vw_step02Ass02Controller implements Initializable {
                 Duration = data.getValue();
                 });
                 }else if(isNumber(showTime) && isNumber(Duration)){
-                    break;
+                    if(Integer.parseInt(showTime)>3){
+                        dialog.setHeaderText("Showtime should limit to 3");
+                        result = dialog.showAndWait();
+                        result.ifPresent(data -> {
+
+                        showTime = data.getKey();
+                        Duration = data.getValue();
+                        });
+                    }else if(Integer.parseInt(Duration)>60){
+                        dialog.setHeaderText("Duration should limit to 60");
+                        result = dialog.showAndWait();
+                        result.ifPresent(data -> {
+
+                        showTime = data.getKey();
+                        Duration = data.getValue();
+                        });
+                    }else{
+                        break;
+                    }
                 }else{
                     dialog.setHeaderText("Please input number data");
                     
