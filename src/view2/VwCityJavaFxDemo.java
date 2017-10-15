@@ -574,7 +574,7 @@ public class VwCityJavaFxDemo extends Application {
                                 
                                 demoEndButton.setOnAction((event) -> {
                                     try {
-                                        Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/VwMainInitialStep02.fxml"));
+                                        Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/UITestDrive.fxml"));
                                         Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
                                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                                         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -652,7 +652,7 @@ public class VwCityJavaFxDemo extends Application {
                         
 
                         System.out.println("Finished");
-                        int sum = 0;
+                        int sum = 1;
 
                         final CategoryAxis xAxis = new CategoryAxis();
                         final NumberAxis yAxis = new NumberAxis();
