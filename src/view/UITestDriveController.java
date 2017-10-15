@@ -42,12 +42,16 @@ import javax.swing.ImageIcon;
  *
  * @author XC8184
  */
-public class VwMIStep02Controller implements Initializable {
+public class UITestDriveController implements Initializable {
 
+    @FXML
+    private RadioButton rdoSpeed20;
     @FXML
     private ToggleGroup grpSpeed;
     @FXML
-    private JFXButton btnStart;
+    private RadioButton rdoSpeed40;
+    @FXML
+    private RadioButton rdoSpeed100;
     @FXML
     private RadioButton rdoMap01;
     @FXML
@@ -55,30 +59,45 @@ public class VwMIStep02Controller implements Initializable {
     @FXML
     private RadioButton rdoMap02;
     @FXML
+    private RadioButton rdoMap03;
+    @FXML
     private ImageView imgMap;
     @FXML
     private JFXCheckBox chkTermAndCondition;
     @FXML
-    private Label lblFeedback;
-    @FXML
     private JFXColorPicker txtBackGroundColor;
-
-    //----------------------variable
-    private MdCity mdCity;
-    private MdTimer mdTimer;
-    private String tt;
     @FXML
-    private RadioButton rdoSpeed20;
+    private JFXButton btnStart;
     @FXML
-    private RadioButton rdoSpeed40;
-    @FXML
-    private RadioButton rdoSpeed100;
+    private Label lblFeedback;
     @FXML
     private JFXButton btnAbout;
     @FXML
-    private RadioButton rdoMap03;
-    @FXML
     private JFXComboBox<Integer> cmbNumberOfCars;
+    @FXML
+    private JFXCheckBox chkcar01;
+    @FXML
+    private JFXCheckBox chkcar02;
+    @FXML
+    private JFXCheckBox chkcar03;
+    @FXML
+    private JFXCheckBox chkcar04;
+    @FXML
+    private JFXCheckBox chkcar05;
+    @FXML
+    private JFXCheckBox chkcar06;
+    @FXML
+    private JFXCheckBox chkcar07;
+    @FXML
+    private RadioButton rdoMap011;
+    @FXML
+    private ToggleGroup grptraffichint;
+    @FXML
+    private RadioButton rdoMap021;
+    @FXML
+    private RadioButton rdoMap031;
+    @FXML
+    private ImageView imgMap1;
 
     //----------------------endvariable
 //    public VwMIStep02Controller(String test) {
@@ -111,7 +130,7 @@ public class VwMIStep02Controller implements Initializable {
                 imgMap.setImage(new Image("images/map02.png"));
             }
         } catch (IOException ex) {
-            Logger.getLogger(VwMIStep02Controller.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -168,7 +187,7 @@ public class VwMIStep02Controller implements Initializable {
         text += "5.you can not use arrow to make speed to zero, and you need \n to use r-click for that full stop \n";
         text += "6.after full stop if you r-click again on car it start moving \n";
 
-        VwMIStep01Controller.modal(text, "Term and Condition");
+        UILoginController.modal(text, "Term and Condition");
     }
 
     @FXML
@@ -177,7 +196,8 @@ public class VwMIStep02Controller implements Initializable {
                 + "2. Ater you click on a car you can use arrow up/down to increase/decrease speed \n"
                 + "3. R-click make car full stop and another click make it move \n"
                 + "4. keyboard space make all car stop(for resume press again)";
-        VwMIStep01Controller.modal(text, "About");
+
+        UILoginController.modal(text, "about");
     }
 
 }
