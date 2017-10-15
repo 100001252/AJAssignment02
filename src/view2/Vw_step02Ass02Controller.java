@@ -5,7 +5,6 @@
  */
 package view2;
 
-
 import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.IOException;
 import java.net.URL;
@@ -75,14 +74,14 @@ public class Vw_step02Ass02Controller implements Initializable {
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        runDemo(window,false);
+        runDemo(window, false);
 
     }
 
     @FXML
     private void testOnlyAction(ActionEvent event) {
         try {
-            Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/VwMainInitialStep02.fxml"));
+            Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/UITestDrive.fxml"));
             Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(vwMainInitialSecondStep);
@@ -102,8 +101,8 @@ public class Vw_step02Ass02Controller implements Initializable {
             showTime = data.getKey();
             Duration = data.getValue();
         });
-        for(int i = 0; i<100; i++){
-            if(showTime.equals("") || Duration.equals("")){
+        for (int i = 0; i < 100; i++) {
+            if (showTime.equals("") || Duration.equals("")) {
                 dialog.setContentText("Please do not leave input empty");
             }else if(isNumber(showTime) || isNumber(Duration)){
                 
@@ -112,14 +111,11 @@ public class Vw_step02Ass02Controller implements Initializable {
             }
             
         }
-        
-        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
 
+        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         runDemo(window, true);
-        
-        
-        
+
     }
 
     private boolean isNumber(String aString){
@@ -139,7 +135,7 @@ public class Vw_step02Ass02Controller implements Initializable {
         return popup;
     }
 
-    private void runDemo(Stage window,boolean plusTest) {
+    private void runDemo(Stage window, boolean plusTest) {
         int initialSpeed = 100;
         MdCity mdcity = new MdCity();
         MdTimer mdTimer = new MdTimer();

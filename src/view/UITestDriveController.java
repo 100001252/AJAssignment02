@@ -200,4 +200,8 @@ public class UITestDriveController implements Initializable {
         UILoginController.modal(text, "about");
     }
 
+    @FXML
+    private void checkboxCarSelected(ActionEvent event) {
+    }
+
 }
