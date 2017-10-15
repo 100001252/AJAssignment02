@@ -69,7 +69,7 @@ public class ShootingGameJavafxTest extends Application {
 
                 BooleanBinding hit = Bindings.createBooleanBinding(() -> {
                     Point2D targetLocation = target.localToParent(targetStartX, targetY);
-                    // System.out.println("keeeyyyPresssed3333->step2 x=" + targetStartX + " y=" + targetY + " | shot=(" + shot.getByX() + "," + shot.getByY());
+                    System.out.println("keeeyyyPresssed3333->step2 x=" + targetStartX + " y=" + targetY + " | shot=(" + shot.getByX() + "," + shot.getByY());
                     Point2D projectileLocation = projectile.localToParent(weaponEnd);
                     return (targetLocation.distance(projectileLocation) < targetRadius + projectileRadius);
                 }, projectile.translateXProperty(), projectile.translateYProperty());

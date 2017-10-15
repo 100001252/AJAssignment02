@@ -57,9 +57,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
@@ -71,7 +74,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
+public class VwCityJavaFx01_JustForTest1_hashmap5 extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -80,7 +83,7 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
     private Color labelsColor = Color.BLACK;
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
-    private int numberOfCars = 20; //46;
+    private int numberOfCars = 15; //46;
     //-----------variable
     private int maxTime = 50;//maximum seconds of running this app
     //private HashMap<String, ImageView> hashImageViewCar = new HashMap<>();
@@ -89,18 +92,19 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
     private ArrayList<ImageView> lstImageViewSchoolSignStart = new ArrayList<>();
     private ArrayList<ImageView> lstImageViewSchoolSignEnd = new ArrayList<>();
     private HashMap<String, Label> hashLabelViewClone = new HashMap<String, Label>();
+    private HashMap<String, BooleanBinding> hashBooleanBinding = new HashMap<String, BooleanBinding>();
     private ArrayList<HBox> lstHboxViewClone = new ArrayList<>();
     private HashMap<String, PathTransition> hashPathTransitions = new HashMap<String, PathTransition>();
     private HashMap<String, Timeline> hashTimeline = new HashMap<String, Timeline>();
 
-    public VwCityJavaFx01_JustForTest1_hashmap3(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFx01_JustForTest1_hashmap5(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
         this.initialSpeed = initialSpeed;
     }
 
-    public VwCityJavaFx01_JustForTest1_hashmap3() {
+    public VwCityJavaFx01_JustForTest1_hashmap5() {
         this.colorHash = "#055b08";
         this.mdCity = new MdCity();
         this.mdTimer = new MdTimer();
@@ -130,7 +134,8 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         for (int i = 0; i < numberOfCars; i++) {
-            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), true, i, this.initialSpeed));
+            boolean choosroadgoOrback = true; //(i > (numberOfCars / 2)) ? false : true;
+            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), choosroadgoOrback, i, this.initialSpeed));
         }
 //        for (int i = numberOfCars / 2; i < numberOfCars; i++) {
 //            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
@@ -194,7 +199,10 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
 
                             }
                             mdCity.getCarByName(carname).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press left click to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
-
+                            hashPathTransitions.get(carname).setRate(carobj.convertSpeedToRate());
+                            mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+                            hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
+                            hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                             //--------------------------------------------------end normal op
                             // anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
                         } catch (Exception ex) {
@@ -207,6 +215,7 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
 
             //----------------------------------------------------------------------------------------onclick event end
         }
+
         for (int i = 0; i < mdCity.getLstSchoolSign().size(); i++) {
 
             lstImageViewSchoolSignStart.add(new ImageView(new Image(mdCity.getLstSchoolSign().get(i).getImgSchoolStart())));
@@ -301,13 +310,49 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
             pathTransobj.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             pathTransobj.setInterpolator(Interpolator.LINEAR);
             pathTransobj.setCycleCount(Timeline.INDEFINITE);
+            pathTransobj.setAutoReverse(false);
             pathTransobj.setDelay(Duration.seconds(carobj.getDelay()));
             hashPathTransitions.put(carname, pathTransobj);
 
         }
+        //------------------------------------circle for stop all
+        Circle circ1 = new Circle(50, 20, 30, Color.BLUE); //new Circle(50, 20, 10);
+        circ1.setLayoutX(400);
+        circ1.setLayoutY(200);
+
+        //-----------------end circ1
+        //------------------------------------------------------------------------------bluecircleonclick
+        circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                // System.out.println("clickkkd on circle");
+                for (Map.Entry<String, PathTransition> ps : hashPathTransitions.entrySet()) {
+                    if (ps.getValue().getStatus() == PathTransition.Status.RUNNING) {
+                        ps.getValue().pause();
+                    } else {
+                        ps.getValue().play();
+
+                    }
+                }
+
+                for (Map.Entry<String, Timeline> tl : hashTimeline.entrySet()) {
+                    if (tl.getValue().getStatus() == Timeline.Status.RUNNING) {
+                        tl.getValue().pause();
+                    } else {
+                        tl.getValue().play();
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        //--------------------------------------------------------------------------------bluecircleonclickend
         //-----------------------------------add all element
         Group root = new Group();
-        root.getChildren().addAll(road, divider, lblTimer);
+        root.getChildren().addAll(circ1, road, divider, lblTimer);
         //hbbox
         for (HBox hbobj : lstHboxViewClone) {
             root.getChildren().add(hbobj);
@@ -371,47 +416,45 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
         primaryStage.show();
 
         //---------------------------------------------------------------------------------------only one timline
-        for (MdCar carobj : mdCity.getLstCar()) {
-            final String carname = carobj.getName();
-            Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
-                    hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr");
-                    hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
-                    if (mdTimer.getSec() > 3) {
-                        try {
+//----//---------test race end-timeline1
+        Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+                hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
+                hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
+                if (mdTimer.getSec() > 3) {
+                    try {
 
-                            hashPathTransitions.get(carname).setDelay(Duration.seconds(0));
-                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+                        hashPathTransitions.get(carname).setDelay(Duration.seconds(0));
+                        ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
-                            ths.run();
-                            hashImageViewCar.get(carname).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
+                        ths.run();
+                        hashImageViewCar.get(carname).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
-                            if (mdCity.getCarByName(carname).isIsParked()) {
-                                hashPathTransitions.get(carname).pause();
-                            }
-                            if (mdCity.getCarByName(carname).getSpeed() == 0) {
-                                hashPathTransitions.get(carname).pause();
-                            } else {
-                                //  anim.playFromStart();
-                                hashPathTransitions.get(carname).setRate(mdCity.getCarByName(carname).convertSpeedToRate());
+                        if (mdCity.getCarByName(carname).isIsParked()) {
+                            hashPathTransitions.get(carname).pause();
+                            //temp hashTimeline.get(carname).pause();
+                        }
+                        if (mdCity.getCarByName(carname).getSpeed() == 0) {
+                            hashPathTransitions.get(carname).pause();
+                            //temp hashTimeline.get(carname).pause();
+                        } else {
+                            //  anim.playFromStart();
+                            hashPathTransitions.get(carname).setRate(mdCity.getCarByName(carname).convertSpeedToRate());
 
-                            }
-
-                        } catch (Exception ex2) {
-
-                            ex2.printStackTrace();
                         }
 
-                    }
-                }
-            }));
-            aTimeline.setCycleCount(Timeline.INDEFINITE);
-            hashTimeline.put(carobj.getName(), aTimeline);
-        }
-//----//---------test race end-timeline1
+                    } catch (Exception ex2) {
 
+                        ex2.printStackTrace();
+                    }
+
+                }
+            }
+        }));
+        aTimeline.setCycleCount(Timeline.INDEFINITE);
+        hashTimeline.put("mainTimeline", aTimeline);
         //-----------------------------------------------------------------------------------------only one timline end
         //----------------------------onclickevent
         //----------------------------onclickevent
@@ -437,7 +480,8 @@ public class VwCityJavaFx01_JustForTest1_hashmap3 extends Application {
     public void fullStopControl(PathTransition anim, String carname, String ActionBy) throws Exception {
         if (anim.getStatus() == PathTransition.Status.RUNNING) {
             anim.pause();
-            mdCity.getCarByName(carname).setIsParked(true, new MdVehicleAction("break", "break full stop", "user press full stop", ActionBy, carname));
+            mdCity.getCarByName(carname).setSpeed(0, new MdVehicleAction("break", "start from break step01 decrease speed to 0", "user press break that makes full stop", ActionBy, carname));
+            mdCity.getCarByName(carname).setIsParked(true, new MdVehicleAction("break", "break full stop step01 handbreak", "user press full stop", ActionBy, carname));
 
         } else {
             mdCity.getCarByName(carname).setIsParked(false, new MdVehicleAction("breakstart", "start from break step01 handbreak release", "user continue from full stop", ActionBy, carname));

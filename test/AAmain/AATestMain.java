@@ -27,7 +27,20 @@ public class AATestMain {
         //runCityJavaFxDemo_justForTest3();//same as original just shorter process for stopAccident
         // testHashMap();
         //    runCityJavaFx01_justForTest_hashmap();
-        runCityJavaFx01_justForTest_hashmap2();  ///no error running
+        // runCityJavaFx01_justForTest_hashmap2();  ///no error running
+        // runCityJavaFx01_justForTest_hashmap3();  ///no error running
+        runCityJavaFx01_justForTest_hashmap4();  ///no error running
+        //  runCityJavaFx01_justForTest_hashmap5();//using hit eventlistener not timeline does not work int that way
+    }
+
+    public static void runCityJavaFx01_justForTest_hashmap5() {
+
+        new Thread() {
+            @Override
+            public void run() {
+                javafx.application.Application.launch(VwCityJavaFx01_JustForTest1_hashmap5.class);
+            }
+        }.start();
 
     }
 
@@ -74,6 +87,29 @@ public class AATestMain {
             @Override
             public void run() {
                 javafx.application.Application.launch(VwCityJavaFxMain_justForTestOld.class);
+            }
+        }.start();
+
+    }
+
+    public static void runCityJavaFx01_justForTest_hashmap4() {
+
+        new Thread() {
+            @Override
+            public void run() {
+                javafx.application.Application.launch(VwCityJavaFx01_JustForTest1_hashmap4.class);
+            }
+        }.start();
+
+    }
+
+    public static void runCityJavaFx01_justForTest_hashmap3() {
+//        MdTimer mdTimer = new MdTimer();
+//        MdCity mdcity = new MdCity();
+        new Thread() {
+            @Override
+            public void run() {
+                javafx.application.Application.launch(VwCityJavaFx01_JustForTest1_hashmap3.class);
             }
         }.start();
 
