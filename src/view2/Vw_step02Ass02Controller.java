@@ -63,7 +63,9 @@ public class Vw_step02Ass02Controller implements Initializable {
     @FXML
     private void demoOnlyAction(ActionEvent event) {
 
-        Dialog<Pair<String, String>> dialog = createPopupDialog();
+       Dialog<Pair<String, String>> dialog = createPopupDialog();
+        
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(data -> {
@@ -71,10 +73,37 @@ public class Vw_step02Ass02Controller implements Initializable {
             showTime = data.getKey();
             Duration = data.getValue();
         });
-        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
+        if(result.equals(null)){
+            
+        }else{
+            for (int i = 0; i < 100; i++) {
+            if (showTime.equals("") || Duration.equals("")) {
+                dialog.setHeaderText("Please do not leave input empty");
+                result = dialog.showAndWait();
+                result.ifPresent(data -> {
+                
+                showTime = data.getKey();
+                Duration = data.getValue();
+                });
+                }else if(isNumber(showTime) && isNumber(Duration)){
+                    break;
+                }else{
+                    dialog.setHeaderText("Please input number data");
+                    
+                    result = dialog.showAndWait();
+                    result.ifPresent(data -> {
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        runDemo(window, false);
+                    showTime = data.getKey();
+                    Duration = data.getValue();
+                    });
+                }
+            
+            }
+
+            // System.out.println("Times=" + showTime + ", Duration=" + Duration);
+
+            runDemo(window, false);
+        }
 
     }
 

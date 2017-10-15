@@ -109,10 +109,10 @@ public class VwCityJavaFxDemo extends Application {
                 String ID = Integer.toString(id);
 
                 if (id % 5 == 1) {
-                    //oldcode mdCity.addCar(new MdCar(new Location(180, 400), "car"+ID+".png", "c"+ID, true, id, this.initialSpeed));
+                    
                     mdCity.addCar(new MdCar(new Location(180, 400), "car-21d811.png", "c" + ID, true, id, this.initialSpeed));
                 } else if (id % 5 == 2) {
-                    //mdCity.addCar(new MdCar(new Location(180, 400), "car" + ID + ".jpg", "c" + ID, true, id, this.initialSpeed));
+                    
                     mdCity.addCar(new MdCar(new Location(180, 400), "car-5906e8.png", "c" + ID, true, id, this.initialSpeed));
                 } else if (id % 5 == 3) {
                     mdCity.addCar(new MdCar(new Location(180, 400), "car-043d01.png", "c" + ID, true, id, this.initialSpeed));
@@ -123,9 +123,7 @@ public class VwCityJavaFxDemo extends Application {
                 }
 
             }
-//            mdCity.addCar(new MdCar(new Location(180, 400), "carbluepolice.jpg", "c1", true, 1, this.initialSpeed));
-//            mdCity.addCar(new MdCar(new Location(180, 400), "carred.png", "c2", true, 2, this.initialSpeed));
-//            mdCity.addCar(new MdCar(new Location(180, 400), "carblue.png", "c3", true, 3, this.initialSpeed));
+
             mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
             //Initial all Arraylists
@@ -141,22 +139,12 @@ public class VwCityJavaFxDemo extends Application {
 
                 lstAnims.add(new PathTransition());
             }
-            ImageView car1 = new ImageView();
-//            ImageView car2 = new ImageView();
-//            ImageView car3 = new ImageView();
-//            ImageView car1Clone = new ImageView();
-//            ImageView car2Clone = new ImageView();
-//            ImageView car3Clone = new ImageView();
-//            Label car1lblSpeed = new Label("Speed");
-//            car1lblSpeed.setTextFill(labelsColor);
-//            Label car2lblSpeed = new Label("Speed");
-//            car2lblSpeed.setTextFill(labelsColor);
-//            Label car3lblSpeed = new Label("Speed");
-//            car3lblSpeed.setTextFill(labelsColor);
 
+            //-----------school zone icons
             ImageView img_schoolZone_start = new ImageView();
             ImageView img_schoolZone_end = new ImageView();
 
+            //-------------explanation Labels
             Label lbl1 = new Label("1.L-CLICK on a car reduce speed by 10km/h");
             lbl1.setTextFill(labelsColor);
             lbl1.setLayoutX(300);
@@ -201,32 +189,7 @@ public class VwCityJavaFxDemo extends Application {
                 hboxY += 40;
             }
 
-            car1.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-            car1.setX(mdCity.getCarByName("c1").getLocation().getX());
-            car1.setY(mdCity.getCarByName("c1").getLocation().getY());
-            car1.setRotate(-90);
-//            car1Clone.setImage(new Image(mdCity.getCarByName("c1").getImgName()));
-//            HBox hb1 = new HBox();
-//            hb1.getChildren().addAll(car1Clone, car1lblSpeed);
-//            hb1.setLayoutY(20);
-//
-//            car2.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
-//            car2.setX(mdCity.getCarByName("c1").getLocation().getX());
-//            car2.setY(mdCity.getCarByName("c1").getLocation().getY());
-//            car2.setRotate(-90);
-//            car2Clone.setImage(new Image(mdCity.getCarByName("c2").getImgName()));
-//            HBox hb2 = new HBox();
-//            hb2.getChildren().addAll(car2Clone, car2lblSpeed);
-//            hb2.setLayoutY(60);
-//
-//            car3.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
-//            car3.setX(mdCity.getCarByName("c3").getLocation().getX());
-//            car3.setY(mdCity.getCarByName("c3").getLocation().getY());
-//            car3.setRotate(-90);
-//            car3Clone.setImage(new Image(mdCity.getCarByName("c3").getImgName()));
-//            HBox hb3 = new HBox();
-//            hb3.getChildren().addAll(car3Clone, car3lblSpeed);
-//            hb3.setLayoutY(100);
+            
             img_schoolZone_start.setImage(new Image(mdCity.getSchoolSignByName("sc1").getImgSchoolStart()));
             img_schoolZone_start.setX(mdCity.getSchoolSignByName("sc1").getLocationSchoolStart().getX());
             img_schoolZone_start.setY(mdCity.getSchoolSignByName("sc1").getLocationSchoolStart().getY());
@@ -307,7 +270,7 @@ public class VwCityJavaFxDemo extends Application {
             roadCarreturn.getElements().addAll(pathCarReturn);
 
             //-------anim
-            //Group g1=new Group()
+        
             int pathi = 0;
             int pathid;
             for (PathTransition anim : lstAnims) {
@@ -325,53 +288,20 @@ public class VwCityJavaFxDemo extends Application {
                 pathi++;
                 anim.play();
             }
-            PathTransition anim = new PathTransition();
-            anim.setNode(car1);
-            anim.setPath(mdCity.getCarByName("c1").isIsRouteToGo() ? roadCargo : roadCarreturn);
-            anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-            anim.setInterpolator(Interpolator.LINEAR);
-            anim.setCycleCount(Timeline.INDEFINITE);
-            anim.setDuration(new Duration(mdCity.getCarByName("c1").convertSpeedToDuration()));
-            anim.setDelay(Duration.seconds(mdCity.getCarByName("c1").getDelay()));
-            anim.play();
-//            //---------anim2
-//            PathTransition anim2 = new PathTransition();
-//            anim2.setNode(car2);
-//            anim2.setPath(mdCity.getCarByName("c2").isIsRouteToGo() ? roadCargo : roadCarreturn);
-//            anim2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-//            anim2.setCycleCount(Timeline.INDEFINITE);
-//            anim2.setInterpolator(Interpolator.LINEAR);
-//            anim2.setDuration(new Duration(mdCity.getCarByName("c2").convertSpeedToDuration()));
-//            anim2.setDelay(Duration.seconds(mdCity.getCarByName("c2").getDelay()));
-//            //----------anim3
-//            PathTransition anim3 = new PathTransition();
-//            anim3.setNode(car3);
-//            anim3.setPath(mdCity.getCarByName("c3").isIsRouteToGo() ? roadCargo : roadCarreturn);
-//            anim3.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-//            anim3.setCycleCount(Timeline.INDEFINITE);
-//            anim3.setInterpolator(Interpolator.LINEAR);
-//            anim3.setDuration(new Duration(mdCity.getCarByName("c3").convertSpeedToDuration()));
-//            anim3.setDelay(Duration.seconds(mdCity.getCarByName("c3").getDelay()));
+ 
 
             //------------------------------root group
             Group root = new Group();
 
             root.getChildren().addAll(road, divider, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
-            //root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
+            
             root.getChildren().addAll(lstCars);
-//            for (ImageView car : lstCars) {
-//                root.getChildren().add(car);
-//            }
+
             for (HBox hbox : lstCarBoxs) {
                 root.getChildren().add(hbox);
             }
             root.setTranslateX(50);
             root.setTranslateY(50);
-
-            //---------animations.play()
-//            anims.forEach((anim0) -> {
-//                anim0.play();
-//            });
 
              lstAnims.forEach((anim0) -> {
                  System.err.println(anim0.getStatus());
@@ -381,16 +311,10 @@ public class VwCityJavaFxDemo extends Application {
 
             });
 
-//            anim.play();
-//            anim2.play();
-//            anim3.play();
+
             //---------test race start-timeline1
             int ti = 0, timelineId;
-//            Dialog reminderAct = new Dialog();                    
-//                reminderAct.setHeaderText("You reach 40 speed limit zone!");
-//                reminderAct.setContentText("Click on the car to perform brake action!");
-            Pane reminderPane = new Pane();
-            
+ //----------when reach school zone, this stamp will automaticlly appear           
             Label reminderLabel1 = new Label();
             reminderLabel1.setText("Hint: when car reaching ");
             reminderLabel1.setTextFill(Paint.valueOf("#2d1514"));
@@ -436,16 +360,6 @@ public class VwCityJavaFxDemo extends Application {
 
                                 if(mdCity.getCarByName(carname).isIs40ZoneArea()){
                                     
-//                                    reminderAct.setOnShown((reminderEvent) -> {
-//                                    mdTimer.pause();
-//                                    anim0.pause();
-//
-//                                    });
-//                                    reminderAct.setOnCloseRequest((reminderEndEvent) -> {
-//                                        anim0.play();
-//                                        mdTimer.resume();
-//
-//                                    });
                                     if(reminderUp){
                                         root.getChildren().add(reminderBox);
                                         reminderOk.setOnAction((event) -> {
@@ -502,9 +416,6 @@ public class VwCityJavaFxDemo extends Application {
                             carlabel.setText(Integer.toString(mdCity.getCarByName(carname).getSpeed()) + " km/hr");
                             carId++;
                         }
-//                        car1lblSpeed.setText(Integer.toString(mdCity.getCarByName("c1").getSpeed()) + " km/hr");
-//                        car2lblSpeed.setText(Integer.toString(mdCity.getCarByName("c2").getSpeed()) + " km/hr");
-//                        car3lblSpeed.setText(Integer.toString(mdCity.getCarByName("c3").getSpeed()) + " km/hr");
 //----------------------------just for dbug purposes
 
 //----------------------------end of debug
@@ -641,8 +552,7 @@ public class VwCityJavaFxDemo extends Application {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                
-//                               
+                                                      
                             });
                             alert.show();
                             
@@ -657,7 +567,7 @@ public class VwCityJavaFxDemo extends Application {
                 }
             }));
 
-            ///mouse-onclick-car1
+            ///mouse-onclick-cars
             int ei = 0;
             int mouseActId;
             for (ImageView aCar : lstCars) {
@@ -728,14 +638,10 @@ public class VwCityJavaFxDemo extends Application {
                 aLine.setCycleCount(Timeline.INDEFINITE);
                 aLine.play();
             }
-//            timeline1.setCycleCount(Timeline.INDEFINITE);
-//            timeline2.setCycleCount(Timeline.INDEFINITE);
-//            timeline3.setCycleCount(Timeline.INDEFINITE);
+
             timeline4.setCycleCount(Timeline.INDEFINITE);
 
-//            timeline1.play();
-//            timeline2.play();
-//            timeline3.play();
+
             timeline4.play();
             ///circle clicked
             circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -786,24 +692,14 @@ public class VwCityJavaFxDemo extends Application {
                 animations.get(i).play();
                 multiT.get(i).play();
             }
-//            t1.play();
-//            t2.play();
-//            t3.play();
-//            anim.play();
-//            anim2.play();
-//            anim3.play();
+
 
         } else {
             for (int i = 0; i < animations.size(); i++) {
                 animations.get(i).pause();
                 multiT.get(i).pause();
             }
-//            t1.pause();
-//            t2.pause();
-//            t3.pause();
-//            anim.pause();
-//            anim2.pause();
-//            anim3.pause();
+
 
         }
 
@@ -858,9 +754,6 @@ public class VwCityJavaFxDemo extends Application {
 
     }
     
-     public static void main(String[] args) {
-        // Test5_javafx t = new Test5_javafx("my name");
-        launch();
-    }
+    
 
 }
