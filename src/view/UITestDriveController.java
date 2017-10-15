@@ -202,6 +202,20 @@ public class UITestDriveController implements Initializable {
 
     @FXML
     private void checkboxCarSelected(ActionEvent event) {
+        //do onclick something here
+
+    }
+
+    private boolean[] getCarOptionSelected() {
+        boolean[] carOptions = new boolean[7];
+        carOptions[0] = chkcar01.isSelected();
+        carOptions[1] = chkcar02.isSelected();
+        carOptions[2] = chkcar03.isSelected();
+        carOptions[3] = chkcar04.isSelected();
+        carOptions[4] = chkcar05.isSelected();
+        carOptions[5] = chkcar06.isSelected();
+        carOptions[6] = chkcar07.isSelected();
+        return carOptions;
     }
 
 }
