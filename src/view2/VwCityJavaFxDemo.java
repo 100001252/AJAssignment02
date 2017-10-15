@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -34,14 +33,21 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
 import helper.*;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 
 /**
  *
@@ -57,12 +63,13 @@ public class VwCityJavaFxDemo extends Application {
     private String labelsBackgroudColor = "white";
     private int initialSpeed;
     private int demoShowTimes;
-    private ArrayList<ImageView> cars = new ArrayList<>();
-    private ArrayList<ImageView> carClones = new ArrayList<>();
-    private ArrayList<Label> carSpeedLabels = new ArrayList<>();
-    private ArrayList<HBox> carBoxs = new ArrayList<>();
-    private ArrayList<PathTransition> anims = new ArrayList<>();
-    private ArrayList<Timeline> timelines = new ArrayList<>();
+
+    private ArrayList<ImageView> lstCars = new ArrayList<>();
+    private ArrayList<ImageView> lstCarClones = new ArrayList<>();
+    private ArrayList<Label> lstCarSpeedLabels = new ArrayList<>();
+    private ArrayList<HBox> lstCarBoxs = new ArrayList<>();
+    private ArrayList<PathTransition> lstAnims = new ArrayList<>();
+    private ArrayList<Timeline> lstTimelines = new ArrayList<>();
     //-----------variable
     private int maxTime = 500;//maximum seconds of running this app
 
@@ -110,16 +117,16 @@ public class VwCityJavaFxDemo extends Application {
 
             //Initial all Arraylists
             for (int i = 0; i < carNumber; i++) {
-                cars.add(new ImageView());
-                carClones.add(new ImageView());
+                lstCars.add(new ImageView());
+                lstCarClones.add(new ImageView());
 
                 Label carSpeedLabel = new Label("Speed");
                 carSpeedLabel.setTextFill(labelsColor);
-                carSpeedLabels.add(carSpeedLabel);
+                lstCarSpeedLabels.add(carSpeedLabel);
 
-                carBoxs.add(new HBox());
+                lstCarBoxs.add(new HBox());
 
-                anims.add(new PathTransition());
+                lstAnims.add(new PathTransition());
             }
             ImageView car1 = new ImageView();
 //            ImageView car2 = new ImageView();
@@ -163,21 +170,21 @@ public class VwCityJavaFxDemo extends Application {
             //car.setImage(new Image("file:res/car.gif"));
             int carid = 1;
             int hboxY = 20;
-            for (int counter = 0; counter < cars.size(); counter++) {
+            for (int counter = 0; counter < lstCars.size(); counter++) {
                 String ID = Integer.toString(carid);
                 String carname = "c" + ID;
                 //ImageView carView = cars.get(counter);
-                cars.get(counter).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
-                cars.get(counter).setX(mdCity.getCarByName(carname).getLocation().getX());
-                cars.get(counter).setY(mdCity.getCarByName(carname).getLocation().getY());
-                cars.get(counter).setRotate(-90);
+                lstCars.get(counter).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
+                lstCars.get(counter).setX(mdCity.getCarByName(carname).getLocation().getX());
+                lstCars.get(counter).setY(mdCity.getCarByName(carname).getLocation().getY());
+                lstCars.get(counter).setRotate(-90);
 
                 //ImageView carCloneView = carClones.get(counter);
-                carClones.get(counter).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
+                lstCarClones.get(counter).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
                 carid++;
 
-                carBoxs.get(counter).getChildren().addAll(carClones.get(counter), carSpeedLabels.get(counter));
-                carBoxs.get(counter).setLayoutY(hboxY);
+                lstCarBoxs.get(counter).getChildren().addAll(lstCarClones.get(counter), lstCarSpeedLabels.get(counter));
+                lstCarBoxs.get(counter).setLayoutY(hboxY);
                 hboxY += 40;
             }
 
@@ -290,12 +297,12 @@ public class VwCityJavaFxDemo extends Application {
             //Group g1=new Group()
             int pathi = 0;
             int pathid;
-            for (PathTransition anim : anims) {
+            for (PathTransition anim : lstAnims) {
                 pathid = pathi + 1;
                 String ID = Integer.toString(pathid);
                 String carname = "c" + ID;
 
-                anim.setNode(cars.get(pathi));
+                anim.setNode(lstCars.get(pathi));
                 anim.setPath(mdCity.getCarByName(carname).isIsRouteToGo() ? roadCargo : roadCarreturn);
                 anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                 anim.setInterpolator(Interpolator.LINEAR);
@@ -338,10 +345,11 @@ public class VwCityJavaFxDemo extends Application {
            
             root.getChildren().addAll(road, divider, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
             //root.getChildren().addAll(hb1, hb2, hb3, road, divider, car1, car2, car3, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
-            for (ImageView car : cars) {
-                root.getChildren().add(car);
-            }
-            for (HBox hbox : carBoxs) {
+            root.getChildren().addAll(lstCars);
+//            for (ImageView car : lstCars) {
+//                root.getChildren().add(car);
+//            }
+            for (HBox hbox : lstCarBoxs) {
                 root.getChildren().add(hbox);
             }
             root.setTranslateX(50);
@@ -351,7 +359,7 @@ public class VwCityJavaFxDemo extends Application {
 //            anims.forEach((anim0) -> {
 //                anim0.play();
 //            });
-             anims.forEach((anim0) -> {
+             lstAnims.forEach((anim0) -> {
                  System.err.println(anim0.getStatus());
             });
             
@@ -361,11 +369,11 @@ public class VwCityJavaFxDemo extends Application {
 
             //---------test race start-timeline1
             int ti = 0, timelineId;
-            for (ImageView aCar : cars) {
+            for (ImageView aCar : lstCars) {
                 timelineId = ti + 1;
                 String ID = Integer.toString(timelineId);
                 String carname = "c" + ID;
-                PathTransition anim0 = anims.get(ti);
+                PathTransition anim0 = lstAnims.get(ti);
                 Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
@@ -379,6 +387,11 @@ public class VwCityJavaFxDemo extends Application {
                                 ths.run();
                                 aCar.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
+                                if(mdCity.getCarByName(carname).isIs40ZoneArea()){
+                                    Dialog reminderAct = new Dialog();
+                                    reminderAct.setHeaderText("You reach 40 speed limit zone!");
+                                    
+                                }                                
                                 if (mdCity.getCarByName(carname).isIsParked()) {
                                     anim0.pause();
                                 }
@@ -399,7 +412,7 @@ public class VwCityJavaFxDemo extends Application {
                     }
                 }));
                 ti++;
-                timelines.add(aTimeline);
+                lstTimelines.add(aTimeline);
             }
 
 //            Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
@@ -506,7 +519,7 @@ public class VwCityJavaFxDemo extends Application {
                 public void handle(ActionEvent t) {
                     int carId = 1;
                     try {
-                        for (Label carlabel : carSpeedLabels) {
+                        for (Label carlabel : lstCarSpeedLabels) {
                             String ID = Integer.toString(carId);
                             String carname = "c" + ID;
                             carlabel.setText(Integer.toString(mdCity.getCarByName(carname).getSpeed()) + " km/hr");
@@ -523,56 +536,114 @@ public class VwCityJavaFxDemo extends Application {
                     }
 
                     if (mdTimer.getSec() == maxTime) {//--------end of process
-                        System.out.println("Finished");
-                        int sum = 0;
-                        
-                        final CategoryAxis xAxis = new CategoryAxis();
-                        final NumberAxis yAxis = new NumberAxis();
-                        final BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
-                        final PieChart pieChart = new PieChart();
-                        final Label pieDataLabel = new Label("");
-                        
-                        pieDataLabel.setTextFill(Color.ANTIQUEWHITE);
-                        pieDataLabel.setStyle("-fx-font: 16 arial;");
-                                                
-                        xAxis.setLabel("Car Name");
-                        yAxis.setLabel("Control Times");
+                        demoShowTimes--;
+                        if(0==demoShowTimes){
+                            System.out.println("Finished");
+                            int sum = 0;
 
-                        XYChart.Series userSeries = new XYChart.Series();
-                        userSeries.setName("User");
-                        XYChart.Series systemSeries = new XYChart.Series();
-                        systemSeries.setName("Auto");
-                        
-                        for(MdCar pieCar: mdCity.getLstCar()){
-                            sum += pieCar.getLstVehicleAction().size();
-                        }
-                        
-                        for(MdCar pieCar: mdCity.getLstCar()){
-                            String name = pieCar.getName();int actionLstSize = pieCar.getLstVehicleAction().size();
-                            userSeries.getData().add(new XYChart.Data(name,actionLstSize));
-                            systemSeries.getData().add(new XYChart.Data(name,0));
-                            int per = actionLstSize*100/sum;
-                            pieChart.getData().add(new PieChart.Data(name, per));
+                            final CategoryAxis xAxis = new CategoryAxis();
+                            final NumberAxis yAxis = new NumberAxis();
+                            final BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+                            final PieChart pieChart = new PieChart();
+                            final Label pieDataLabel = new Label("");
+
+                            pieDataLabel.setTextFill(Color.ANTIQUEWHITE);
+                            pieDataLabel.setStyle("-fx-font: 16 arial;");
+
+                            xAxis.setLabel("Car Name");
+                            yAxis.setLabel("Control Times");
+
+                            XYChart.Series userSeries = new XYChart.Series();
+                            userSeries.setName("User");
+                            XYChart.Series systemSeries = new XYChart.Series();
+                            systemSeries.setName("Auto");
+
+                            for(MdCar pieCar: mdCity.getLstCar()){
+                                sum += pieCar.getLstVehicleAction().size();
+                            }
+
+                            for(MdCar pieCar: mdCity.getLstCar()){
+                                String name = pieCar.getName();int actionLstSize = pieCar.getLstVehicleAction().size();
+                                userSeries.getData().add(new XYChart.Data(name,actionLstSize));
+                                systemSeries.getData().add(new XYChart.Data(name,0));
+                                int per = 0;
+                                if(0!=sum){
+                                    per = actionLstSize*100/sum;
+                                }
+                                pieChart.getData().add(new PieChart.Data(name, per));
+
+                            }
+
+                            barChart.getData().addAll(userSeries, systemSeries);
+                            pieChart.getData().stream().forEach((data) -> {
+                                data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
+                                    pieDataLabel.setTranslateX(e.getSceneX());
+                                    pieDataLabel.setTranslateY(e.getSceneY());
+                                    pieDataLabel.setText(String.valueOf(data.getPieValue())
+                                            +"%");
+
+                                });
+                            });
+                            
+                            Button backToHome = new Button();
+                            backToHome.setText("Back");
+                            
+                            backToHome.setOnAction((event) -> {
+                                try{
+                                    Parent root = FXMLLoader.load(getClass().getResource("../view2/Vw_step02Ass02.fxml"));
+                                    Scene scene = new Scene(root, 1350, 750);
+                                    primaryStage.setScene(scene);
+                                    primaryStage.show();
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                    DebugLog buglog = new DebugLog();
+                                    try{
+                                        buglog.appendData("Back to home from demo end failed");
+                                    }catch(IOException ie){
+                                        System.err.println("dubug log failed");
+                                    }
+                                }
+                                
+                            });
+
+                            HBox chartBox = new HBox();
+                            chartBox.getChildren().addAll(barChart,pieChart,backToHome);
+                            Scene aScene = new Scene(new Group(),1350,500);
+                            ((Group) aScene.getRoot()).getChildren().addAll(chartBox,pieDataLabel);
+                            primaryStage.setScene(aScene);
+                            primaryStage.show();
+                        }else{
+                            mdTimer.setSec(0);
+                            for(PathTransition anim: lstAnims){
+                                anim.pause();
+                            }
+                            
+                            mdTimer.pause();
+                            
+                            Alert alert = new Alert(AlertType.INFORMATION);
+                            alert.setTitle("Demo End");
+                            alert.setHeaderText("This Demo Ended, Press ok to see demo again");
+                            alert.setContentText("Demo show times left: "+Integer.toString(demoShowTimes));
+
+                            alert.setOnHidden(evt -> {
+                                int initialSpeed = 100;
+                                MdCity mdcity = new MdCity();
+                                MdTimer mdTimer = new MdTimer();
+
+                                try {
+                                    VwCityJavaFxDemo vc = new VwCityJavaFxDemo(Integer.toString(demoShowTimes), Integer.toString(maxTime), "#005544", mdcity, mdTimer, initialSpeed);
+                                    vc.start(primaryStage);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                
+//                               
+                            });
+                            alert.show();
                             
                         }
                         
-                        barChart.getData().addAll(userSeries, systemSeries);
-                        pieChart.getData().stream().forEach((data) -> {
-                            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
-                                pieDataLabel.setTranslateX(e.getSceneX());
-                                pieDataLabel.setTranslateY(e.getSceneY());
-                                pieDataLabel.setText(String.valueOf(data.getPieValue())
-                                        +"%");
-                                
-                            });
-                        });
-                                  
-                        HBox chartBox = new HBox();
-                        chartBox.getChildren().addAll(barChart,pieChart);
-                        Scene aScene = new Scene(new Group(),1000,500);
-                        ((Group) aScene.getRoot()).getChildren().addAll(chartBox,pieDataLabel);
-                        primaryStage.setScene(aScene);
-                        primaryStage.show();
+                        
                         
                     }
                     if (mdTimer.getSec() <= maxTime) {
@@ -585,12 +656,12 @@ public class VwCityJavaFxDemo extends Application {
             ///mouse-onclick-car1
             int ei = 0;
             int mouseActId;
-            for (ImageView aCar : cars) {
+            for (ImageView aCar : lstCars) {
                 mouseActId = ei + 1;
                 String ID = Integer.toString(mouseActId);
                 String carname = "c" + ID;
-                Timeline timeline1 = timelines.get(ei);
-                PathTransition anim0 = anims.get(ei);
+                Timeline timeline1 = lstTimelines.get(ei);
+                PathTransition anim0 = lstAnims.get(ei);
                 aCar.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent
@@ -856,7 +927,7 @@ public class VwCityJavaFxDemo extends Application {
 //                }
 //            }
 //            );
-            for (Timeline aLine : timelines) {
+            for (Timeline aLine : lstTimelines) {
                 aLine.setCycleCount(Timeline.INDEFINITE);
                 aLine.play();
             }
@@ -874,11 +945,11 @@ public class VwCityJavaFxDemo extends Application {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     // System.out.println("clickkkd on circle");
-                    Timeline timeline1 = timelines.get(0);
+                    Timeline timeline1 = lstTimelines.get(0);
                     if (timeline1.getStatus() == Timeline.Status.RUNNING) {
-                        stopAllMove(anims, timelines, mdTimer, false);
+                        stopAllMove(lstAnims, lstTimelines, mdTimer, false);
                     } else {
-                        stopAllMove(anims, timelines, mdTimer, true);
+                        stopAllMove(lstAnims, lstTimelines, mdTimer, true);
 
                     }
                 }
