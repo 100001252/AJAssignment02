@@ -81,6 +81,7 @@ public class VwCityJavaFx01_mainTest extends Application {
     //-----------variable
     private int maxTime = 20;//maximum seconds of running this app
     private int numberOfCars = 10;
+    private ArrayList<String> listofPossibleCar = new ArrayList<>();
 
     //private HashMap<String, ImageView> hashImageViewCar = new HashMap<>();
     private HashMap<String, ImageView> hashImageViewCar = new HashMap<String, ImageView>();
@@ -101,21 +102,13 @@ public class VwCityJavaFx01_mainTest extends Application {
 
     private String chooseImageById(int id) {
         String image = "car-21d811.png";
-        if (id % 7 == 0) {
-            image = "car-030dbf.png";
-        } else if (id % 7 == 1) {
-            image = "car-043d01.png";
-        } else if (id % 7 == 2) {
-            image = "car-67dbc9.png";
-        } else if (id % 7 == 3) {
-            image = "car-578eed.png";
-        } else if (id % 7 == 4) {
-            image = "car-822d00.png";
-        } else if (id % 7 == 5) {
-            image = "car-5906e8.png";
-        } else if (id % 7 == 6) {
-            image = "car-999999.png";
+        int listsize = listofPossibleCar.size();
+
+        while ((id % listsize) > (listsize - 1)) {
+            id--;
+
         }
+        image = listofPossibleCar.get(id % listsize);
         return image;
     }
 
@@ -795,6 +788,20 @@ public class VwCityJavaFx01_mainTest extends Application {
 
         }
 
+    }
+
+    /**
+     * @param numberOfCars the numberOfCars to set
+     */
+    public void setNumberOfCars(int numberOfCars) {
+        this.numberOfCars = numberOfCars;
+    }
+
+    /**
+     * @param listofPossibleCar the listofPossibleCar to set
+     */
+    public void setListofPossibleCar(ArrayList<String> listofPossibleCar) {
+        this.listofPossibleCar = listofPossibleCar;
     }
 
 }
