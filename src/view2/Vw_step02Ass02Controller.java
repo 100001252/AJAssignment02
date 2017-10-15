@@ -5,6 +5,8 @@
  */
 package view2;
 
+
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -33,7 +35,6 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.MdCity;
 import model.MdTimer;
-import view.VwCityJavaFx;
 
 /**
  * FXML Controller class
@@ -74,7 +75,7 @@ public class Vw_step02Ass02Controller implements Initializable {
         // System.out.println("Times=" + showTime + ", Duration=" + Duration);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        runDemo(window);
+        runDemo(window,false);
 
     }
 
@@ -93,6 +94,28 @@ public class Vw_step02Ass02Controller implements Initializable {
 
     @FXML
     private void demoAndTestAction(ActionEvent event) {
+        Dialog<Pair<String, String>> dialog = createPopupDialog();
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        result.ifPresent(data -> {
+//            // System.out.println("Times=" + data.getKey() + ", Duration=" + data.getValue());
+            showTime = data.getKey();
+            Duration = data.getValue();
+        });
+        for(int i = 0; i<100; i++){
+            if(showTime.equals("") || Duration.equals("")){
+                dialog.setContentText("Please do not leave input empty");
+            }
+            dialog.setContentText("Please input number data");
+        }
+        
+        // System.out.println("Times=" + showTime + ", Duration=" + Duration);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        runDemo(window, true);
+        
+        
+        
     }
 
     private Popup createPopup() {
@@ -104,13 +127,13 @@ public class Vw_step02Ass02Controller implements Initializable {
         return popup;
     }
 
-    private void runDemo(Stage window) {
+    private void runDemo(Stage window,boolean plusTest) {
         int initialSpeed = 100;
         MdCity mdcity = new MdCity();
         MdTimer mdTimer = new MdTimer();
 
         try {
-            VwCityJavaFxDemo vc = new VwCityJavaFxDemo(showTime, Duration, "#005544", mdcity, mdTimer, initialSpeed);
+            VwCityJavaFxDemo vc = new VwCityJavaFxDemo(showTime, Duration, "#005544", mdcity, mdTimer, initialSpeed, plusTest);
             vc.start(window);
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,9 +155,9 @@ public class Vw_step02Ass02Controller implements Initializable {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField showTimes = new TextField();
-        showTimes.setPromptText("How many times?");
+        showTimes.setPromptText("How many times? up to 3");
         TextField duration = new TextField();
-        duration.setPromptText("How many seconds?");
+        duration.setPromptText("How many seconds? up to 60");
 
         grid.add(new Label("Times:"), 0, 0);
         grid.add(showTimes, 1, 0);

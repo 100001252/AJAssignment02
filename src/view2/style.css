@@ -27,3 +27,9 @@ and open the template in the editor.
     -fx-font-size: 14px;
     -fx-padding: 10 20 10 20;
 }
+
+.hbox {
+    -fx-background-color: #2f4f4f;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
