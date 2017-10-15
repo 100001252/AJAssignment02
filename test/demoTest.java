@@ -29,7 +29,7 @@ public class demoTest extends Application{
         MdTimer mdTimer = new MdTimer();
         
         try {
-            VwCityJavaFxDemo vc = new VwCityJavaFxDemo("2", "33", "#005544", mdcity, mdTimer, 100);
+            VwCityJavaFxDemo vc = new VwCityJavaFxDemo("2", "33", "#005544", mdcity, mdTimer, 100,true);
             vc.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
