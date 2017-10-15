@@ -34,6 +34,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     private Location location;
     // Where the vehicle is headed.
     private int speed = 50;//initial speed for all car is 50km/hr
+    private int speedofCarInFront = 50;
 
     private int timeInSecond = 0;
 
@@ -56,6 +57,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         //temperarily
         if (InitialSpeed > 0) {
             this.speed = InitialSpeed;
+            this.speedofCarInFront = InitialSpeed;
         }
         this.delay = delayToStart;
         this.isRouteToGo = goRoute;
@@ -592,6 +594,20 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     public void setImgNormal(String imgNormal) {
         // this.imgNormal = getClass().getResource("../images/").toString() + imgNormal;
         this.imgNormal = imgNormal;
+    }
+
+    /**
+     * @return the speedofCarInFront
+     */
+    public int getSpeedofCarInFront() {
+        return speedofCarInFront;
+    }
+
+    /**
+     * @param speedofCarInFront the speedofCarInFront to set
+     */
+    public void setSpeedofCarInFront(int speedofCarInFront) {
+        this.speedofCarInFront = speedofCarInFront;
     }
 
 }

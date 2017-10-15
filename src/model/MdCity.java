@@ -43,7 +43,8 @@ public class MdCity implements Runnable {
             // this.getCarByName(carName).setLocation(new Location(carobj.getLocation().getX() + carobj.getSpeed() / 10, 0));
             Double dist = distanceBetweenLocation(oldLocation, new Location(xVal, yVal));
 
-            if (this.getCarByName(carName).getDistanceFromOrigin() > 2650 && this.getCarByName(carName).getDistanceFromOrigin() < 2660) {
+            // if (this.getCarByName(carName).getDistanceFromOrigin() > 2650 && this.getCarByName(carName).getDistanceFromOrigin() < 2660) {
+            if (this.getCarByName(carName).getDistanceFromOrigin() > 2700) {
                 this.getCarByName(carName).setDistanceFromOrigin(0);
             } else {
                 this.getCarByName(carName).setDistanceFromOrigin(this.getCarByName(carName).getDistanceFromOrigin() + dist.intValue());
@@ -259,18 +260,29 @@ public class MdCity implements Runnable {
                     c = this.getLstCar().get(this.getLstCar().size() - 1);
                 }
                 double distanceBetweenCars = distanceBetweenLocation(c.getLocation(), objCar.getLocation());
-                if (distanceBetweenCars < 40 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+                ///---------------------------------------------------------------------------set car speed if that is close
+                if (distanceBetweenCars < 700 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+
+                    if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
+                        c.setSpeedofCarInFront(objCar.getSpeed());
+                    }
+                    //c.setSpeed(objCar.getSpeed(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
+
+                }
+
+                if (distanceBetweenCars < 80 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
                     //it means they are very close that is why we stop the car in front
                     if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
-                        c.setIsParked(true, new MdVehicleAction("break", "break full stop", "because cars are very close", "auto", c.getName())); //car c is behind and objcar has speed less than c
+                        c.setSpeed(c.getSpeedofCarInFront(), new MdVehicleAction("break", "break full stop step01 slowdown", "because cars are very close", "auto", c.getName()));
+                        c.setIsParked(true, new MdVehicleAction("break", "break full stop step02 full stop", "because cars are very close", "auto", c.getName())); //car c is behind and objcar has speed less than c
 
                     }
 
                 }
-                if (distanceBetweenCars < 80 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+                if (distanceBetweenCars < 100 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
 
                     if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
-                        c.setSpeed(objCar.getSpeed(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
+                        c.setSpeed(c.getSpeedofCarInFront(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
 
                     }
                     //***********if front car is in fullstop condition

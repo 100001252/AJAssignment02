@@ -57,9 +57,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
@@ -71,7 +74,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFx01_JustForTest1_hashmap4 extends Application {
+public class VwCityJavaFx01_JustForTest1_hashmap5 extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -89,18 +92,19 @@ public class VwCityJavaFx01_JustForTest1_hashmap4 extends Application {
     private ArrayList<ImageView> lstImageViewSchoolSignStart = new ArrayList<>();
     private ArrayList<ImageView> lstImageViewSchoolSignEnd = new ArrayList<>();
     private HashMap<String, Label> hashLabelViewClone = new HashMap<String, Label>();
+    private HashMap<String, BooleanBinding> hashBooleanBinding = new HashMap<String, BooleanBinding>();
     private ArrayList<HBox> lstHboxViewClone = new ArrayList<>();
     private HashMap<String, PathTransition> hashPathTransitions = new HashMap<String, PathTransition>();
     private HashMap<String, Timeline> hashTimeline = new HashMap<String, Timeline>();
 
-    public VwCityJavaFx01_JustForTest1_hashmap4(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFx01_JustForTest1_hashmap5(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
         this.initialSpeed = initialSpeed;
     }
 
-    public VwCityJavaFx01_JustForTest1_hashmap4() {
+    public VwCityJavaFx01_JustForTest1_hashmap5() {
         this.colorHash = "#055b08";
         this.mdCity = new MdCity();
         this.mdTimer = new MdTimer();
@@ -195,7 +199,10 @@ public class VwCityJavaFx01_JustForTest1_hashmap4 extends Application {
 
                             }
                             mdCity.getCarByName(carname).decreaseSpeed(10, new MdVehicleAction("dec", "Decrease speed", "user press left click to decrease speed by 10km/hr", "user", mdCity.getCarToControl()));
-
+                            hashPathTransitions.get(carname).setRate(carobj.convertSpeedToRate());
+                            mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+                            hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
+                            hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                             //--------------------------------------------------end normal op
                             // anim2.setRate(mdCity.getCarByName("c2").convertSpeedToRate());
                         } catch (Exception ex) {
@@ -409,49 +416,45 @@ public class VwCityJavaFx01_JustForTest1_hashmap4 extends Application {
         primaryStage.show();
 
         //---------------------------------------------------------------------------------------only one timline
-        for (MdCar carobj : mdCity.getLstCar()) {
-            final String carname = carobj.getName();
-            Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
-                    hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
-                    hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
-                    if (mdTimer.getSec() > 3) {
-                        try {
+//----//---------test race end-timeline1
+        Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+                hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
+                hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
+                if (mdTimer.getSec() > 3) {
+                    try {
 
-                            hashPathTransitions.get(carname).setDelay(Duration.seconds(0));
-                            ThreadStopAccident ths = new ThreadStopAccident(mdCity);
+                        hashPathTransitions.get(carname).setDelay(Duration.seconds(0));
+                        ThreadStopAccident ths = new ThreadStopAccident(mdCity);
 
-                            ths.run();
-                            hashImageViewCar.get(carname).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
+                        ths.run();
+                        hashImageViewCar.get(carname).setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
-                            if (mdCity.getCarByName(carname).isIsParked()) {
-                                hashPathTransitions.get(carname).pause();
-                                //temp hashTimeline.get(carname).pause();
-                            }
-                            if (mdCity.getCarByName(carname).getSpeed() == 0) {
-                                hashPathTransitions.get(carname).pause();
-                                //temp hashTimeline.get(carname).pause();
-                            } else {
-                                //  anim.playFromStart();
-                                hashPathTransitions.get(carname).setRate(mdCity.getCarByName(carname).convertSpeedToRate());
+                        if (mdCity.getCarByName(carname).isIsParked()) {
+                            hashPathTransitions.get(carname).pause();
+                            //temp hashTimeline.get(carname).pause();
+                        }
+                        if (mdCity.getCarByName(carname).getSpeed() == 0) {
+                            hashPathTransitions.get(carname).pause();
+                            //temp hashTimeline.get(carname).pause();
+                        } else {
+                            //  anim.playFromStart();
+                            hashPathTransitions.get(carname).setRate(mdCity.getCarByName(carname).convertSpeedToRate());
 
-                            }
-
-                        } catch (Exception ex2) {
-
-                            ex2.printStackTrace();
                         }
 
-                    }
-                }
-            }));
-            aTimeline.setCycleCount(Timeline.INDEFINITE);
-            hashTimeline.put(carobj.getName(), aTimeline);
-        }
-//----//---------test race end-timeline1
+                    } catch (Exception ex2) {
 
+                        ex2.printStackTrace();
+                    }
+
+                }
+            }
+        }));
+        aTimeline.setCycleCount(Timeline.INDEFINITE);
+        hashTimeline.put("mainTimeline", aTimeline);
         //-----------------------------------------------------------------------------------------only one timline end
         //----------------------------onclickevent
         //----------------------------onclickevent
