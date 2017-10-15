@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UITestDriveController">
+    <children>
+        <ImageView fitHeight="711.0" fitWidth="1118.0" layoutX="281.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/racing.jpg" />
+            </image>
+            <effect>
+                <BoxBlur />
+            </effect>
+        </ImageView>
+        <ImageView fitHeight="730.0" fitWidth="1058.0" layoutX="2.0" layoutY="1.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/racing.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="705.0" fitWidth="1067.0" layoutX="190.0" layoutY="12.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/racing.jpg" />
+            </image>
+            <effect>
+                <BoxBlur />
+            </effect>
+        </ImageView>
+        <Pane layoutX="274.0" layoutY="26.0" prefHeight="379.0" prefWidth="423.0" style="-fx-background-radius: 200; -fx-background-color: #c8daf7;">
+            <children>
+                <RadioButton fx:id="rdoSpeed20" layoutX="79.0" layoutY="107.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="20km/hr" textAlignment="CENTER">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="grpSpeed" />
+                    </toggleGroup>
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="rdoSpeed40" layoutX="79.0" layoutY="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="40km/hr" textAlignment="CENTER" toggleGroup="$grpSpeed">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="rdoSpeed100" layoutX="79.0" layoutY="196.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="159.0" selected="true" text="100km/hr" textAlignment="CENTER" toggleGroup="$grpSpeed">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </RadioButton>
+                <Label layoutX="54.0" layoutY="46.0" prefHeight="51.0" prefWidth="316.0" text="Please choose initial speed">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Label layoutX="16.0" layoutY="258.0" prefHeight="51.0" prefWidth="316.0" text="Please choose initial speed">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane layoutX="696.0" layoutY="35.0" prefHeight="329.0" prefWidth="277.0" style="-fx-border-color: #617799; -fx-background-color: #c8daf7;">
+            <children>
+                <RadioButton fx:id="rdoMap01" layoutX="38.0" layoutY="25.0" mnemonicParsing="false" onAction="#radioMapSelect" selected="true" text="Map01">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="grpMap" />
+                    </toggleGroup>
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="rdoMap02" layoutX="38.0" layoutY="79.0" mnemonicParsing="false" onAction="#radioMapSelect" text="Map02" toggleGroup="$grpMap">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="rdoMap03" layoutX="38.0" layoutY="129.0" mnemonicParsing="false" onAction="#radioMapSelect" text="Map03" toggleGroup="$grpMap">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </RadioButton>
+                <ImageView fx:id="imgMap" fitHeight="131.0" fitWidth="218.0" layoutX="30.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/map01.PNG" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <Pane layoutX="221.0" layoutY="484.0" prefHeight="198.0" prefWidth="786.0" style="-fx-background-color: #c8daf7;">
+            <children>
+                <JFXCheckBox fx:id="chkTermAndCondition" layoutX="348.0" layoutY="56.0" onAction="#chkTermAndConditionChecked" text="Term And Condition" unCheckedColor="#23e40e">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </JFXCheckBox>
+                <JFXColorPicker fx:id="txtBackGroundColor" layoutX="23.0" layoutY="64.0" prefHeight="36.0" prefWidth="105.0" promptText="#047a06" />
+                <JFXButton fx:id="btnStart" layoutX="439.0" layoutY="130.0" onAction="#startButtonClicked" prefHeight="58.0" prefWidth="72.0" style="-fx-background-color: Green; -fx-background-radius: 200;" text="Start" textFill="#eeecec" textOverrun="WORD_ELLIPSIS">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </JFXButton>
+                <Label layoutX="23.0" layoutY="14.0" text="Background Color">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <JFXButton layoutX="615.0" layoutY="39.0" onAction="#btnReadTermAndCondition" prefHeight="51.0" prefWidth="112.0" style="-fx-background-color: green;" text="Read">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </JFXButton>
+                <Label fx:id="lblFeedback" layoutX="268.0" layoutY="91.0" prefHeight="36.0" prefWidth="488.0" textFill="#eb1212">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <JFXButton fx:id="btnAbout" layoutX="575.0" layoutY="374.0" onAction="#btnAboutClicked" prefHeight="98.0" prefWidth="122.0" style="-fx-background-color: green; -fx-background-radius: 200;" text="About">
+            <font>
+                <Font size="29.0" />
+            </font>
+        </JFXButton>
+        <Pane layoutX="2.0" layoutY="14.0" prefHeight="165.0" prefWidth="255.0" style="-fx-background-radius: 200; -fx-background-color: #c8daf7;">
+            <children>
+                <JFXComboBox fx:id="cmbNumberOfCars" focusColor="#d6d9e1" layoutX="58.0" layoutY="46.0" promptText="Number of Car" />
+            </children>
+        </Pane>
+        <Pane layoutX="2.0" layoutY="200.0" prefHeight="477.0" prefWidth="218.0" style="-fx-background-radius: 200; -fx-background-color: #c8daf7;">
+            <children>
+                <HBox layoutX="26.0" layoutY="61.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar01" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-030dbf.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox layoutX="26.0" layoutY="112.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar02" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-21d811.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox layoutX="26.0" layoutY="163.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar03" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-67dbc9.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox layoutX="26.0" layoutY="213.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar04" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-d7e514.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox layoutX="26.0" layoutY="264.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar05" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-ffffff.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox layoutX="26.0" layoutY="308.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar06" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-ff0505.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <HBox layoutX="26.0" layoutY="359.0" prefHeight="51.0" prefWidth="150.0">
+                    <children>
+                        <JFXCheckBox fx:id="chkcar07" onAction="#checkboxCarSelected" text=" " />
+                        <ImageView fitHeight="44.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/car-000000.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
+        <Pane layoutX="1007.0" layoutY="36.0" prefHeight="329.0" prefWidth="277.0" style="-fx-border-color: #617799; -fx-background-color: #c8daf7;">
+            <children>
+                <RadioButton fx:id="rdoMap011" layoutX="38.0" layoutY="25.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="218.0" selected="true" text="School">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                    <toggleGroup>
+                        <ToggleGroup fx:id="grptraffichint" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="rdoMap021" layoutX="38.0" layoutY="79.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="168.0" text="Stop Sign" toggleGroup="$grptraffichint">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="rdoMap031" layoutX="38.0" layoutY="129.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="191.0" text="Traffic Light" toggleGroup="$grptraffichint">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </RadioButton>
+                <ImageView fx:id="imgMap1" fitHeight="131.0" fitWidth="218.0" layoutX="30.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/school_zone_start.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+    </children>
+
+</AnchorPane>

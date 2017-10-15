@@ -31,7 +31,7 @@ import javafx.stage.Window;
  *
  * @author XC8184
  */
-public class VwMIStep01Controller implements Initializable {
+public class UILoginController implements Initializable {
 
     @FXML
     private JFXTextField txtUsername;
