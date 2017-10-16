@@ -69,7 +69,7 @@ import javafx.scene.layout.VBox;
  *
  * @author XC8184
  */
-public class VwCityJavaFx01_mainTest extends Application {
+public class VwCityJavaFx03_mainTest extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
     private String colorHash;
@@ -93,7 +93,7 @@ public class VwCityJavaFx01_mainTest extends Application {
     private HashMap<String, PathTransition> hashPathTransitions = new HashMap<String, PathTransition>();
     private HashMap<String, Timeline> hashTimeline = new HashMap<String, Timeline>();
 
-    public VwCityJavaFx01_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
+    public VwCityJavaFx03_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
         this.mdCity = mdCityObj;
         this.mdTimer = mdtimerobj;
@@ -119,11 +119,8 @@ public class VwCityJavaFx01_mainTest extends Application {
                 boolean choosroadgoOrback = true; //(i > (numberOfCars / 2)) ? false : true;
                 mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), choosroadgoOrback, i, this.initialSpeed));
             }
-//        for (int i = numberOfCars / 2; i < numberOfCars; i++) {
-//            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
-//        }
-            mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
 
+// find better location            mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
             //for (MdCar carobj : mdCity.getLstCar()) {
             int layoutyLabel = 0;
             for (MdCar carobj : mdCity.getLstCar()) {
@@ -212,79 +209,53 @@ public class VwCityJavaFx01_mainTest extends Application {
             lblTimer.setLayoutX(300);
             lblTimer.setLayoutY(-50);
             //-------------------------------------------------------defining all path(normal, pathgocar,pathreturncar)
+
             PathElement[] path
                     = {
                         new MoveTo(0, 500),
                         new ArcTo(50, 50, 0, 50, 550, false, false),//first arc
-                        new LineTo(900, 550),
-                        new ArcTo(50, 50, 0, 950, 500, false, false),//2 arc
-                        new LineTo(950, 100),
-                        new ArcTo(50, 50, 0, 900, 50, false, false),//3 arc
-                        new LineTo(50, 50),
-                        new ArcTo(50, 50, 0, 0, 100, false, false),//3 arc
+                        new LineTo(900, 600),
+                        new ArcTo(200, 200, 0, 600, 400, true, false),
+                        new ArcTo(100, 100, 0, 400, 300, true, true), //second line bottom arc
+                        new LineTo(600, 200),
+                        new ArcTo(180, 100, 0, 550, 0, true, false),//thirs arc
+                        new LineTo(100, 0),
+                        new ArcTo(90, 0, 0, 50, 50, true, false),//thirs arc
 
                         new ClosePath()
                     };
 
-            //road for ongoing car
-            PathElement[] pathCarGo
-                    = {
-                        new MoveTo(20, 480),
-                        new ArcTo(50, 50, 0, 80, 530, false, false),//first arc
-                        new LineTo(870, 530),
-                        new ArcTo(50, 50, 0, 920, 480, false, false),//2 arc
-                        new LineTo(920, 80),
-                        new ArcTo(50, 50, 0, 870, 80, false, false),//3 arc
-                        new LineTo(50, 80),
-                        new ArcTo(50, 50, 0, 20, 100, false, false),//3 arc
-
-                        new ClosePath()
-                    };
-
-            PathElement[] pathCarReturn
-                    = {//for start tdo not put any car return
-                        new MoveTo(-20, 480),
-                        new LineTo(-20, 80),
-                        new ArcTo(50, 50, 0, 30, 20, false, true),//first arc
-                        new LineTo(930, 20),
-                        new ArcTo(50, 50, 0, 980, 80, false, true),//2 arc
-                        new LineTo(980, 530),
-                        new ArcTo(50, 50, 0, 920, 580, false, true),//3 arc
-                        new LineTo(0, 580),
-                        new ClosePath()
-                    };
 //----------------------end
-
 //--------------------------------------draw road black
             Path road = new Path();
-            road.setLayoutX(200);
             road.setStroke(Color.BLACK);
-            road.setStrokeWidth(120);
+            road.setStrokeWidth(50);
             road.getElements().addAll(path);
+            road.setLayoutX(200);
 
             Path divider = new Path();
-            divider.setLayoutX(200);
             divider.setStroke(Color.WHITE);
-            divider.setStrokeWidth(2);
+            divider.setStrokeWidth(4);
             divider.getStrokeDashArray().addAll(10.0, 10.0);
             divider.getElements().addAll(path);
+            divider.setLayoutX(200);
 
             Path roadCargo = new Path();
             roadCargo.setLayoutX(200);
-            roadCargo.getElements().addAll(pathCarGo);
 
-            Path roadCarreturn = new Path();
-            roadCarreturn.setLayoutX(200);
-            roadCarreturn.getElements().addAll(pathCarReturn);
+            roadCargo.getElements().addAll(path);
 
+//            Path roadCarreturn = new Path();
+//            roadCarreturn.setLayoutX(200);
+//            roadCarreturn.getElements().addAll(pathCarReturn);
             //--------------------------------------------------------------------------------end of draw road
             for (MdCar carobj : mdCity.getLstCar()) {
                 String carname = carobj.getName();
                 PathTransition pathTransobj = new PathTransition();
                 //Duration.seconds(mdCity.getLstCar().get(i).convertSpeedToDuration()), mdCity.getLstCar().get(i).isIsRouteToGo() ? roadCargo : roadCarreturn, lstImageViewCar.get(i))
                 pathTransobj.setNode(hashImageViewCar.get(carname));
-                pathTransobj.setPath(carobj.isIsRouteToGo() ? roadCargo : roadCarreturn);
-                pathTransobj.setDuration(new Duration(25000));
+                pathTransobj.setPath(roadCargo);
+                pathTransobj.setDuration(new Duration(35000));
                 //lstPathTransitions.get(i).setDelay(new Duration(50));
                 pathTransobj.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                 pathTransobj.setInterpolator(Interpolator.LINEAR);

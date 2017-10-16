@@ -91,15 +91,15 @@ public class UITestDriveController implements Initializable {
     @FXML
     private JFXCheckBox chkcar07;
     @FXML
-    private RadioButton rdoMap011;
-    @FXML
     private ToggleGroup grptraffichint;
     @FXML
-    private RadioButton rdoMap021;
+    private RadioButton rdosignSchool;
     @FXML
-    private RadioButton rdoMap031;
+    private RadioButton rdosignStop;
     @FXML
-    private ImageView imgMap1;
+    private RadioButton rdosignTraffic;
+    @FXML
+    private ImageView imgsign;
 
     //----------------------endvariable
 //    public VwMIStep02Controller(String test) {
@@ -127,9 +127,12 @@ public class UITestDriveController implements Initializable {
             if (rdoMap01.isSelected()) {
 
                 imgMap.setImage(new Image("images/map01.png"));
-            } else {
+            } else if (rdoMap02.isSelected()) {
                 // System.out.println("map02");
                 imgMap.setImage(new Image("images/map02.png"));
+            } else if (rdoMap03.isSelected()) {
+                // System.out.println("map02");
+                imgMap.setImage(new Image("images/map03.png"));
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -165,21 +168,33 @@ public class UITestDriveController implements Initializable {
             MdTimer mdTimer = new MdTimer();
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            int maxrunningTime = 100;
             if (rdoMap01.isSelected()) {
                 DebugLog.appendData2(">>>jlkjew123qiru234123>>rdomap01 is selected so i need to start map02");
 
                 VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
                 vc.setNumberOfCars(numberofcars);
                 vc.setListofPossibleCar(getCarOptionSelected());
+                vc.setMaxTime(maxrunningTime);
                 vc.start(window);
                 //                VwCityJavaFx vc = new VwCityJavaFx(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
                 //vc.start(window);
 
             } else if (rdoMap02.isSelected()) {
                 DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map02");
+                VwCityJavaFx02_mainTest vc = new VwCityJavaFx02_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setMaxTime(maxrunningTime);
+                vc.setNumberOfCars(numberofcars);
+                vc.setListofPossibleCar(getCarOptionSelected());
+                vc.start(window);
 
             } else if (rdoMap03.isSelected()) {
                 DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map03");
+                VwCityJavaFx03_mainTest vc = new VwCityJavaFx03_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setMaxTime(maxrunningTime);
+                vc.setNumberOfCars(numberofcars);
+                vc.setListofPossibleCar(getCarOptionSelected());
+                vc.start(window);
 
             }
 
@@ -262,6 +277,17 @@ public class UITestDriveController implements Initializable {
         }
 
         return carOptions;
+    }
+
+    @FXML
+    private void radiosignChanged(ActionEvent event) {
+        if (rdosignSchool.isSelected()) {
+            imgsign.setImage(new Image("images/school_zone_start.png"));
+        } else if (rdosignStop.isSelected()) {
+            imgsign.setImage(new Image("images/stopsign.jpg"));
+        } else if (rdosignTraffic.isSelected()) {
+            imgsign.setImage(new Image("images/tl-g.png"));
+        }
     }
 
 }
