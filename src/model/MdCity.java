@@ -35,7 +35,7 @@ public class MdCity implements Runnable {
      * @param xVal
      * @param yVal
      */
-    public synchronized void updateCarLocation(String carName, double xVal, double yVal) {
+    public synchronized void updateCarLocation(String carName, double xVal, double yVal, int oneCycle, int setto) {
         try {
             MdCar carobj = this.getCarByName(carName);
             Location oldLocation = carobj.getLocation();
@@ -44,8 +44,8 @@ public class MdCity implements Runnable {
             Double dist = distanceBetweenLocation(oldLocation, new Location(xVal, yVal));
 
             // if (this.getCarByName(carName).getDistanceFromOrigin() > 2650 && this.getCarByName(carName).getDistanceFromOrigin() < 2660) {
-            if (this.getCarByName(carName).getDistanceFromOrigin() > 2700) {
-                this.getCarByName(carName).setDistanceFromOrigin(0);
+            if (this.getCarByName(carName).getDistanceFromOrigin() > oneCycle && this.getCarByName(carName).getDistanceFromOrigin() < (oneCycle + 20)) {
+                this.getCarByName(carName).setDistanceFromOrigin(setto);
             } else {
                 this.getCarByName(carName).setDistanceFromOrigin(this.getCarByName(carName).getDistanceFromOrigin() + dist.intValue());
             }

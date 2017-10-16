@@ -284,11 +284,11 @@ public class VwCityJavaFx01_mainTest extends Application {
                 //Duration.seconds(mdCity.getLstCar().get(i).convertSpeedToDuration()), mdCity.getLstCar().get(i).isIsRouteToGo() ? roadCargo : roadCarreturn, lstImageViewCar.get(i))
                 pathTransobj.setNode(hashImageViewCar.get(carname));
                 pathTransobj.setPath(carobj.isIsRouteToGo() ? roadCargo : roadCarreturn);
-                pathTransobj.setDuration(new Duration(25000));
+                pathTransobj.setDuration(new Duration(35000));
                 //lstPathTransitions.get(i).setDelay(new Duration(50));
                 pathTransobj.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                 pathTransobj.setInterpolator(Interpolator.LINEAR);
-                pathTransobj.setCycleCount(Timeline.INDEFINITE);
+                pathTransobj.setCycleCount(1);
                 pathTransobj.setAutoReverse(false);
                 pathTransobj.setDelay(Duration.seconds(carobj.getDelay()));
                 hashPathTransitions.put(carname, pathTransobj);
@@ -400,7 +400,10 @@ public class VwCityJavaFx01_mainTest extends Application {
                 Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+                        mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY(), 2878, 254);
+                        if (carname.equals("c1")) {
+                            System.out.println("c1>>>" + carobj.getDistanceFromOrigin());
+                        }
                         hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
                         hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                         if (mdTimer.getSec() > 3) {

@@ -371,7 +371,10 @@ public class VwCityJavaFx03_mainTest extends Application {
                 Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY());
+//                        if (carname.equals("c0")) {
+//                            System.out.println("c0>>>" + carobj.getDistanceFromOrigin());
+//                        }
+                        mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY(), 3862, 180);
                         hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
                         hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                         if (mdTimer.getSec() > 3) {
