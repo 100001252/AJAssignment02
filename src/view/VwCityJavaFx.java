@@ -291,7 +291,7 @@ public class VwCityJavaFx extends Application {
             Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    mdCity.updateCarLocation("c1", car1.getX() + car1.getTranslateX(), car1.getY() + car1.getTranslateY(), 2700);
+                    mdCity.updateCarLocation("c1", car1.getX() + car1.getTranslateX(), car1.getY() + car1.getTranslateY(), 2700, 180);
                     if (mdTimer.getSec() > 3) {
                         try {
 
@@ -332,7 +332,7 @@ public class VwCityJavaFx extends Application {
                 @Override
                 public void handle(ActionEvent t) {
                     //mdCity.updateCarLocation("c2", car2.getTranslateX(), car2.getTranslateY());
-                    mdCity.updateCarLocation("c2", car2.getX() + car2.getTranslateX(), car2.getY() + car2.getTranslateY(), 2700);
+                    mdCity.updateCarLocation("c2", car2.getX() + car2.getTranslateX(), car2.getY() + car2.getTranslateY(), 2700, 180);
                     if (mdTimer.getSec() > 3) {
                         try {
 

@@ -20,11 +20,15 @@ public class MdCity implements Runnable {
 
     private ArrayList<MdCar> lstCar;
     private ArrayList<MdSchoolSign> lstSchoolSign;
+    private ArrayList<MdStopSign> lstStopSign;
+    private ArrayList<MdTrafficLight> lstTrafficLight;
     private String carToControl;
 
     public MdCity() {
         lstCar = new ArrayList<>();
-        lstSchoolSign = new ArrayList<>();
+        lstSchoolSign = new ArrayList<MdSchoolSign>();
+        lstStopSign = new ArrayList<MdStopSign>();
+        lstTrafficLight = new ArrayList<MdTrafficLight>();
 
     }
 
@@ -83,6 +87,31 @@ public class MdCity implements Runnable {
         }
 
         lstSchoolSign.add(schoolsignObj);
+    }
+
+    /**
+     * add schoolsign to mdcity
+     *
+     * @param schoolsignObj
+     */
+    public void addStopSign(MdStopSign stObj) throws Exception {
+        for (MdStopSign scObj : this.lstStopSign) {
+            if (scObj.getName().equals(stObj.getName())) {
+                DebugLog.appendData2("errrroo23214hkjasdf987rrrr>>>>>   schoolSign");
+                throw new CarRacingException("this schoolsign name (" + stObj.getName() + ") already exist in our record");
+            }
+        }
+        this.lstStopSign.add(stObj);
+    }
+
+    public void addTrafficLight(MdTrafficLight tfObj) throws Exception {
+        for (MdTrafficLight trafficobj : this.lstTrafficLight) {
+            if (tfObj.getName().equals(trafficobj.getName())) {
+                throw new CarRacingException("this Traffic sign name (" + tfObj.getName() + ") already exist in our record");
+            }
+        }
+        this.lstTrafficLight.add(tfObj);
+
     }
 
     /**

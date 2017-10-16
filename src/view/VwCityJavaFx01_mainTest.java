@@ -72,6 +72,7 @@ import javafx.scene.layout.VBox;
 public class VwCityJavaFx01_mainTest extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
+    private int trafficSign = 0;//0=schoolsign , 1=stopsign , 2=trafficlight
     private String colorHash;
     private MdCity mdCity;
     private MdTimer mdTimer;
@@ -288,7 +289,7 @@ public class VwCityJavaFx01_mainTest extends Application {
                 //lstPathTransitions.get(i).setDelay(new Duration(50));
                 pathTransobj.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                 pathTransobj.setInterpolator(Interpolator.LINEAR);
-                pathTransobj.setCycleCount(1);
+                pathTransobj.setCycleCount(Timeline.INDEFINITE);
                 pathTransobj.setAutoReverse(false);
                 pathTransobj.setDelay(Duration.seconds(carobj.getDelay()));
                 hashPathTransitions.put(carname, pathTransobj);
@@ -400,10 +401,10 @@ public class VwCityJavaFx01_mainTest extends Application {
                 Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY(), 2878, 254);
-                        if (carname.equals("c1")) {
-                            System.out.println("c1>>>" + carobj.getDistanceFromOrigin());
-                        }
+                        mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY(), 2878, 180);
+
+                        System.out.println("  " + carobj.getName() + ">>>" + carobj.getDistanceFromOrigin());
+
                         hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
                         hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                         if (mdTimer.getSec() > 3) {
@@ -454,7 +455,7 @@ public class VwCityJavaFx01_mainTest extends Application {
 
 //---------------------------------------------------endnewpatern--------------------------------------------------------endnewpatern
             //---------test race start-timelinefinal it is a timeline that we never stop
-            Timeline timelinefinal = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
+            Timeline timelinefinal = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
                     try {
