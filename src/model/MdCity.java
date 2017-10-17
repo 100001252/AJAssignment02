@@ -11,6 +11,7 @@ import helper.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  *
@@ -260,8 +261,30 @@ public class MdCity implements Runnable {
         try {
 
             for (MdCar objCar : (ArrayList<MdCar>) this.getLstCar().clone()) {
-                //---------------------------------------------------------------------traffic light
+                //---------------------------------------------------------------------stop sign
+                for (MdStopSign st : this.getLstStopSign()) {
+                    int index = objCar.getLstVehicleAction().size();
+                    Date now = new Date();
+                    if ((st.getLocation().calcDistanceBetweenTwoLocation(objCar.getLocation())) < 100) {
+                        //if last time that they stop passed is in less than 10 seconds from now
+                        Date actionDate = objCar.getLstVehicleAction().get(index - 1).getActionTime();
+                        String abr = objCar.getLstVehicleAction().get(index - 1).getAbbriviation();
+                        long seconds = (now.getTime() - actionDate.getTime()) / 1000;
+                        if (seconds < 4 && abr.equals("break")) // System.out.println("close to traffic lighttttt");
+                        //objCar.setIs40ZoneArea(true);
+                        {
+                            objCar.setIs40ZoneArea(false);
+                        } else {
+                            objCar.setIs40ZoneArea(true);
+                        }
+                    }
+                    if ((st.getLocation().calcDistanceBetweenTwoLocation(objCar.getLocation())) > 100) {
+                        //objCar.setIs40ZoneArea(false);
+                        objCar.setIs40ZoneArea(false);
+                    }
+                }
 
+                //---------------------------------------------------------------------traffic light
                 for (MdTrafficLight tf : this.getLstTrafficLight()) {
                     if ((tf.getLocation().calcDistanceBetweenTwoLocation(objCar.getLocation())) < 100 && tf.getStatus() == 2) {
                         // System.out.println("close to traffic lighttttt");
