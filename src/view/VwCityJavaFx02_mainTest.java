@@ -121,7 +121,14 @@ public class VwCityJavaFx02_mainTest extends Application {
                 mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), choosroadgoOrback, i, this.initialSpeed));
             }
 
-// find better location            mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
+            if (this.trafficSign == 0) {//add schoolsigne
+                // mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
+            } else if (this.trafficSign == 1) {//add stop sign
+
+            } else if (this.trafficSign == 2) {//add traffic light
+
+            }
+
             //for (MdCar carobj : mdCity.getLstCar()) {
             int layoutyLabel = 0;
             for (MdCar carobj : mdCity.getLstCar()) {

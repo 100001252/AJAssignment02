@@ -123,7 +123,14 @@ public class VwCityJavaFx01_mainTest extends Application {
 //        for (int i = numberOfCars / 2; i < numberOfCars; i++) {
 //            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
 //        }
-            mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
+            if (this.trafficSign == 0) {//add schoolsigne
+                mdCity.addSchoolSign(new MdSchoolSign("sc1", new Location(800, 100), new Location(300, 100)));
+            } else if (this.trafficSign == 1) {//add stop sign
+                mdCity.addStopSign(new MdStopSign("st1", new Location(800, 100)));
+            } else if (this.trafficSign == 2) {//add traffic light
+                mdCity.addTrafficLight(new MdTrafficLight("tf1", new Location(800, 100)));
+
+            }
 
             //for (MdCar carobj : mdCity.getLstCar()) {
             int layoutyLabel = 0;
@@ -205,6 +212,20 @@ public class VwCityJavaFx01_mainTest extends Application {
                 lstImageViewSchoolSignEnd.add(new ImageView(new Image(mdCity.getLstSchoolSign().get(i).getImgSchoolEnd())));
                 lstImageViewSchoolSignEnd.get(i).setX(mdCity.getLstSchoolSign().get(i).getLocationSchoolEnd().getX());
                 lstImageViewSchoolSignEnd.get(i).setY(mdCity.getLstSchoolSign().get(i).getLocationSchoolEnd().getY());
+            }
+            for (int i = 0; i < mdCity.getLstStopSign().size(); i++) {
+
+                lstImageViewSchoolSignStart.add(new ImageView(new Image(mdCity.getLstStopSign().get(i).getImg())));
+                lstImageViewSchoolSignStart.get(i).setX(mdCity.getLstStopSign().get(i).getLocation().getX());
+                lstImageViewSchoolSignStart.get(i).setY(mdCity.getLstStopSign().get(i).getLocation().getY());
+
+            }
+            for (int i = 0; i < mdCity.getLstTrafficLight().size(); i++) {
+
+                lstImageViewSchoolSignStart.add(new ImageView(new Image(mdCity.getLstTrafficLight().get(i).getImg())));
+                lstImageViewSchoolSignStart.get(i).setX(mdCity.getLstTrafficLight().get(i).getLocation().getX());
+                lstImageViewSchoolSignStart.get(i).setY(mdCity.getLstTrafficLight().get(i).getLocation().getY());
+
             }
 
             Label lblTimer = new Label("Timer");
@@ -344,7 +365,9 @@ public class VwCityJavaFx01_mainTest extends Application {
             //schoolzone images
             for (int i = 0; i < lstImageViewSchoolSignStart.size(); i++) {
                 root.getChildren().add(lstImageViewSchoolSignStart.get(i));
-                root.getChildren().add(lstImageViewSchoolSignEnd.get(i));
+                if (trafficSign == 0) {
+                    root.getChildren().add(lstImageViewSchoolSignEnd.get(i));
+                }
             }
             root.setTranslateX(50);
             root.setTranslateY(50);

@@ -95,22 +95,22 @@ public class MdCity implements Runnable {
      * @param schoolsignObj
      */
     public void addStopSign(MdStopSign stObj) throws Exception {
-        for (MdStopSign scObj : this.lstStopSign) {
+        for (MdStopSign scObj : this.getLstStopSign()) {
             if (scObj.getName().equals(stObj.getName())) {
                 DebugLog.appendData2("errrroo23214hkjasdf987rrrr>>>>>   schoolSign");
                 throw new CarRacingException("this schoolsign name (" + stObj.getName() + ") already exist in our record");
             }
         }
-        this.lstStopSign.add(stObj);
+        this.getLstStopSign().add(stObj);
     }
 
     public void addTrafficLight(MdTrafficLight tfObj) throws Exception {
-        for (MdTrafficLight trafficobj : this.lstTrafficLight) {
+        for (MdTrafficLight trafficobj : this.getLstTrafficLight()) {
             if (tfObj.getName().equals(trafficobj.getName())) {
                 throw new CarRacingException("this Traffic sign name (" + tfObj.getName() + ") already exist in our record");
             }
         }
-        this.lstTrafficLight.add(tfObj);
+        this.getLstTrafficLight().add(tfObj);
 
     }
 
@@ -456,6 +456,34 @@ public class MdCity implements Runnable {
      */
     public void setCarToControl(String carToControl) {
         this.carToControl = carToControl;
+    }
+
+    /**
+     * @return the lstStopSign
+     */
+    public ArrayList<MdStopSign> getLstStopSign() {
+        return lstStopSign;
+    }
+
+    /**
+     * @param lstStopSign the lstStopSign to set
+     */
+    public void setLstStopSign(ArrayList<MdStopSign> lstStopSign) {
+        this.lstStopSign = lstStopSign;
+    }
+
+    /**
+     * @return the lstTrafficLight
+     */
+    public ArrayList<MdTrafficLight> getLstTrafficLight() {
+        return lstTrafficLight;
+    }
+
+    /**
+     * @param lstTrafficLight the lstTrafficLight to set
+     */
+    public void setLstTrafficLight(ArrayList<MdTrafficLight> lstTrafficLight) {
+        this.lstTrafficLight = lstTrafficLight;
     }
 
 }
