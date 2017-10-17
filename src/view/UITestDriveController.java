@@ -173,9 +173,11 @@ public class UITestDriveController implements Initializable {
                 DebugLog.appendData2(">>>jlkjew123qiru234123>>rdomap01 is selected so i need to start map02");
 
                 VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setTrafficSign(getradiosignOptionselected());
                 vc.setNumberOfCars(numberofcars);
                 vc.setListofPossibleCar(getCarOptionSelected());
                 vc.setMaxTime(maxrunningTime);
+
                 vc.start(window);
                 //                VwCityJavaFx vc = new VwCityJavaFx(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
                 //vc.start(window);
@@ -183,6 +185,7 @@ public class UITestDriveController implements Initializable {
             } else if (rdoMap02.isSelected()) {
                 DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map02");
                 VwCityJavaFx02_mainTest vc = new VwCityJavaFx02_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setTrafficSign(getradiosignOptionselected());
                 vc.setMaxTime(maxrunningTime);
                 vc.setNumberOfCars(numberofcars);
                 vc.setListofPossibleCar(getCarOptionSelected());
@@ -191,6 +194,7 @@ public class UITestDriveController implements Initializable {
             } else if (rdoMap03.isSelected()) {
                 DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map03");
                 VwCityJavaFx03_mainTest vc = new VwCityJavaFx03_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setTrafficSign(getradiosignOptionselected());
                 vc.setMaxTime(maxrunningTime);
                 vc.setNumberOfCars(numberofcars);
                 vc.setListofPossibleCar(getCarOptionSelected());
@@ -290,14 +294,14 @@ public class UITestDriveController implements Initializable {
         }
     }
 
-    private int radiosignOptionselected() {
+    private int getradiosignOptionselected() {
         int result = 1;
         if (rdosignSchool.isSelected()) {
-            result = 1;
+            result = 0;
         } else if (rdosignStop.isSelected()) {
-            result = 2;
+            result = 1;
         } else if (rdosignTraffic.isSelected()) {
-            result = 3;
+            result = 2;
         }
         return result;
     }

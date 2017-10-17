@@ -815,4 +815,18 @@ public class VwCityJavaFx01_mainTest extends Application {
         this.maxTime = maxTime;
     }
 
+    /**
+     * @return the trafficSign
+     */
+    public int getTrafficSign() {
+        return trafficSign;
+    }
+
+    /**
+     * @param trafficSign the trafficSign to set
+     */
+    public void setTrafficSign(int trafficSign) {
+        this.trafficSign = trafficSign;
+    }
+
 }

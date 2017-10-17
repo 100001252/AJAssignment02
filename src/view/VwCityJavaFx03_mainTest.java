@@ -72,6 +72,7 @@ import javafx.scene.layout.VBox;
 public class VwCityJavaFx03_mainTest extends Application {
 
     //------------------allvariable that you use in this view and you should define at start
+    private int trafficSign = 0;//0=schoolsign , 1=stopsign , 2=trafficlight
     private String colorHash;
     private MdCity mdCity;
     private MdTimer mdTimer;
@@ -783,6 +784,20 @@ public class VwCityJavaFx03_mainTest extends Application {
      */
     public void setMaxTime(int maxTime) {
         this.maxTime = maxTime;
+    }
+
+    /**
+     * @return the trafficSign
+     */
+    public int getTrafficSign() {
+        return trafficSign;
+    }
+
+    /**
+     * @param trafficSign the trafficSign to set
+     */
+    public void setTrafficSign(int trafficSign) {
+        this.trafficSign = trafficSign;
     }
 
 }
