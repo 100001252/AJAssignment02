@@ -261,6 +261,7 @@ public class MdCity implements Runnable {
 
             for (MdCar objCar : (ArrayList<MdCar>) this.getLstCar().clone()) {
                 //---------------------------------------------------------------------traffic light
+
                 for (MdTrafficLight tf : this.getLstTrafficLight()) {
                     if ((tf.getLocation().calcDistanceBetweenTwoLocation(objCar.getLocation())) < 100 && tf.getStatus() == 2) {
                         // System.out.println("close to traffic lighttttt");
