@@ -290,4 +290,16 @@ public class UITestDriveController implements Initializable {
         }
     }
 
+    private int radiosignOptionselected() {
+        int result = 1;
+        if (rdosignSchool.isSelected()) {
+            result = 1;
+        } else if (rdosignStop.isSelected()) {
+            result = 2;
+        } else if (rdosignTraffic.isSelected()) {
+            result = 3;
+        }
+        return result;
+    }
+
 }
