@@ -3,6 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/feiyeyuji/Documents/NetBeansProjects/assgn2/AJAssignment02/src/view2/Vw_step02Ass02Controller.java</file>
+            <file>file:/C:/Users/feiyeyuji/Documents/NetBeansProjects/assgn2/AJAssignment02/src/view2/VwCityJavaFxDemo.java</file>
+=======
             <file>file:/C:/zzzzjava/aadworks/Assignment02/src/view/VwCityJavaFx01_mainTest.java</file>
             <file>file:/C:/zzzzjava/aadworks/Assignment02/test/PathDemoJavaFx_ver04.java</file>
             <file>file:/C:/zzzzjava/aadworks/Assignment02/src/view/UITestDriveController.java</file>
@@ -10,6 +14,7 @@
             <file>file:/C:/zzzzjava/aadworks/Assignment02/src/view/VwCityJavaFx02_mainTest.java</file>
             <file>file:/C:/zzzzjava/aadworks/Assignment02/src/model/MdCity.java</file>
             <file>file:/C:/zzzzjava/aadworks/Assignment02/src/view/VwCityJavaFx.java</file>
+>>>>>>> 548c8f97d9df5af695bf744c7cfc4535fce1c512
         </group>
     </open-files>
 </project-private>
