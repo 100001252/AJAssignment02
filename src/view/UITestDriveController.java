@@ -15,6 +15,8 @@ import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXComboBox;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,15 +91,15 @@ public class UITestDriveController implements Initializable {
     @FXML
     private JFXCheckBox chkcar07;
     @FXML
-    private RadioButton rdoMap011;
-    @FXML
     private ToggleGroup grptraffichint;
     @FXML
-    private RadioButton rdoMap021;
+    private RadioButton rdosignSchool;
     @FXML
-    private RadioButton rdoMap031;
+    private RadioButton rdosignStop;
     @FXML
-    private ImageView imgMap1;
+    private RadioButton rdosignTraffic;
+    @FXML
+    private ImageView imgsign;
 
     //----------------------endvariable
 //    public VwMIStep02Controller(String test) {
@@ -125,9 +127,12 @@ public class UITestDriveController implements Initializable {
             if (rdoMap01.isSelected()) {
 
                 imgMap.setImage(new Image("images/map01.png"));
-            } else {
+            } else if (rdoMap02.isSelected()) {
                 // System.out.println("map02");
                 imgMap.setImage(new Image("images/map02.png"));
+            } else if (rdoMap03.isSelected()) {
+                // System.out.println("map02");
+                imgMap.setImage(new Image("images/map03.png"));
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -137,33 +142,62 @@ public class UITestDriveController implements Initializable {
     @FXML
     private void startButtonClicked(ActionEvent event) throws Exception {
         //VwReportView vwReport = new VwReportView();
-        boolean chktc = chkTermAndCondition.isSelected();
+
+        boolean validate = chkTermAndCondition.isSelected();
+        if (!validate) {
+            lblFeedback.setText("Please check Term and condition");
+            throw new Exception("invalid term and condition");
+        }
+        Integer numberofcars = cmbNumberOfCars.getValue();
+        if (numberofcars == null) {
+            validate = false;
+            lblFeedback.setText("Please choose number of cars");
+            throw new Exception("invalid data");
+        }
+        validate = isCarOptionCheckedAtleast();
+        if (!validate) {
+            lblFeedback.setText("Please choose Minimum one colorful car from list");
+            throw new Exception("invalid data");
+        }
         //------check which initial speed chosen
         int initialSpeed = 100;
         initialSpeed = (rdoSpeed20.isSelected() ? 20 : (rdoSpeed40.isSelected() ? 40 : 100));
 
-        if (chktc) {
+        if (validate) {
             MdCity mdcity = new MdCity();
             MdTimer mdTimer = new MdTimer();
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            int maxrunningTime = 100;
             if (rdoMap01.isSelected()) {
                 DebugLog.appendData2(">>>jlkjew123qiru234123>>rdomap01 is selected so i need to start map02");
 
-                //VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
                 VwCityJavaFx01_mainTest vc = new VwCityJavaFx01_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
-                //  VwCityJavaFxMain_justForTest vc = new VwCityJavaFxMain_justForTest("1", "#005544", mdcity, mdTimer, initialSpeed);
+                vc.setNumberOfCars(numberofcars);
+                vc.setListofPossibleCar(getCarOptionSelected());
+                vc.setMaxTime(maxrunningTime);
                 vc.start(window);
                 //                VwCityJavaFx vc = new VwCityJavaFx(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
                 //vc.start(window);
 
             } else if (rdoMap02.isSelected()) {
                 DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map02");
+                VwCityJavaFx02_mainTest vc = new VwCityJavaFx02_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setMaxTime(maxrunningTime);
+                vc.setNumberOfCars(numberofcars);
+                vc.setListofPossibleCar(getCarOptionSelected());
+                vc.start(window);
+
+            } else if (rdoMap03.isSelected()) {
+                DebugLog.appendData2(">>>23jlkasdfsdaf>>rdomap02 is selected so i need to start map03");
+                VwCityJavaFx03_mainTest vc = new VwCityJavaFx03_mainTest(txtBackGroundColor.getValue().toString(), mdcity, mdTimer, initialSpeed);
+                vc.setMaxTime(maxrunningTime);
+                vc.setNumberOfCars(numberofcars);
+                vc.setListofPossibleCar(getCarOptionSelected());
+                vc.start(window);
 
             }
 
-        } else {
-            lblFeedback.setText("Please check Term and condition");
         }
 
     }
@@ -198,24 +232,62 @@ public class UITestDriveController implements Initializable {
                 + "4. keyboard space make all car stop(for resume press again)";
 
         UILoginController.modal(text, "about");
+
     }
 
     @FXML
     private void checkboxCarSelected(ActionEvent event) {
         //do onclick something here
+        //zzzzz
 
     }
 
-    private boolean[] getCarOptionSelected() {
-        boolean[] carOptions = new boolean[7];
-        carOptions[0] = chkcar01.isSelected();
-        carOptions[1] = chkcar02.isSelected();
-        carOptions[2] = chkcar03.isSelected();
-        carOptions[3] = chkcar04.isSelected();
-        carOptions[4] = chkcar05.isSelected();
-        carOptions[5] = chkcar06.isSelected();
-        carOptions[6] = chkcar07.isSelected();
+    private boolean isCarOptionCheckedAtleast() {
+        if (chkcar01.isSelected() || chkcar02.isSelected() || chkcar03.isSelected()
+                || chkcar04.isSelected() || chkcar05.isSelected() || chkcar06.isSelected() || chkcar07.isSelected()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private ArrayList<String> getCarOptionSelected() {
+        ArrayList<String> carOptions = new ArrayList<String>();
+        if (chkcar01.isSelected()) {
+            carOptions.add("car-030dbf.png");
+        }
+        if (chkcar02.isSelected()) {
+            carOptions.add("car-21d811.png");
+        }
+        if (chkcar03.isSelected()) {
+            carOptions.add("car-67dbc9.png");
+        }
+        if (chkcar04.isSelected()) {
+            carOptions.add("car-d7e514.png");
+        }
+        if (chkcar05.isSelected()) {
+            carOptions.add("car-ffffff.png");
+        }
+        if (chkcar06.isSelected()) {
+            carOptions.add("car-ff0505.png");
+        }
+        if (chkcar07.isSelected()) {
+            carOptions.add("car-000000.png");
+        }
+
         return carOptions;
+    }
+
+    @FXML
+    private void radiosignChanged(ActionEvent event) {
+        if (rdosignSchool.isSelected()) {
+            imgsign.setImage(new Image("images/school_zone_start.png"));
+        } else if (rdosignStop.isSelected()) {
+            imgsign.setImage(new Image("images/stopsign.jpg"));
+        } else if (rdosignTraffic.isSelected()) {
+            imgsign.setImage(new Image("images/tl-g.png"));
+        }
     }
 
 }

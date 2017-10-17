@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="view.UITestDriveController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UITestDriveController">
     <children>
         <ImageView fitHeight="711.0" fitWidth="1118.0" layoutX="281.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -208,7 +208,7 @@
         </Pane>
         <Pane layoutX="1007.0" layoutY="36.0" prefHeight="329.0" prefWidth="277.0" style="-fx-border-color: #617799; -fx-background-color: #c8daf7;">
             <children>
-                <RadioButton fx:id="rdoMap011" layoutX="38.0" layoutY="25.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="218.0" selected="true" text="School">
+                <RadioButton fx:id="rdosignSchool" layoutX="38.0" layoutY="25.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="218.0" selected="true" text="School">
                     <font>
                         <Font size="25.0" />
                     </font>
@@ -216,17 +216,17 @@
                         <ToggleGroup fx:id="grptraffichint" />
                     </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="rdoMap021" layoutX="38.0" layoutY="79.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="168.0" text="Stop Sign" toggleGroup="$grptraffichint">
+                <RadioButton fx:id="rdosignStop" layoutX="38.0" layoutY="79.0" mnemonicParsing="false" onAction="#radiosignChanged" prefHeight="36.0" prefWidth="168.0" text="Stop Sign" toggleGroup="$grptraffichint">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </RadioButton>
-                <RadioButton fx:id="rdoMap031" layoutX="38.0" layoutY="129.0" mnemonicParsing="false" onAction="#radioMapSelect" prefHeight="36.0" prefWidth="191.0" text="Traffic Light" toggleGroup="$grptraffichint">
+                <RadioButton fx:id="rdosignTraffic" layoutX="38.0" layoutY="129.0" mnemonicParsing="false" onAction="#radiosignChanged" prefHeight="36.0" prefWidth="191.0" text="Traffic Light" toggleGroup="$grptraffichint">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </RadioButton>
-                <ImageView fx:id="imgMap1" fitHeight="131.0" fitWidth="218.0" layoutX="30.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="imgsign" fitHeight="131.0" fitWidth="218.0" layoutX="30.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/school_zone_start.png" />
                     </image>

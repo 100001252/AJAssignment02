@@ -81,8 +81,9 @@ public class VwCityJavaFxDemo extends Application {
     private ArrayList<Timeline> lstTimelines = new ArrayList<>();
     //-----------variable
     private int maxTime = 500;//maximum seconds of running this app
-    public VwCityJavaFxDemo(){
-        
+
+    public VwCityJavaFxDemo() {
+
     }
 
     public VwCityJavaFxDemo(String times, String maxtime, String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed, boolean plusTest) {
@@ -109,10 +110,10 @@ public class VwCityJavaFxDemo extends Application {
                 String ID = Integer.toString(id);
 
                 if (id % 5 == 1) {
-                    
+
                     mdCity.addCar(new MdCar(new Location(180, 400), "car-21d811.png", "c" + ID, true, id, this.initialSpeed));
                 } else if (id % 5 == 2) {
-                    
+
                     mdCity.addCar(new MdCar(new Location(180, 400), "car-5906e8.png", "c" + ID, true, id, this.initialSpeed));
                 } else if (id % 5 == 3) {
                     mdCity.addCar(new MdCar(new Location(180, 400), "car-043d01.png", "c" + ID, true, id, this.initialSpeed));
@@ -189,7 +190,6 @@ public class VwCityJavaFxDemo extends Application {
                 hboxY += 40;
             }
 
-            
             img_schoolZone_start.setImage(new Image(mdCity.getSchoolSignByName("sc1").getImgSchoolStart()));
             img_schoolZone_start.setX(mdCity.getSchoolSignByName("sc1").getLocationSchoolStart().getX());
             img_schoolZone_start.setY(mdCity.getSchoolSignByName("sc1").getLocationSchoolStart().getY());
@@ -270,7 +270,6 @@ public class VwCityJavaFxDemo extends Application {
             roadCarreturn.getElements().addAll(pathCarReturn);
 
             //-------anim
-        
             int pathi = 0;
             int pathid;
             for (PathTransition anim : lstAnims) {
@@ -288,13 +287,12 @@ public class VwCityJavaFxDemo extends Application {
                 pathi++;
                 anim.play();
             }
- 
 
             //------------------------------root group
             Group root = new Group();
 
             root.getChildren().addAll(road, divider, circ1, lbl1, lbl2, lblTimer, img_schoolZone_start, img_schoolZone_end);
-            
+
             root.getChildren().addAll(lstCars);
 
             for (HBox hbox : lstCarBoxs) {
@@ -303,18 +301,17 @@ public class VwCityJavaFxDemo extends Application {
             root.setTranslateX(50);
             root.setTranslateY(50);
 
-             lstAnims.forEach((anim0) -> {
-                 System.err.println(anim0.getStatus());
-             });
+            lstAnims.forEach((anim0) -> {
+                System.err.println(anim0.getStatus());
+            });
             lstAnims.forEach((anim0) -> {
                 System.err.println(anim0.getStatus());
 
             });
 
-
             //---------test race start-timeline1
             int ti = 0, timelineId;
- //----------when reach school zone, this stamp will automaticlly appear           
+            //----------when reach school zone, this stamp will automaticlly appear
             Label reminderLabel1 = new Label();
             reminderLabel1.setText("Hint: when car reaching ");
             reminderLabel1.setTextFill(Paint.valueOf("#2d1514"));
@@ -330,25 +327,24 @@ public class VwCityJavaFxDemo extends Application {
             Button reminderOk = new Button();
             reminderOk.setText("Understand");
             VBox reminderBox = new VBox(2);
-            reminderBox.getChildren().addAll(reminderLabel1,reminderLabel2,reminderLabel3,reminderLabel4, reminderOk);
+            reminderBox.getChildren().addAll(reminderLabel1, reminderLabel2, reminderLabel3, reminderLabel4, reminderOk);
             reminderBox.setLayoutX(900);
             reminderBox.setLayoutY(120);
-            
+
             reminderBox.setPrefHeight(150);
             reminderBox.setPrefWidth(180);
             reminderBox.setStyle("-fx-background-color: #97caf9; -fx-background-radius: 30;-fx-stroke: yellow; -fx-stroke-width: 2;-fx-padding: 20 5 20 5;");
-            
+
             for (ImageView aCar : lstCars) {
                 timelineId = ti + 1;
                 String ID = Integer.toString(timelineId);
                 String carname = "c" + ID;
                 PathTransition anim0 = lstAnims.get(ti);
-                
-                
+
                 Timeline aTimeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY());
+                        mdCity.updateCarLocation(carname, aCar.getX() + aCar.getTranslateX(), aCar.getY() + aCar.getTranslateY(), 2878, 180);
                         if (mdTimer.getSec() > 3) {
                             try {
 
@@ -358,26 +354,26 @@ public class VwCityJavaFxDemo extends Application {
                                 ths.run();
                                 aCar.setImage(new Image(mdCity.getCarByName(carname).getImgName()));
 
-                                if(mdCity.getCarByName(carname).isIs40ZoneArea()){
-                                    
-                                    if(reminderUp){
+                                if (mdCity.getCarByName(carname).isIs40ZoneArea()) {
+
+                                    if (reminderUp) {
                                         root.getChildren().add(reminderBox);
                                         reminderOk.setOnAction((event) -> {
                                             root.getChildren().remove(reminderBox);
-                                            for(PathTransition Anim40: lstAnims){
+                                            for (PathTransition Anim40 : lstAnims) {
                                                 Anim40.play();
-                                                
+
                                             }
                                         });
-                                        for(PathTransition Anim40: lstAnims){
+                                        for (PathTransition Anim40 : lstAnims) {
                                             Anim40.pause();
                                         }
-                                        
+
 //                                        reminderAct.show();
                                     }
-                                    
+
                                     reminderUp = false;
-                                }                                
+                                }
                                 if (mdCity.getCarByName(carname).isIsParked()) {
                                     anim0.pause();
                                 }
@@ -400,7 +396,6 @@ public class VwCityJavaFxDemo extends Application {
                 ti++;
                 lstTimelines.add(aTimeline);
             }
-
 
             //----//---------test race end-timeline3
             //---------test race start-timeline4 it is a timeline that we never stop
@@ -426,13 +421,13 @@ public class VwCityJavaFxDemo extends Application {
                     if (mdTimer.getSec() == maxTime) {//--------end of process
 
                         demoShowTimes--;
-                        if(0==demoShowTimes){
+                        if (0 == demoShowTimes) {
                             System.out.println("Finished");
                             int sum = 0;
 
                             final CategoryAxis xAxis = new CategoryAxis();
                             final NumberAxis yAxis = new NumberAxis();
-                            final BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+                            final BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
                             final PieChart pieChart = new PieChart();
                             final Label pieDataLabel = new Label("");
 
@@ -447,17 +442,18 @@ public class VwCityJavaFxDemo extends Application {
                             XYChart.Series systemSeries = new XYChart.Series();
                             systemSeries.setName("Auto");
 
-                            for(MdCar pieCar: mdCity.getLstCar()){
+                            for (MdCar pieCar : mdCity.getLstCar()) {
                                 sum += pieCar.getLstVehicleAction().size();
                             }
 
-                            for(MdCar pieCar: mdCity.getLstCar()){
-                                String name = pieCar.getName();int actionLstSize = pieCar.getLstVehicleAction().size();
-                                userSeries.getData().add(new XYChart.Data(name,actionLstSize));
-                                systemSeries.getData().add(new XYChart.Data(name,0));
+                            for (MdCar pieCar : mdCity.getLstCar()) {
+                                String name = pieCar.getName();
+                                int actionLstSize = pieCar.getLstVehicleAction().size();
+                                userSeries.getData().add(new XYChart.Data(name, actionLstSize));
+                                systemSeries.getData().add(new XYChart.Data(name, 0));
                                 int per = 0;
-                                if(0!=sum){
-                                    per = actionLstSize*100/sum;
+                                if (0 != sum) {
+                                    per = actionLstSize * 100 / sum;
                                 }
                                 pieChart.getData().add(new PieChart.Data(name, per));
 
@@ -469,26 +465,24 @@ public class VwCityJavaFxDemo extends Application {
                                     pieDataLabel.setTranslateX(e.getSceneX());
                                     pieDataLabel.setTranslateY(e.getSceneY());
                                     pieDataLabel.setText(String.valueOf(data.getPieValue())
-                                            +"%");
+                                            + "%");
 
                                 });
                             });
-                            
+
                             Button demoEndButton = new Button();
                             demoEndButton.setTranslateX(50);
                             demoEndButton.setTranslateY(200);
-                            
-                            
-                            
-                            if(demoAndTest){
+
+                            if (demoAndTest) {
                                 demoEndButton.setText("Click to Go to Test");
-                                
+
                                 demoEndButton.setOnAction((event) -> {
                                     try {
                                         Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view/UITestDrive.fxml"));
                                         Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
                                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                        
+
                                         window.setScene(vwMainInitialSecondStep);
                                         window.show();
                                     } catch (IOException ex) {
@@ -496,50 +490,49 @@ public class VwCityJavaFxDemo extends Application {
                                     }
 
                                 });
-                            }else{
+                            } else {
                                 demoEndButton.setText("Back to Mode Selection");
-                            
+
                                 demoEndButton.setOnAction((event) -> {
-                                    try{
+                                    try {
                                         Parent root = FXMLLoader.load(getClass().getResource("../view2/Vw_step02Ass02.fxml"));
                                         Scene scene = new Scene(root, 1350, 750);
 
                                         primaryStage.setScene(scene);
                                         primaryStage.show();
-                                    }catch(Exception e){
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                         DebugLog buglog = new DebugLog();
-                                        try{
+                                        try {
                                             buglog.appendData("Back to home from demo end failed");
-                                        }catch(IOException ie){
+                                        } catch (IOException ie) {
                                             System.err.println("dubug log failed");
                                         }
                                     }
 
                                 });
                             }
-                            
 
                             HBox chartBox = new HBox();
-                            chartBox.getChildren().addAll(barChart,pieChart,demoEndButton);
-                            
-                            Scene aScene = new Scene(new Group(),1350,500);
-                            
-                            ((Group) aScene.getRoot()).getChildren().addAll(chartBox,pieDataLabel);
+                            chartBox.getChildren().addAll(barChart, pieChart, demoEndButton);
+
+                            Scene aScene = new Scene(new Group(), 1350, 500);
+
+                            ((Group) aScene.getRoot()).getChildren().addAll(chartBox, pieDataLabel);
                             primaryStage.setScene(aScene);
                             primaryStage.show();
-                        }else{
+                        } else {
                             mdTimer.setSec(0);
-                            for(PathTransition anim: lstAnims){
+                            for (PathTransition anim : lstAnims) {
                                 anim.pause();
                             }
-                            
+
                             mdTimer.pause();
-                            
+
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Demo End");
                             alert.setHeaderText("This Demo Ended, Press ok to see demo again");
-                            alert.setContentText("Demo show times left: "+Integer.toString(demoShowTimes));
+                            alert.setContentText("Demo show times left: " + Integer.toString(demoShowTimes));
 
                             alert.setOnHidden(evt -> {
                                 int initialSpeed = 100;
@@ -552,12 +545,11 @@ public class VwCityJavaFxDemo extends Application {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                                      
+
                             });
                             alert.show();
-                            
-                        }
 
+                        }
 
                     }
                     if (mdTimer.getSec() <= maxTime) {
@@ -631,16 +623,14 @@ public class VwCityJavaFxDemo extends Application {
             }
 
             Scene scene = new Scene(root, 1350, 750, Color.DARKGREEN);
-           
+
 //--------------------------------tableview end
-       
             for (Timeline aLine : lstTimelines) {
                 aLine.setCycleCount(Timeline.INDEFINITE);
                 aLine.play();
             }
 
             timeline4.setCycleCount(Timeline.INDEFINITE);
-
 
             timeline4.play();
             ///circle clicked
@@ -664,7 +654,7 @@ public class VwCityJavaFxDemo extends Application {
                     "PathTransition Demo");
             primaryStage.setScene(scene);
             scene.setFill(Color.web(this.colorHash));
-            
+
             primaryStage.show();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -693,13 +683,11 @@ public class VwCityJavaFxDemo extends Application {
                 multiT.get(i).play();
             }
 
-
         } else {
             for (int i = 0; i < animations.size(); i++) {
                 animations.get(i).pause();
                 multiT.get(i).pause();
             }
-
 
         }
 
@@ -753,7 +741,5 @@ public class VwCityJavaFxDemo extends Application {
         }
 
     }
-    
-    
 
 }

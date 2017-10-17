@@ -55,19 +55,14 @@ public class PathDemoJavaFx_ver04 extends Application {
                 = {
                     new MoveTo(0, 500),
                     new ArcTo(50, 50, 0, 50, 550, false, false),//first arc
-                    new LineTo(900, 550),
-                    new ArcTo(100, 100, 0, 800, 500, false, false),//second line bottom arc
-                    new LineTo(200, 500),
-                    new ArcTo(100, 100, 0, 100, 400, false, true),//thirs arc
-                    new LineTo(900, 400),
-                    new ArcTo(100, 100, 0, 800, 300, false, false),//fourth arc
-                    new LineTo(200, 300),
-                    new ArcTo(100, 100, 0, 100, 200, false, true),//fifth arc
-                    new LineTo(900, 200),
-                    new ArcTo(200, 200, 0, 700, 0, false, false),//6 arc
+                    new LineTo(900, 600),
+                    new ArcTo(200, 200, 0, 600, 400, true, false),
+                    new ArcTo(100, 100, 0, 400, 300, true, true), //second line bottom arc
+                    new LineTo(600, 200),
+                    new ArcTo(180, 100, 0, 550, 0, true, false),//thirs arc
                     new LineTo(100, 0),
-                    new ArcTo(80, 80, 0, 0, 0, false, false),//7 arc
-                    new LineTo(0, 300),
+                    new ArcTo(90, 0, 0, 50, 50, true, false),//thirs arc
+
                     new ClosePath()
                 };
 

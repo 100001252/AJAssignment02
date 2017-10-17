@@ -20,11 +20,15 @@ public class MdCity implements Runnable {
 
     private ArrayList<MdCar> lstCar;
     private ArrayList<MdSchoolSign> lstSchoolSign;
+    private ArrayList<MdStopSign> lstStopSign;
+    private ArrayList<MdTrafficLight> lstTrafficLight;
     private String carToControl;
 
     public MdCity() {
         lstCar = new ArrayList<>();
-        lstSchoolSign = new ArrayList<>();
+        lstSchoolSign = new ArrayList<MdSchoolSign>();
+        lstStopSign = new ArrayList<MdStopSign>();
+        lstTrafficLight = new ArrayList<MdTrafficLight>();
 
     }
 
@@ -35,7 +39,7 @@ public class MdCity implements Runnable {
      * @param xVal
      * @param yVal
      */
-    public synchronized void updateCarLocation(String carName, double xVal, double yVal) {
+    public synchronized void updateCarLocation(String carName, double xVal, double yVal, int oneCycle, int setto) {
         try {
             MdCar carobj = this.getCarByName(carName);
             Location oldLocation = carobj.getLocation();
@@ -44,8 +48,8 @@ public class MdCity implements Runnable {
             Double dist = distanceBetweenLocation(oldLocation, new Location(xVal, yVal));
 
             // if (this.getCarByName(carName).getDistanceFromOrigin() > 2650 && this.getCarByName(carName).getDistanceFromOrigin() < 2660) {
-            if (this.getCarByName(carName).getDistanceFromOrigin() > 2700) {
-                this.getCarByName(carName).setDistanceFromOrigin(0);
+            if (this.getCarByName(carName).getDistanceFromOrigin() > oneCycle && this.getCarByName(carName).getDistanceFromOrigin() < (oneCycle + 20)) {
+                this.getCarByName(carName).setDistanceFromOrigin(setto);
             } else {
                 this.getCarByName(carName).setDistanceFromOrigin(this.getCarByName(carName).getDistanceFromOrigin() + dist.intValue());
             }
@@ -83,6 +87,31 @@ public class MdCity implements Runnable {
         }
 
         lstSchoolSign.add(schoolsignObj);
+    }
+
+    /**
+     * add schoolsign to mdcity
+     *
+     * @param schoolsignObj
+     */
+    public void addStopSign(MdStopSign stObj) throws Exception {
+        for (MdStopSign scObj : this.lstStopSign) {
+            if (scObj.getName().equals(stObj.getName())) {
+                DebugLog.appendData2("errrroo23214hkjasdf987rrrr>>>>>   schoolSign");
+                throw new CarRacingException("this schoolsign name (" + stObj.getName() + ") already exist in our record");
+            }
+        }
+        this.lstStopSign.add(stObj);
+    }
+
+    public void addTrafficLight(MdTrafficLight tfObj) throws Exception {
+        for (MdTrafficLight trafficobj : this.lstTrafficLight) {
+            if (tfObj.getName().equals(trafficobj.getName())) {
+                throw new CarRacingException("this Traffic sign name (" + tfObj.getName() + ") already exist in our record");
+            }
+        }
+        this.lstTrafficLight.add(tfObj);
+
     }
 
     /**
