@@ -426,8 +426,7 @@ public class VwCityJavaFx01_mainTest extends Application {
                     public void handle(ActionEvent t) {
                         mdCity.updateCarLocation(carname, hashImageViewCar.get(carname).getX() + hashImageViewCar.get(carname).getTranslateX(), hashImageViewCar.get(carname).getY() + hashImageViewCar.get(carname).getTranslateY(), 2878, 180);
 
-                        System.out.println("  " + carobj.getName() + ">>>" + carobj.getDistanceFromOrigin());
-
+                        // System.out.println("  " + carobj.getName() + ">>>" + carobj.getDistanceFromOrigin());
                         hashLabelViewClone.get(carname).setText(Integer.toString(carobj.getSpeed()) + " km/hr ");
                         hashImageViewCar.get(carname).setImage(new Image(carobj.getImgName()));
                         if (mdTimer.getSec() > 3) {

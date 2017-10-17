@@ -260,6 +260,17 @@ public class MdCity implements Runnable {
         try {
 
             for (MdCar objCar : (ArrayList<MdCar>) this.getLstCar().clone()) {
+                //---------------------------------------------------------------------traffic light
+                for (MdTrafficLight tf : this.getLstTrafficLight()) {
+                    if ((tf.getLocation().calcDistanceBetweenTwoLocation(objCar.getLocation())) < 100 && tf.getStatus() == 2) {
+                        System.out.println("close to traffic lighttttt");
+                        objCar.setIs40ZoneArea(true);
+                    }
+                    if ((tf.getLocation().calcDistanceBetweenTwoLocation(objCar.getLocation())) > 100) {
+                        objCar.setIs40ZoneArea(false);
+                    }
+                }
+
                 //----------------manage 40zone area
                 for (MdSchoolSign sd : this.getLstSchoolSign()) {
 

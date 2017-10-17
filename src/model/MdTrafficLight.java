@@ -20,6 +20,7 @@ public class MdTrafficLight {
     private final String imgGrean = "tl-g.png";
     private final String imgyellow = "tl-y.png";
     private final String imgred = "tl-r.png";
+    private int status = 0;
     private String name;
     // Where the vehicle is.
     private Location location;
@@ -30,7 +31,8 @@ public class MdTrafficLight {
     public MdTrafficLight(String name, Location loc) {
         this.location = loc;
         this.name = name;
-        this.img = this.imgGrean;
+        this.status = 2;
+        this.img = this.imgred;
         this.distanceFromOrigin = loc.getDistanceFromOrigin();
 
     }
@@ -110,6 +112,20 @@ public class MdTrafficLight {
      */
     public void setDistanceFromOrigin(int distanceFromOrigin) {
         this.distanceFromOrigin = distanceFromOrigin;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 }
