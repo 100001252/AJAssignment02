@@ -118,7 +118,7 @@ public class VwCityJavaFx01_mainTest extends Application {
         try {//--------------------------------newpaternstart------------------------------------------------start new patern
             for (int i = 0; i < numberOfCars; i++) {
                 boolean choosroadgoOrback = true; //(i > (numberOfCars / 2)) ? false : true;
-                mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), choosroadgoOrback, i, this.initialSpeed));
+                mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), choosroadgoOrback, i * 2, this.initialSpeed));
             }
 //        for (int i = numberOfCars / 2; i < numberOfCars; i++) {
 //            mdCity.addCar(new MdCar(new Location(180, 400), chooseImageById(i), "c" + Integer.toString(i), false, i, this.initialSpeed));
