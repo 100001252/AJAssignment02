@@ -20,7 +20,7 @@ public class MdTrafficLight {
     private final String imgGrean = "tl-g.png";
     private final String imgyellow = "tl-y.png";
     private final String imgred = "tl-r.png";
-    private int status = 0;
+    private int status = 0;//0 for green 1 for yellow and 2 for red
     private String name;
     // Where the vehicle is.
     private Location location;

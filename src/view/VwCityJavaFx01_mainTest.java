@@ -481,7 +481,23 @@ public class VwCityJavaFx01_mainTest extends Application {
                 @Override
                 public void handle(ActionEvent t) {
                     try {
+                        System.out.println("traffic sign is::>>> " + trafficSign);
+                        if (lstImageViewSchoolSignStart.size() > 0 && trafficSign == 2) {
 
+                            int divided = mdTimer.getSec() % 11;
+
+                            if (divided < 6) {
+                                lstImageViewSchoolSignStart.get(0).setImage(new Image(mdCity.getLstTrafficLight().get(0).getImgGrean()));
+                                mdCity.getLstTrafficLight().get(0).setStatus(0);
+
+                            } else if (divided > 6 && divided < 8) {
+                                lstImageViewSchoolSignStart.get(0).setImage(new Image(mdCity.getLstTrafficLight().get(0).getImgyellow()));
+                                mdCity.getLstTrafficLight().get(0).setStatus(1);
+                            } else if (divided > 8) {
+                                lstImageViewSchoolSignStart.get(0).setImage(new Image(mdCity.getLstTrafficLight().get(0).getImgred()));
+                                mdCity.getLstTrafficLight().get(0).setStatus(2);
+                            }
+                        }
                         //----------------------------just for dbug purposes
                         //----------------------------end of debug
                     } catch (Exception ex) {
@@ -538,15 +554,20 @@ public class VwCityJavaFx01_mainTest extends Application {
                     }
 
                 }
-            }));//----//---------test race end-timelinefinal
+            }
+            ));//----//---------test race end-timelinefinal
 
 //--------------------------------tableview end
             timelinefinal.setCycleCount(Timeline.INDEFINITE);
+
             timelinefinal.play();
             ///circle clicked
-            circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            circ1.setOnMouseClicked(
+                    new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(MouseEvent mouseEvent) {
+                public void handle(MouseEvent mouseEvent
+                ) {
                     // System.out.println("clickkkd on circle");
 
                 }
@@ -557,6 +578,7 @@ public class VwCityJavaFx01_mainTest extends Application {
             primaryStage.setTitle(
                     "PathTransition Demo");
             primaryStage.setScene(scene);
+
             scene.setFill(Color.web(this.colorHash));
             primaryStage.show();
         } catch (Exception ex) {
