@@ -308,7 +308,7 @@ public class MdCity implements Runnable {
                     }
 
                 }
-                if (distanceBetweenCars < 120 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
+                if (distanceBetweenCars < 80 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
 
                     if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
                         c.setSpeed(c.getSpeedofCarInFront(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
