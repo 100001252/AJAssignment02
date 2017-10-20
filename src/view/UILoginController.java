@@ -57,17 +57,23 @@ public class UILoginController implements Initializable {
      */
     private void doLogin(ActionEvent event) throws IOException {
         //loading second steps scen
-        Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("VwMainInitialStep02.fxml"));
-        Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("VwMainInitialStep02.fxml"));
+//        Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
+//        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         //--------end loading second step
         // System.out.println("makiiinglogin");
         String username = txtUsername.getText();
         String pass = txtPassword.getText();
         if (username.equals("admin") && pass.equals("admin")) {
-            // System.out.println("welcome");
+            Parent vwMainInitialSecondStepParent = FXMLLoader.load(getClass().getResource("../view2/Vw_step02Ass02.fxml"));
+            Scene vwMainInitialSecondStep = new Scene(vwMainInitialSecondStepParent, 1350, 750);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(vwMainInitialSecondStep);
             window.show();
+            // System.out.println("welcome");
+
+//            window.setScene(vwMainInitialSecondStep);
+//            window.show();
         } else {
             lblfeedback.setText("User name and password does not match with our record");
             // System.out.println("Incorect username and password");
