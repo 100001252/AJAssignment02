@@ -31,6 +31,9 @@ public class RunMainMVC extends Application {
 
         //--loadjavafxview
         Parent root = FXMLLoader.load(getClass().getResource("../view/UILogin.fxml"));//view an controller loaded
+        //---------------just test
+//        Parent root = FXMLLoader.load(getClass().getResource("../view/UITestDrive.fxml"));//view an controller loaded
+        //-------------end of just test
         DebugLog.appendData2(getClass().getResource("../view2/Vw_step02Ass02.fxml").toString());
         Scene scene = new Scene(root, 1350, 750);
         stage.setScene(scene);

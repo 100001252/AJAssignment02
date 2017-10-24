@@ -19,6 +19,9 @@ import java.util.Date;
  */
 public class MdCity implements Runnable {
 
+    private int maxDistanceOfCarFromOrigin;
+    private int setTo;
+
     private ArrayList<MdCar> lstCar;
     private ArrayList<MdSchoolSign> lstSchoolSign;
     private ArrayList<MdStopSign> lstStopSign;
@@ -42,6 +45,8 @@ public class MdCity implements Runnable {
      */
     public synchronized void updateCarLocation(String carName, double xVal, double yVal, int oneCycle, int setto) {
         try {
+            this.maxDistanceOfCarFromOrigin = oneCycle;
+            this.setTo = setto;
             MdCar carobj = this.getCarByName(carName);
             Location oldLocation = carobj.getLocation();
             this.getCarByName(carName).setLocation(new Location(xVal, yVal));
@@ -243,7 +248,10 @@ public class MdCity implements Runnable {
                 if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.isIsParked()) {
                     c.setIsParked(true, new MdVehicleAction("break", "break full stop", "because car infront stoped", "auto", c.getName()));
                 }
-
+//                if ((objCar.getDistanceFromOrigin() < (this.setTo + 40)) && objCar.isIsParked() && (this.getLstCar().get(this.getLstCar().size() - 1).getDistanceFromOrigin() > this.maxDistanceOfCarFromOrigin - 40)) {
+//                    this.getLstCar().get(this.getLstCar().size() - 1).setIsParked(true, new MdVehicleAction("break", "break full stop", "because car infront stoped", "auto", this.getLstCar().get(this.getLstCar().size() - 1).getName()));
+//
+//                }
             }
 
         } catch (Exception ex) {
@@ -327,8 +335,9 @@ public class MdCity implements Runnable {
                 ///---------------------------------------------------------------------------set car speed if that is close
                 if (distanceBetweenCars < 700 && objCar.isIsRouteToGo() == c.isIsRouteToGo()) {
 
-                    if (objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() && objCar.getSpeed() < c.getSpeed()) {
+                    if ((objCar.getDistanceFromOrigin() > c.getDistanceFromOrigin() || (objCar.getDistanceFromOrigin() < 500)) && objCar.getSpeed() < c.getSpeed()) {
                         c.setSpeedofCarInFront(objCar.getSpeed());
+
                     }
                     //c.setSpeed(objCar.getSpeed(), new MdVehicleAction("dec", "decrease speed", "because of close distance", "auto", c.getName())); //car c is behind and objcar has speed less than c
 

@@ -55,6 +55,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -93,6 +94,7 @@ public class VwCityJavaFx01_mainTest extends Application {
     private ArrayList<HBox> lstHboxViewClone = new ArrayList<>();
     private HashMap<String, PathTransition> hashPathTransitions = new HashMap<String, PathTransition>();
     private HashMap<String, Timeline> hashTimeline = new HashMap<String, Timeline>();
+    private HashMap<String, MdBall> hashBall = new HashMap<String, MdBall>();
 
     public VwCityJavaFx01_mainTest(String colorHash, MdCity mdCityObj, MdTimer mdtimerobj, int initialSpeed) {
         this.colorHash = colorHash;
@@ -317,43 +319,60 @@ public class VwCityJavaFx01_mainTest extends Application {
 
             }
             //------------------------------------circle for stop all
-            Circle circ1 = new Circle(50, 20, 30, Color.BLUE); //new Circle(50, 20, 10);
-            circ1.setLayoutX(400);
-            circ1.setLayoutY(200);
 
-            //-----------------end circ1
+            //-----------------end circ1 ball
+            Circle circ1 = new Circle(10, 10, 10, Color.BLUE); //new Circle(50, 20, 10);
+            circ1.setLayoutX(800);
+            circ1.setLayoutY(100);
+
+            TranslateTransition ballTransition = new TranslateTransition(Duration.millis(2000), circ1);
+//            translateTransition.setFromX(mdCity.getLstSchoolSign().get(0).getLocationSchoolStart().getX() - 50);
+            if (this.trafficSign == 0) {
+                ballTransition.setToY(mdCity.getLstSchoolSign().get(0).getLocationSchoolStart().getY() - 300);
+            } else {
+                ballTransition.setToY(-300);
+            }
+
+            //translateTransition.setCycleCount(2);
+            ballTransition.setCycleCount(Timeline.INDEFINITE);
+            ballTransition.setAutoReverse(true);
+            ballTransition.play();
+//            RotateTransition rotateTransition = new RotateTransition(Duration.millis(3000), circ1);
+//            rotateTransition.setByAngle(180f);
+//            rotateTransition.setCycleCount(4);
+//            rotateTransition.setAutoReverse(true);
+
             //------------------------------------------------------------------------------bluecircleonclick
-            circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    // System.out.println("clickkkd on circle");
-                    for (Map.Entry<String, PathTransition> ps : hashPathTransitions.entrySet()) {
-                        if (ps.getValue().getStatus() == PathTransition.Status.RUNNING) {
-                            ps.getValue().pause();
-                        } else {
-                            ps.getValue().play();
-
-                        }
-                    }
-
-                    for (Map.Entry<String, Timeline> tl : hashTimeline.entrySet()) {
-                        if (tl.getValue().getStatus() == Timeline.Status.RUNNING) {
-                            tl.getValue().pause();
-                        } else {
-                            tl.getValue().play();
-
-                        }
-
-                    }
-
-                }
-
-            });
-
+//            circ1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent mouseEvent) {
+//                    // System.out.println("clickkkd on circle");
+//                    for (Map.Entry<String, PathTransition> ps : hashPathTransitions.entrySet()) {
+//                        if (ps.getValue().getStatus() == PathTransition.Status.RUNNING) {
+//                            ps.getValue().pause();
+//                        } else {
+//                            ps.getValue().play();
+//
+//                        }
+//                    }
+//
+//                    for (Map.Entry<String, Timeline> tl : hashTimeline.entrySet()) {
+//                        if (tl.getValue().getStatus() == Timeline.Status.RUNNING) {
+//                            tl.getValue().pause();
+//                        } else {
+//                            tl.getValue().play();
+//
+//                        }
+//
+//                    }
+//
+//                }
+//
+//            });
             //--------------------------------------------------------------------------------bluecircleonclickend
             //-----------------------------------add all element
             Group root = new Group();
-            root.getChildren().addAll(circ1, road, divider, lblTimer);
+            root.getChildren().addAll(road, divider, lblTimer);
             //hbbox
             for (HBox hbobj : lstHboxViewClone) {
                 root.getChildren().add(hbobj);
@@ -369,6 +388,7 @@ public class VwCityJavaFx01_mainTest extends Application {
                     root.getChildren().add(lstImageViewSchoolSignEnd.get(i));
                 }
             }
+            root.getChildren().add(circ1);
             root.setTranslateX(50);
             root.setTranslateY(50);
 
@@ -482,18 +502,24 @@ public class VwCityJavaFx01_mainTest extends Application {
                 public void handle(ActionEvent t) {
                     try {
                         System.out.println("traffic sign is::>>> " + trafficSign);
-                        if (lstImageViewSchoolSignStart.size() > 0 && trafficSign == 2) {
+                        if (lstImageViewSchoolSignStart.size() > 0 && trafficSign == 2) {//traffic light change color
 
                             int divided = mdTimer.getSec() % 11;
 
-                            if (divided < 6) {
+                            if (divided < 6) {//traffic light green
                                 lstImageViewSchoolSignStart.get(0).setImage(new Image(mdCity.getLstTrafficLight().get(0).getImgGrean()));
                                 mdCity.getLstTrafficLight().get(0).setStatus(0);
+                                circ1.setLayoutX(750);
+                                ballTransition.pause();
 
-                            } else if (divided > 6 && divided < 8) {
+                            } else if (divided > 6 && divided < 8) {//trafic light yellow
                                 lstImageViewSchoolSignStart.get(0).setImage(new Image(mdCity.getLstTrafficLight().get(0).getImgyellow()));
                                 mdCity.getLstTrafficLight().get(0).setStatus(1);
-                            } else if (divided > 8) {
+                                ballTransition.play();
+
+                            } else if (divided > 8) {//traffic light red
+
+                                ballTransition.play();
                                 lstImageViewSchoolSignStart.get(0).setImage(new Image(mdCity.getLstTrafficLight().get(0).getImgred()));
                                 mdCity.getLstTrafficLight().get(0).setStatus(2);
                             }
